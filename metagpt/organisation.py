@@ -4,10 +4,14 @@
 import asyncio
 from pathlib import Path
 
-import agentops
+# import agentops
 import typer
+
 from metagpt.logs import logger
 from metagpt.const import CONFIG_ROOT
+import flat
+import federation
+import holarchy
 from metagpt.utils.project_repo import ProjectRepo
 
 app = typer.Typer(add_completion=False, pretty_exceptions_show_locals=False)
@@ -15,6 +19,7 @@ app = typer.Typer(add_completion=False, pretty_exceptions_show_locals=False)
 
 def generate_repo(
     idea,
+    paradigm,
     investment=3.0,
     n_round=7,
     code_review=True,
@@ -38,44 +43,108 @@ def generate_repo(
         QaEngineer,
     )
     from metagpt.team import Team
-
-    if config.agentops_api_key != "":
-        agentops.init(config.agentops_api_key, tags=["software_company"])
+   
+    # if config.agentops_api_key != "":
+    #     agentops.init(config.agentops_api_key, tags=["software_company"])
 
     config.update_via_cli(project_path, project_name, inc, reqa_file, max_auto_summarize_code)
     ctx = Context(config=config)
+    if paradigm =="Team" :
+        if not recover_path:
+            company = Team(context=ctx)
+            company.hire(
+                [
+                    ProductManager(),
+                    Architect(),
+                    ProjectManager(),
+                ]
+            )
 
-    if not recover_path:
-        company = Team(context=ctx)
-        company.hire(
-            [
-                ProductManager(),
-                Architect(),
-                ProjectManager(),
-            ]
+            if implement or code_review:
+                company.hire([Engineer(n_borg=5, use_code_review=code_review), Engineer(n_borg=5, use_code_review=code_review, name = "John"), Engineer(n_borg=5, use_code_review=code_review, name = "Roger")])
+
+            if run_tests:
+                company.hire([QaEngineer()])
+                if n_round < 8:
+                    n_round = 8  # If `--run-tests` is enabled, at least 8 rounds are required to run all QA actions.
+        else:
+            stg_path = Path(recover_path)
+            if not stg_path.exists() or not str(stg_path).endswith("team"):
+                raise FileNotFoundError(f"{recover_path} not exists or not endswith `team`")
+
+            company = Team.deserialize(stg_path=stg_path, context=ctx)
+            idea = company.idea
+
+        company.invest(investment)
+        company.run_project(idea)
+        asyncio.run(company.run(n_round=n_round))
+
+        # if config.agentops_api_key != "":
+        #     agentops.end_session("Success")
+    elif(paradigm == "Flat"):
+        print("hello")
+        flat_org = flat.Flat(context=ctx)
+        flat_org.hire(roles=[
+            ProductManager(),
+            Architect(),
+            ProjectManager(),
+            Engineer(name="eng1"),
+            Engineer(name="eng2"),
+            QaEngineer()
+        ])
+        flat_org.invest(investment)
+        flat_org.run_project(idea)
+        asyncio.run(flat_org.run(n_round=n_round))
+        
+    elif(paradigm == "Holarchy"):
+        print("hello")
+        # Holarchy
+        hol = holarchy.Holarchy(context=ctx)
+        # Create nested structure
+        pm_node = hol.create_holon(ProductManager())
+        arch_node = hol.create_holon(Architect(), "ProductManager")
+        eng_node = hol.create_holon(Engineer(name="eng1"), "Architect")
+        qa_node = hol.create_holon(QaEngineer(), "Architect")
+        hol.invest(investment)
+        hol.run_project(idea)
+        asyncio.run(hol.run(n_round=n_round))
+        
+    elif(paradigm == "Hierarchy"):
+        print("hello")
+        flat_org = flat.Flat(context=ctx)
+        flat_org.hire(roles=[
+            ProductManager(),
+            Architect(),
+            ProjectManager(),
+            Engineer(name="eng1"),
+            Engineer(name="eng2"),
+            QaEngineer()
+        ])
+        flat_org.invest(investment)
+        flat_org.run_project(idea)
+        asyncio.run(flat_org.run(n_round=n_round))
+        
+    elif(paradigm == "Federation"):
+        print("hello")
+        # Federation
+        fed = federation.Federation(context=ctx)
+        # Create development team
+        fed.create_team(
+            "dev_team",
+            [Engineer(name="dev1"), Engineer(name="dev2")],
+            ProjectManager()
         )
+        # Create architecture team
+        fed.create_team(
+            "arch_team",
+            [Engineer(name="arch1"), Engineer(name="arch2")],
+            Architect()
+)
+        fed.invest(investment)
+        fed.run_project(idea)
+        asyncio.run(fed.run(n_round=n_round))
 
-        if implement or code_review:
-            company.hire([Engineer(n_borg=5, use_code_review=code_review), Engineer(n_borg=5, use_code_review=code_review, name = "John"), Engineer(n_borg=5, use_code_review=code_review, name = "Roger")])
-
-        if run_tests:
-            company.hire([QaEngineer()])
-            if n_round < 8:
-                n_round = 8  # If `--run-tests` is enabled, at least 8 rounds are required to run all QA actions.
-    else:
-        stg_path = Path(recover_path)
-        if not stg_path.exists() or not str(stg_path).endswith("team"):
-            raise FileNotFoundError(f"{recover_path} not exists or not endswith `team`")
-
-        company = Team.deserialize(stg_path=stg_path, context=ctx)
-        idea = company.idea
-
-    company.invest(investment)
-    company.run_project(idea)
-    asyncio.run(company.run(n_round=n_round))
-
-    if config.agentops_api_key != "":
-        agentops.end_session("Success")
+    
 
     return ctx.repo
 
@@ -84,8 +153,9 @@ def generate_repo(
 #pass the arugments using the startup function
 def startup(
     idea: str = typer.Argument(None, help="Your innovative idea, such as 'Create a 2048 game.'"),
+    paradigm: str = typer.Argument("Team", help="Team, Flat, Hierarchy, Holarchy, Federation" ),
     investment: float = typer.Option(default=3.0, help="Dollar amount to invest in the AI company."),
-    n_round: int = typer.Option(default=5, help="Number of rounds for the simulation."),
+    n_round: int = typer.Option(default=7, help="Number of rounds for the simulation."),
     code_review: bool = typer.Option(default=True, help="Whether to use code review."),
     run_tests: bool = typer.Option(default=False, help="Whether to enable QA for adding & running tests."),
     implement: bool = typer.Option(default=True, help="Enable or disable code implementation."),
@@ -117,6 +187,7 @@ def startup(
 
     return generate_repo(
         idea,
+        paradigm,
         investment,
         n_round,
         code_review,

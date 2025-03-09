@@ -45,6 +45,7 @@ class CostManager(BaseModel):
             return
         self.total_prompt_tokens += prompt_tokens
         self.total_completion_tokens += completion_tokens
+        logger.info(f"Current Model: {model}")
         if model not in self.token_costs:
             logger.warning(f"Model {model} not found in TOKEN_COSTS.")
             return

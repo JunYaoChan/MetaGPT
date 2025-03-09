@@ -17,6 +17,13 @@ from openai.types.chat import ChatCompletionChunk
 
 from metagpt.logs import logger
 from metagpt.utils.ahttp_client import apost
+import deepseek_tokenizer
+
+import logging
+
+# Configure the logger
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 TOKEN_COSTS = {
     "gpt-3.5-turbo": {"prompt": 0.0015, "completion": 0.002},
@@ -382,6 +389,7 @@ SPARK_TOKENS = {
 
 def count_input_tokens(messages, model="gpt-3.5-turbo-0125"):
     """Return the number of tokens used by a list of messages."""
+    log.info(f"Counting tokens for model {model}")
     if "claude" in model:
         # rough estimation for models newer than claude-2.1
         vo = anthropic.Client()
@@ -389,6 +397,13 @@ def count_input_tokens(messages, model="gpt-3.5-turbo-0125"):
         for message in messages:
             for key, value in message.items():
                 num_tokens += vo.count_tokens(str(value))
+        return num_tokens
+    if "deepseek" in model:
+        vo = deepseek_tokenizer.tokenizer()
+        num_tokens = 0
+        for message in messages:
+            for key, value in message.items():
+                num_tokens += len(vo.encode(value))
         return num_tokens
     try:
         encoding = tiktoken.encoding_for_model(model)
@@ -479,6 +494,10 @@ def count_output_tokens(string: str, model: str) -> int:
     if "claude" in model:
         vo = anthropic.Client()
         num_tokens = vo.count_tokens(string)
+        return num_tokens
+    if "deepseek" in model:
+        vo = deepseek_tokenizer.tokenizer()
+        num_tokens = len(vo.encode(string))
         return num_tokens
     try:
         encoding = tiktoken.encoding_for_model(model)
