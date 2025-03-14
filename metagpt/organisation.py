@@ -12,6 +12,7 @@ from metagpt.const import CONFIG_ROOT
 import flat
 import federation
 import holarchy
+from metagpt.roles.engineer import EngineerProfile, ExpertiseLevel
 from metagpt.utils.project_repo import ProjectRepo
 
 app = typer.Typer(add_completion=False, pretty_exceptions_show_locals=False)
@@ -88,8 +89,14 @@ def generate_repo(
             ProductManager(),
             Architect(),
             ProjectManager(),
-            Engineer(name="eng1"),
-            Engineer(name="eng2"),
+            Engineer(
+                engineers=[
+                    EngineerProfile("Alex", ExpertiseLevel.SENIOR),  # Team lead
+                    EngineerProfile("John", ExpertiseLevel.MID),     # Mid-level engineer
+                    EngineerProfile("Mary", ExpertiseLevel.JUNIOR)   # Junior engineer
+                ],
+            ),
+            # Engineer(name="eng2"),
             QaEngineer()
         ])
         flat_org.invest(investment)
@@ -155,7 +162,7 @@ def startup(
     idea: str = typer.Argument(None, help="Your innovative idea, such as 'Create a 2048 game.'"),
     paradigm: str = typer.Argument("Team", help="Team, Flat, Hierarchy, Holarchy, Federation" ),
     investment: float = typer.Option(default=3.0, help="Dollar amount to invest in the AI company."),
-    n_round: int = typer.Option(default=7, help="Number of rounds for the simulation."),
+    n_round: int = typer.Option(default=5, help="Number of rounds for the simulation."),
     code_review: bool = typer.Option(default=True, help="Whether to use code review."),
     run_tests: bool = typer.Option(default=False, help="Whether to enable QA for adding & running tests."),
     implement: bool = typer.Option(default=True, help="Enable or disable code implementation."),

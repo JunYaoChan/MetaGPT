@@ -402,6 +402,8 @@ class Role(SerializationMixin, ContextMixin, BaseModel):
     async def _act(self) -> Message:
         logger.info(f"{self._setting}: to do {self.rc.todo}({self.rc.todo.name})")
         response = await self.rc.todo.run(self.rc.history)
+        logger.info(f"Content: {response.content}")
+
         if isinstance(response, (ActionOutput, ActionNode)):
             msg = Message(
                 content=response.content,

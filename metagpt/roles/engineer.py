@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
@@ -18,11 +19,13 @@
 """
 
 from __future__ import annotations
+import asyncio
 
 import json
 from collections import defaultdict
 from pathlib import Path
-from typing import Optional, Set
+from typing import List, Dict, Optional, Set, Tuple, Union
+
 
 from metagpt.actions import Action, WriteCode, WriteCodeReview, WriteTasks
 from metagpt.actions.fix_bug import FixBug
@@ -58,81 +61,1171 @@ otherwise, answer 'YES' in JSON format.
 """
 
 
+# class Engineer(Role):
+#     """
+#     Represents an Engineer role responsible for writing and possibly reviewing code.
+
+#     Attributes:
+#         name (str): Name of the engineer.
+#         profile (str): Role profile, default is 'Engineer'.
+#         goal (str): Goal of the engineer.
+#         constraints (str): Constraints for the engineer.
+#         n_borg (int): Number of borgs.
+#         use_code_review (bool): Whether to use code review.
+#     """
+
+#     name: str = "Alex"
+#     profile: str = "Engineer"
+#     goal: str = "write elegant, readable, extensible, efficient code"
+#     constraints: str = (
+#         "the code should conform to standards like google-style and be modular and maintainable. "
+#         "Use same language as user requirement"
+#     )
+#     n_borg: int = 1
+#     use_code_review: bool = False
+#     code_todos: list = []
+#     summarize_todos: list = []
+#     next_todo_action: str = ""
+#     n_summarize: int = 0
+
+#     def __init__(self, **kwargs) -> None:
+#         super().__init__(**kwargs)
+
+#         self.set_actions([WriteCode])
+#         self._watch([WriteTasks, SummarizeCode, WriteCode, WriteCodeReview, FixBug, WriteCodePlanAndChange])
+#         self.code_todos = []
+#         self.summarize_todos = []
+#         self.next_todo_action = any_to_name(WriteCode)
+
+#     @staticmethod
+#     def _parse_tasks(task_msg: Document) -> list[str]:
+#         m = json.loads(task_msg.content)
+#         return m.get(TASK_LIST.key) or m.get(REFINED_TASK_LIST.key)
+
+# # this manage the engineer to write the code
+#     async def _act_sp_with_cr(self, review=False) -> Set[str]:
+#         changed_files = set()
+#         logger.debug(f"CODE _ TODO : {self.code_todos}")
+#         for todo in self.code_todos:
+#             """
+#             # Select essential information from the historical data to reduce the length of the prompt (summarized from human experience):
+#             1. All from Architect
+#             2. All from ProjectManager
+#             3. Do we need other codes (currently needed)?
+#             TODO: The goal is not to need it. After clear task decomposition, based on the design idea, you should be able to write a single file without needing other codes. If you can't, it means you need a clearer definition. This is the key to writing longer code.
+#             """
+#             coding_context = await todo.run()
+#             # Code review
+#             if review:
+#                 action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
+#                 self._init_action(action)
+#                 coding_context = await action.run()
+
+#             dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
+#             if self.config.inc:
+#                 dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
+#             await self.project_repo.srcs.save(
+#                 filename=coding_context.filename,
+#                 dependencies=list(dependencies),
+#                 content=coding_context.code_doc.content,
+#             )
+#             msg = Message(
+#                 content=coding_context.model_dump_json(),
+#                 instruct_content=coding_context,
+#                 role=self.profile,
+#                 cause_by=WriteCode,
+#             )
+#             self.rc.memory.add(msg)
+
+#             changed_files.add(coding_context.code_doc.filename)
+#         if not changed_files:
+#             logger.info("Nothing has changed.")
+#         return changed_files
+
+#     async def _act(self) -> Message | None:
+#         """Determines the mode of action based on whether code review is used."""
+#         if self.rc.todo is None:
+#             return None
+#         if isinstance(self.rc.todo, WriteCodePlanAndChange):
+#             self.next_todo_action = any_to_name(WriteCode)
+#             return await self._act_code_plan_and_change()
+#         if isinstance(self.rc.todo, WriteCode):
+#             self.next_todo_action = any_to_name(SummarizeCode)
+#             logger.debug(f"CODE REVIEW : {self.use_code_review}")
+#             return await self._act_write_code()
+#         if isinstance(self.rc.todo, SummarizeCode):
+#             self.next_todo_action = any_to_name(WriteCode)
+#             return await self._act_summarize()
+#         return None
+
+#     async def _act_write_code(self):
+#         changed_files = await self._act_sp_with_cr(review=self.use_code_review)
+#         return Message(
+#             content="\n".join(changed_files),
+#             role=self.profile,
+#             cause_by=WriteCodeReview if self.use_code_review else WriteCode,
+#             send_to=self,
+#             sent_from=self,
+#         )
+
+#     async def _act_summarize(self):
+#         tasks = []
+#         for todo in self.summarize_todos:
+#             summary = await todo.run()
+#             summary_filename = Path(todo.i_context.design_filename).with_suffix(".md").name
+#             dependencies = {todo.i_context.design_filename, todo.i_context.task_filename}
+#             for filename in todo.i_context.codes_filenames:
+#                 rpath = self.project_repo.src_relative_path / filename
+#                 dependencies.add(str(rpath))
+#             await self.project_repo.resources.code_summary.save(
+#                 filename=summary_filename, content=summary, dependencies=dependencies
+#             )
+#             is_pass, reason = await self._is_pass(summary)
+#             if not is_pass:
+#                 todo.i_context.reason = reason
+#                 tasks.append(todo.i_context.model_dump())
+
+#                 await self.project_repo.docs.code_summary.save(
+#                     filename=Path(todo.i_context.design_filename).name,
+#                     content=todo.i_context.model_dump_json(),
+#                     dependencies=dependencies,
+#                 )
+#             else:
+#                 await self.project_repo.docs.code_summary.delete(filename=Path(todo.i_context.design_filename).name)
+
+#         logger.info(f"--max-auto-summarize-code={self.config.max_auto_summarize_code}")
+#         if not tasks or self.config.max_auto_summarize_code == 0:
+#             return Message(
+#                 content="",
+#                 role=self.profile,
+#                 cause_by=SummarizeCode,
+#                 sent_from=self,
+#                 send_to="Edward",  # The name of QaEngineer
+#             )
+#         # The maximum number of times the 'SummarizeCode' action is automatically invoked, with -1 indicating unlimited.
+#         # This parameter is used for debugging the workflow.
+#         self.n_summarize += 1 if self.config.max_auto_summarize_code > self.n_summarize else 0
+#         return Message(
+#             content=json.dumps(tasks), role=self.profile, cause_by=SummarizeCode, send_to=self, sent_from=self
+#         )
+
+#     async def _act_code_plan_and_change(self):
+#         """Write code plan and change that guides subsequent WriteCode and WriteCodeReview"""
+#         node = await self.rc.todo.run()
+#         code_plan_and_change = node.instruct_content.model_dump_json()
+#         dependencies = {
+#             REQUIREMENT_FILENAME,
+#             str(self.project_repo.docs.prd.root_path / self.rc.todo.i_context.prd_filename),
+#             str(self.project_repo.docs.system_design.root_path / self.rc.todo.i_context.design_filename),
+#             str(self.project_repo.docs.task.root_path / self.rc.todo.i_context.task_filename),
+#         }
+#         code_plan_and_change_filepath = Path(self.rc.todo.i_context.design_filename)
+#         await self.project_repo.docs.code_plan_and_change.save(
+#             filename=code_plan_and_change_filepath.name, content=code_plan_and_change, dependencies=dependencies
+#         )
+#         await self.project_repo.resources.code_plan_and_change.save(
+#             filename=code_plan_and_change_filepath.with_suffix(".md").name,
+#             content=node.content,
+#             dependencies=dependencies,
+#         )
+
+#         return Message(
+#             content=code_plan_and_change,
+#             role=self.profile,
+#             cause_by=WriteCodePlanAndChange,
+#             send_to=self,
+#             sent_from=self,
+#         )
+
+#     async def _is_pass(self, summary) -> (str, str):
+#         rsp = await self.llm.aask(msg=IS_PASS_PROMPT.format(context=summary), stream=False)
+#         logger.info(rsp)
+#         if "YES" in rsp:
+#             return True, rsp
+#         return False, rsp
+
+#     async def _think(self) -> Action | None:
+#         if not self.src_workspace:
+#             self.src_workspace = self.git_repo.workdir / self.git_repo.workdir.name
+#         write_plan_and_change_filters = any_to_str_set([WriteTasks, FixBug])
+#         write_code_filters = any_to_str_set([WriteTasks, WriteCodePlanAndChange, SummarizeCode])
+#         summarize_code_filters = any_to_str_set([WriteCode, WriteCodeReview])
+#         if not self.rc.news:
+#             return None
+#         msg = self.rc.news[0]
+#         if self.config.inc and msg.cause_by in write_plan_and_change_filters:
+#             logger.debug(f"TODO WriteCodePlanAndChange:{msg.model_dump_json()}")
+#             await self._new_code_plan_and_change_action(cause_by=msg.cause_by)
+#             return self.rc.todo
+#         if msg.cause_by in write_code_filters:
+
+#             await self._new_code_actions()
+#             logger.debug(f"TASK : {self.rc.todo}")
+#             return self.rc.todo
+#         if msg.cause_by in summarize_code_filters and msg.sent_from == any_to_str(self):
+#             logger.debug(f"TODO SummarizeCode:{msg.model_dump_json()}")
+#             await self._new_summarize_actions()
+#             return self.rc.todo
+#         return None
+
+#     async def _new_coding_context(self, filename, dependency) -> CodingContext:
+#         old_code_doc = await self.project_repo.srcs.get(filename)
+#         if not old_code_doc:
+#             old_code_doc = Document(root_path=str(self.project_repo.src_relative_path), filename=filename, content="")
+#         dependencies = {Path(i) for i in await dependency.get(old_code_doc.root_relative_path)}
+#         task_doc = None
+#         design_doc = None
+#         code_plan_and_change_doc = await self._get_any_code_plan_and_change() if await self._is_fixbug() else None
+#         for i in dependencies:
+#             if str(i.parent.as_posix()) == TASK_FILE_REPO:
+#                 task_doc = await self.project_repo.docs.task.get(i.name)
+#             elif str(i.parent.as_posix()) == SYSTEM_DESIGN_FILE_REPO:
+#                 design_doc = await self.project_repo.docs.system_design.get(i.name)
+#             elif str(i.parent.as_posix()) == CODE_PLAN_AND_CHANGE_FILE_REPO:
+#                 code_plan_and_change_doc = await self.project_repo.docs.code_plan_and_change.get(i.name)
+#         if not task_doc or not design_doc:
+#             logger.error(f'Detected source code "{filename}" from an unknown origin.')
+#             raise ValueError(f'Detected source code "{filename}" from an unknown origin.')
+#         context = CodingContext(
+#             filename=filename,
+#             design_doc=design_doc,
+#             task_doc=task_doc,
+#             code_doc=old_code_doc,
+#             code_plan_and_change_doc=code_plan_and_change_doc,
+#         )
+#         return context
+
+#     async def _new_coding_doc(self, filename, dependency):
+#         context = await self._new_coding_context(filename, dependency)
+#         coding_doc = Document(
+#             root_path=str(self.project_repo.src_relative_path), filename=filename, content=context.model_dump_json()
+#         )
+#         return coding_doc
+
+#     async def _new_code_actions(self):
+#         bug_fix = await self._is_fixbug()
+#         # Prepare file repos
+#         changed_src_files = self.project_repo.srcs.all_files if bug_fix else self.project_repo.srcs.changed_files
+#         changed_task_files = self.project_repo.docs.task.changed_files
+#         changed_files = Documents()
+#         # Recode caused by upstream changes.
+#         for filename in changed_task_files:
+#             design_doc = await self.project_repo.docs.system_design.get(filename)
+#             task_doc = await self.project_repo.docs.task.get(filename)
+#             code_plan_and_change_doc = await self.project_repo.docs.code_plan_and_change.get(filename)
+#             task_list = self._parse_tasks(task_doc)
+#             logger.info(f"SHOW TASK DOC : {task_doc}")
+#             logger.info(f"SHOW DESIGN DOC : {design_doc}")
+#             logger.info(f"SHOW CODE PLAN : {code_plan_and_change_doc}")
+#             logger.info(f"SHOW TASK LIST : {task_list}")
+#             for task_filename in task_list:
+#                 old_code_doc = await self.project_repo.srcs.get(task_filename)
+#                 if not old_code_doc:
+#                     old_code_doc = Document(
+#                         root_path=str(self.project_repo.src_relative_path), filename=task_filename, content=""
+#                     )
+#                 if not code_plan_and_change_doc:
+#                     context = CodingContext(
+#                         filename=task_filename, design_doc=design_doc, task_doc=task_doc, code_doc=old_code_doc
+#                     )
+#                 else:
+#                     context = CodingContext(
+#                         filename=task_filename,
+#                         design_doc=design_doc,
+#                         task_doc=task_doc,
+#                         code_doc=old_code_doc,
+#                         code_plan_and_change_doc=code_plan_and_change_doc,
+#                     )
+#                 coding_doc = Document(
+#                     root_path=str(self.project_repo.src_relative_path),
+#                     filename=task_filename,
+#                     content=context.model_dump_json(),
+#                 )
+#                 if task_filename in changed_files.docs:
+#                     logger.warning(
+#                         f"Log to expose potential conflicts: {coding_doc.model_dump_json()} & "
+#                         f"{changed_files.docs[task_filename].model_dump_json()}"
+#                     )
+#                 changed_files.docs[task_filename] = coding_doc
+#         self.code_todos = [
+#             WriteCode(i_context=i, context=self.context, llm=self.llm) for i in changed_files.docs.values()
+#         ]
+#         # Code directly modified by the user.
+#         dependency = await self.git_repo.get_dependency()
+#         for filename in changed_src_files:
+#             if filename in changed_files.docs:
+#                 continue
+#             coding_doc = await self._new_coding_doc(filename=filename, dependency=dependency)
+#             changed_files.docs[filename] = coding_doc
+#             self.code_todos.append(WriteCode(i_context=coding_doc, context=self.context, llm=self.llm))
+
+#         if self.code_todos:
+#             self.set_todo(self.code_todos[0])
+
+#     async def _new_summarize_actions(self):
+#         src_files = self.project_repo.srcs.all_files
+#         # Generate a SummarizeCode action for each pair of (system_design_doc, task_doc).
+#         summarizations = defaultdict(list)
+#         for filename in src_files:
+#             dependencies = await self.project_repo.srcs.get_dependency(filename=filename)
+#             ctx = CodeSummarizeContext.loads(filenames=list(dependencies))
+#             summarizations[ctx].append(filename)
+#         for ctx, filenames in summarizations.items():
+#             ctx.codes_filenames = filenames
+#             new_summarize = SummarizeCode(i_context=ctx, context=self.context, llm=self.llm)
+#             for i, act in enumerate(self.summarize_todos):
+#                 if act.i_context.task_filename == new_summarize.i_context.task_filename:
+#                     self.summarize_todos[i] = new_summarize
+#                     new_summarize = None
+#                     break
+#             if new_summarize:
+#                 self.summarize_todos.append(new_summarize)
+#         if self.summarize_todos:
+#             self.set_todo(self.summarize_todos[0])
+#             self.summarize_todos.pop(0)
+
+#     async def _new_code_plan_and_change_action(self, cause_by: str):
+#         """Create a WriteCodePlanAndChange action for subsequent to-do actions."""
+#         files = self.project_repo.all_files
+#         options = {}
+#         if cause_by != any_to_str(FixBug):
+#             requirement_doc = await self.project_repo.docs.get(REQUIREMENT_FILENAME)
+#             options["requirement"] = requirement_doc.content
+#         else:
+#             fixbug_doc = await self.project_repo.docs.get(BUGFIX_FILENAME)
+#             options["issue"] = fixbug_doc.content
+#         code_plan_and_change_ctx = CodePlanAndChangeContext.loads(files, **options)
+#         self.rc.todo = WriteCodePlanAndChange(i_context=code_plan_and_change_ctx, context=self.context, llm=self.llm)
+
+#     @property
+#     def action_description(self) -> str:
+#         """AgentStore uses this attribute to display to the user what actions the current role should take."""
+#         return self.next_todo_action
+
+#     async def _is_fixbug(self) -> bool:
+#         fixbug_doc = await self.project_repo.docs.get(BUGFIX_FILENAME)
+#         return bool(fixbug_doc and fixbug_doc.content)
+
+#     async def _get_any_code_plan_and_change(self) -> Optional[Document]:
+#         changed_files = self.project_repo.docs.code_plan_and_change.changed_files
+#         for filename in changed_files.keys():
+#             doc = await self.project_repo.docs.code_plan_and_change.get(filename)
+#             if doc and doc.content:
+#                 return doc
+#         return None
+
+# class Engineer(Role):
+#     """
+#     Represents an Engineer role responsible for writing and possibly reviewing code.
+#     Can distribute tasks among multiple engineers working in parallel.
+
+#     Attributes:
+#         name (str): Name of the engineer.
+#         profile (str): Role profile, default is 'Engineer'.
+#         goal (str): Goal of the engineer.
+#         constraints (str): Constraints for the engineer.
+#         n_engineers (int): Number of engineers to distribute tasks among.
+#         use_code_review (bool): Whether to use code review.
+#     """
+
+#     name: str = "Alex"
+#     profile: str = "Engineer"
+#     goal: str = "write elegant, readable, extensible, efficient code"
+#     constraints: str = (
+#         "the code should conform to standards like google-style and be modular and maintainable. "
+#         "Use same language as user requirement"
+#     )
+#     n_engineers: int = 1  # Default to 1 engineer
+#     use_code_review: bool = False
+#     code_todos: list = []
+#     summarize_todos: list = []
+#     next_todo_action: str = ""
+#     n_summarize: int = 0
+
+#     def __init__(self, **kwargs) -> None:
+#         super().__init__(**kwargs)
+        
+#         # Set n_engineers if provided in kwargs
+#         if 'n_engineers' in kwargs:
+#             self.n_engineers = kwargs['n_engineers']
+            
+#         self.set_actions([WriteCode])
+#         self._watch([WriteTasks, SummarizeCode, WriteCode, WriteCodeReview, FixBug, WriteCodePlanAndChange])
+#         self.code_todos = []
+#         self.summarize_todos = []
+#         self.next_todo_action = any_to_name(WriteCode)
+
+#     @staticmethod
+#     def _parse_tasks(task_msg: Document) -> list[str]:
+#         m = json.loads(task_msg.content)
+#         return m.get(TASK_LIST.key) or m.get(REFINED_TASK_LIST.key)
+
+#     def _distribute_tasks(self, tasks):
+#         """Distribute a list of tasks evenly among multiple engineers."""
+#         if not tasks:
+#             return []
+            
+#         if self.n_engineers <= 1:
+#             return [tasks]  # Return all tasks for one engineer
+            
+#         # Distribute tasks evenly
+#         result = [[] for _ in range(self.n_engineers)]
+#         for i, task in enumerate(tasks):
+#             result[i % self.n_engineers].append(task)
+#         logger.info(f"Distributed Task : {result}")
+#         return result
+
+#     async def _process_engineer_tasks(self, todos, engineer_idx, review=False) -> Set[str]:
+#         """Process a list of todos by a single engineer."""
+#         changed_files = set()
+#         for todo in todos:
+#             coding_context = await todo.run()
+            
+#             # Code review if enabled
+#             if review:
+#                 action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
+#                 self._init_action(action)
+#                 coding_context = await action.run()
+            
+#             dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
+#             if self.config.inc:
+#                 dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
+            
+#             await self.project_repo.srcs.save(
+#                 filename=coding_context.filename,
+#                 dependencies=list(dependencies),
+#                 content=coding_context.code_doc.content,
+#             )
+            
+#             eng_name = f"{self.profile} {engineer_idx+1}" if engineer_idx > 0 else self.profile
+#             msg = Message(
+#                 content=coding_context.model_dump_json(),
+#                 instruct_content=coding_context,
+#                 role=eng_name,  # Add engineer number to role name for clarity
+#                 cause_by=WriteCode,
+#             )
+#             self.rc.memory.add(msg)
+            
+#             changed_files.add(coding_context.code_doc.filename)
+        
+#         return changed_files
+
+#     # this manage the engineer to write the code
+#     async def _act_sp_with_cr(self, review=False) -> Set[str]:
+#         changed_files = set()
+#         logger.debug(f"CODE _ TODO : {self.code_todos}")
+        
+#         if not self.code_todos:
+#             logger.info("No code todos to process.")
+#             return changed_files
+        
+#         # If only one engineer or one task, process sequentially
+#         if self.n_engineers <= 1 or len(self.code_todos) <= 1:
+#             for todo in self.code_todos:
+#                 # Original sequential code
+#                 coding_context = await todo.run()
+#                 if review:
+#                     action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
+#                     self._init_action(action)
+#                     coding_context = await action.run()
+
+#                 dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
+#                 if self.config.inc:
+#                     dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
+#                 await self.project_repo.srcs.save(
+#                     filename=coding_context.filename,
+#                     dependencies=list(dependencies),
+#                     content=coding_context.code_doc.content,
+#                 )
+#                 msg = Message(
+#                     content=coding_context.model_dump_json(),
+#                     instruct_content=coding_context,
+#                     role=self.profile,
+#                     cause_by=WriteCode,
+#                 )
+#                 self.rc.memory.add(msg)
+#                 changed_files.add(coding_context.code_doc.filename)
+#         else:
+#             # Distribute tasks among engineers for parallel processing
+#             todo_chunks = self._distribute_tasks(self.code_todos)
+#             logger.info(f"to do CHunks : {todo_chunks}")
+#             # Create a list of tasks for each engineer
+#             engineer_tasks = []
+#             for eng_idx, todos in enumerate(todo_chunks):
+#                 if not todos:
+#                     continue
+#                 engineer_tasks.append(self._process_engineer_tasks(todos, eng_idx, review))
+            
+#             # Wait for all engineers to complete their tasks
+#             results = await asyncio.gather(*engineer_tasks)
+#             logger.info(f"Engineer task : {engineer_tasks}")
+#             # Collect all changed files
+#             for result in results:
+#                 changed_files.update(result)
+        
+#         if not changed_files:
+#             logger.info("Nothing has changed.")
+#         return changed_files
+
+#     async def _act(self) -> Message | None:
+#         """Determines the mode of action based on whether code review is used."""
+#         if self.rc.todo is None:
+#             return None
+#         if isinstance(self.rc.todo, WriteCodePlanAndChange):
+#             self.next_todo_action = any_to_name(WriteCode)
+#             return await self._act_code_plan_and_change()
+#         if isinstance(self.rc.todo, WriteCode):
+#             self.next_todo_action = any_to_name(SummarizeCode)
+#             logger.debug(f"CODE REVIEW : {self.use_code_review}")
+#             return await self._act_write_code()
+#         if isinstance(self.rc.todo, SummarizeCode):
+#             self.next_todo_action = any_to_name(WriteCode)
+#             return await self._act_summarize()
+#         return None
+
+#     async def _act_write_code(self):
+#         changed_files = await self._act_sp_with_cr(review=self.use_code_review)
+#         return Message(
+#             content="\n".join(changed_files),
+#             role=self.profile,
+#             cause_by=WriteCodeReview if self.use_code_review else WriteCode,
+#             send_to=self,
+#             sent_from=self,
+#         )
+
+#     async def _act_summarize(self):
+#         tasks = []
+#         for todo in self.summarize_todos:
+#             summary = await todo.run()
+#             summary_filename = Path(todo.i_context.design_filename).with_suffix(".md").name
+#             dependencies = {todo.i_context.design_filename, todo.i_context.task_filename}
+#             for filename in todo.i_context.codes_filenames:
+#                 rpath = self.project_repo.src_relative_path / filename
+#                 dependencies.add(str(rpath))
+#             await self.project_repo.resources.code_summary.save(
+#                 filename=summary_filename, content=summary, dependencies=dependencies
+#             )
+#             is_pass, reason = await self._is_pass(summary)
+#             if not is_pass:
+#                 todo.i_context.reason = reason
+#                 tasks.append(todo.i_context.model_dump())
+
+#                 await self.project_repo.docs.code_summary.save(
+#                     filename=Path(todo.i_context.design_filename).name,
+#                     content=todo.i_context.model_dump_json(),
+#                     dependencies=dependencies,
+#                 )
+#             else:
+#                 await self.project_repo.docs.code_summary.delete(filename=Path(todo.i_context.design_filename).name)
+
+#         logger.info(f"--max-auto-summarize-code={self.config.max_auto_summarize_code}")
+#         if not tasks or self.config.max_auto_summarize_code == 0:
+#             return Message(
+#                 content="",
+#                 role=self.profile,
+#                 cause_by=SummarizeCode,
+#                 sent_from=self,
+#                 send_to="Edward",  # The name of QaEngineer
+#             )
+#         # The maximum number of times the 'SummarizeCode' action is automatically invoked, with -1 indicating unlimited.
+#         # This parameter is used for debugging the workflow.
+#         self.n_summarize += 1 if self.config.max_auto_summarize_code > self.n_summarize else 0
+#         return Message(
+#             content=json.dumps(tasks), role=self.profile, cause_by=SummarizeCode, send_to=self, sent_from=self
+#         )
+
+#     async def _act_code_plan_and_change(self):
+#         """Write code plan and change that guides subsequent WriteCode and WriteCodeReview"""
+#         node = await self.rc.todo.run()
+#         code_plan_and_change = node.instruct_content.model_dump_json()
+#         dependencies = {
+#             REQUIREMENT_FILENAME,
+#             str(self.project_repo.docs.prd.root_path / self.rc.todo.i_context.prd_filename),
+#             str(self.project_repo.docs.system_design.root_path / self.rc.todo.i_context.design_filename),
+#             str(self.project_repo.docs.task.root_path / self.rc.todo.i_context.task_filename),
+#         }
+#         code_plan_and_change_filepath = Path(self.rc.todo.i_context.design_filename)
+#         await self.project_repo.docs.code_plan_and_change.save(
+#             filename=code_plan_and_change_filepath.name, content=code_plan_and_change, dependencies=dependencies
+#         )
+#         await self.project_repo.resources.code_plan_and_change.save(
+#             filename=code_plan_and_change_filepath.with_suffix(".md").name,
+#             content=node.content,
+#             dependencies=dependencies,
+#         )
+
+#         return Message(
+#             content=code_plan_and_change,
+#             role=self.profile,
+#             cause_by=WriteCodePlanAndChange,
+#             send_to=self,
+#             sent_from=self,
+#         )
+
+#     async def _is_pass(self, summary) -> (str, str):
+#         rsp = await self.llm.aask(msg=IS_PASS_PROMPT.format(context=summary), stream=False)
+#         logger.info(rsp)
+#         if "YES" in rsp:
+#             return True, rsp
+#         return False, rsp
+
+#     async def _think(self) -> Action | None:
+#         if not self.src_workspace:
+#             self.src_workspace = self.git_repo.workdir / self.git_repo.workdir.name
+#         write_plan_and_change_filters = any_to_str_set([WriteTasks, FixBug])
+#         write_code_filters = any_to_str_set([WriteTasks, WriteCodePlanAndChange, SummarizeCode])
+#         summarize_code_filters = any_to_str_set([WriteCode, WriteCodeReview])
+#         if not self.rc.news:
+#             return None
+#         msg = self.rc.news[0]
+#         if self.config.inc and msg.cause_by in write_plan_and_change_filters:
+#             logger.debug(f"TODO WriteCodePlanAndChange:{msg.model_dump_json()}")
+#             await self._new_code_plan_and_change_action(cause_by=msg.cause_by)
+#             return self.rc.todo
+#         if msg.cause_by in write_code_filters:
+
+#             await self._new_code_actions()
+#             logger.debug(f"TASK : {self.rc.todo}")
+#             return self.rc.todo
+#         if msg.cause_by in summarize_code_filters and msg.sent_from == any_to_str(self):
+#             logger.debug(f"TODO SummarizeCode:{msg.model_dump_json()}")
+#             await self._new_summarize_actions()
+#             return self.rc.todo
+#         return None
+
+#     async def _new_coding_context(self, filename, dependency) -> CodingContext:
+#         old_code_doc = await self.project_repo.srcs.get(filename)
+#         if not old_code_doc:
+#             old_code_doc = Document(root_path=str(self.project_repo.src_relative_path), filename=filename, content="")
+#         dependencies = {Path(i) for i in await dependency.get(old_code_doc.root_relative_path)}
+#         task_doc = None
+#         design_doc = None
+#         code_plan_and_change_doc = await self._get_any_code_plan_and_change() if await self._is_fixbug() else None
+#         for i in dependencies:
+#             if str(i.parent.as_posix()) == TASK_FILE_REPO:
+#                 task_doc = await self.project_repo.docs.task.get(i.name)
+#             elif str(i.parent.as_posix()) == SYSTEM_DESIGN_FILE_REPO:
+#                 design_doc = await self.project_repo.docs.system_design.get(i.name)
+#             elif str(i.parent.as_posix()) == CODE_PLAN_AND_CHANGE_FILE_REPO:
+#                 code_plan_and_change_doc = await self.project_repo.docs.code_plan_and_change.get(i.name)
+#         if not task_doc or not design_doc:
+#             logger.error(f'Detected source code "{filename}" from an unknown origin.')
+#             raise ValueError(f'Detected source code "{filename}" from an unknown origin.')
+#         context = CodingContext(
+#             filename=filename,
+#             design_doc=design_doc,
+#             task_doc=task_doc,
+#             code_doc=old_code_doc,
+#             code_plan_and_change_doc=code_plan_and_change_doc,
+#         )
+#         return context
+
+#     async def _new_coding_doc(self, filename, dependency):
+#         context = await self._new_coding_context(filename, dependency)
+#         coding_doc = Document(
+#             root_path=str(self.project_repo.src_relative_path), filename=filename, content=context.model_dump_json()
+#         )
+#         return coding_doc
+
+#     async def _new_code_actions(self):
+#         bug_fix = await self._is_fixbug()
+#         # Prepare file repos
+#         changed_src_files = self.project_repo.srcs.all_files if bug_fix else self.project_repo.srcs.changed_files
+#         changed_task_files = self.project_repo.docs.task.changed_files
+#         changed_files = Documents()
+#         # Recode caused by upstream changes.
+#         for filename in changed_task_files:
+#             design_doc = await self.project_repo.docs.system_design.get(filename)
+#             task_doc = await self.project_repo.docs.task.get(filename)
+#             code_plan_and_change_doc = await self.project_repo.docs.code_plan_and_change.get(filename)
+#             task_list = self._parse_tasks(task_doc)
+#             logger.info(f"SHOW TASK DOC : {task_doc}")
+#             logger.info(f"SHOW DESIGN DOC : {design_doc}")
+#             logger.info(f"SHOW CODE PLAN : {code_plan_and_change_doc}")
+#             logger.info(f"SHOW TASK LIST : {task_list}")
+#             for task_filename in task_list:
+#                 old_code_doc = await self.project_repo.srcs.get(task_filename)
+#                 if not old_code_doc:
+#                     old_code_doc = Document(
+#                         root_path=str(self.project_repo.src_relative_path), filename=task_filename, content=""
+#                     )
+#                 if not code_plan_and_change_doc:
+#                     context = CodingContext(
+#                         filename=task_filename, design_doc=design_doc, task_doc=task_doc, code_doc=old_code_doc
+#                     )
+#                 else:
+#                     context = CodingContext(
+#                         filename=task_filename,
+#                         design_doc=design_doc,
+#                         task_doc=task_doc,
+#                         code_doc=old_code_doc,
+#                         code_plan_and_change_doc=code_plan_and_change_doc,
+#                     )
+#                 coding_doc = Document(
+#                     root_path=str(self.project_repo.src_relative_path),
+#                     filename=task_filename,
+#                     content=context.model_dump_json(),
+#                 )
+#                 if task_filename in changed_files.docs:
+#                     logger.warning(
+#                         f"Log to expose potential conflicts: {coding_doc.model_dump_json()} & "
+#                         f"{changed_files.docs[task_filename].model_dump_json()}"
+#                     )
+#                 changed_files.docs[task_filename] = coding_doc
+#         self.code_todos = [
+#             WriteCode(i_context=i, context=self.context, llm=self.llm) for i in changed_files.docs.values()
+#         ]
+#         # Code directly modified by the user.
+#         dependency = await self.git_repo.get_dependency()
+#         for filename in changed_src_files:
+#             if filename in changed_files.docs:
+#                 continue
+#             coding_doc = await self._new_coding_doc(filename=filename, dependency=dependency)
+#             changed_files.docs[filename] = coding_doc
+#             self.code_todos.append(WriteCode(i_context=coding_doc, context=self.context, llm=self.llm))
+
+#         if self.code_todos:
+#             self.set_todo(self.code_todos[0])
+
+#     async def _new_summarize_actions(self):
+#         src_files = self.project_repo.srcs.all_files
+#         # Generate a SummarizeCode action for each pair of (system_design_doc, task_doc).
+#         summarizations = defaultdict(list)
+#         for filename in src_files:
+#             dependencies = await self.project_repo.srcs.get_dependency(filename=filename)
+#             ctx = CodeSummarizeContext.loads(filenames=list(dependencies))
+#             summarizations[ctx].append(filename)
+#         for ctx, filenames in summarizations.items():
+#             ctx.codes_filenames = filenames
+#             new_summarize = SummarizeCode(i_context=ctx, context=self.context, llm=self.llm)
+#             for i, act in enumerate(self.summarize_todos):
+#                 if act.i_context.task_filename == new_summarize.i_context.task_filename:
+#                     self.summarize_todos[i] = new_summarize
+#                     new_summarize = None
+#                     break
+#             if new_summarize:
+#                 self.summarize_todos.append(new_summarize)
+#         if self.summarize_todos:
+#             self.set_todo(self.summarize_todos[0])
+#             self.summarize_todos.pop(0)
+
+#     async def _new_code_plan_and_change_action(self, cause_by: str):
+#         """Create a WriteCodePlanAndChange action for subsequent to-do actions."""
+#         files = self.project_repo.all_files
+#         options = {}
+#         if cause_by != any_to_str(FixBug):
+#             requirement_doc = await self.project_repo.docs.get(REQUIREMENT_FILENAME)
+#             options["requirement"] = requirement_doc.content
+#         else:
+#             fixbug_doc = await self.project_repo.docs.get(BUGFIX_FILENAME)
+#             options["issue"] = fixbug_doc.content
+#         code_plan_and_change_ctx = CodePlanAndChangeContext.loads(files, **options)
+#         self.rc.todo = WriteCodePlanAndChange(i_context=code_plan_and_change_ctx, context=self.context, llm=self.llm)
+
+#     @property
+#     def action_description(self) -> str:
+#         """AgentStore uses this attribute to display to the user what actions the current role should take."""
+#         return self.next_todo_action
+
+#     async def _is_fixbug(self) -> bool:
+#         fixbug_doc = await self.project_repo.docs.get(BUGFIX_FILENAME)
+#         return bool(fixbug_doc and fixbug_doc.content)
+
+#     async def _get_any_code_plan_and_change(self) -> Optional[Document]:
+#         changed_files = self.project_repo.docs.code_plan_and_change.changed_files
+#         for filename in changed_files.keys():
+#             doc = await self.project_repo.docs.code_plan_and_change.get(filename)
+#             if doc and doc.content:
+#                 return doc
+#         return None
+
+class ExpertiseLevel:
+# Define expertise levels for engineersclass ExpertiseLevel:
+    JUNIOR = "junior"
+    MID = "mid"
+    SENIOR = "senior"
+    
+    # Task complexity threshold for each level
+    COMPLEXITY_THRESHOLDS = {
+        JUNIOR: 3,  # Junior engineers can handle tasks with complexity up to 3
+        MID: 7,     # Mid-level engineers can handle tasks with complexity up to 7
+        SENIOR: 10  # Senior engineers can handle any task complexity
+    }
+
+# Define an engineer profile class to encapsulate engineer details
+class EngineerProfile:
+    def __init__(self, name: str, expertise: str = ExpertiseLevel.MID):
+        self.name = name
+        # Validate and set expertise level
+        if expertise not in [ExpertiseLevel.JUNIOR, ExpertiseLevel.MID, ExpertiseLevel.SENIOR]:
+            logger.warning(f"Unknown expertise level: {expertise}. Defaulting to {ExpertiseLevel.MID}")
+            self.expertise = ExpertiseLevel.MID
+        else:
+            self.expertise = expertise
+        
+        # Add an LLM instance specific to this engineer
+        self.llm = None
+
+    def __str__(self):
+        return f"{self.name} ({self.expertise})"
+
 class Engineer(Role):
     """
     Represents an Engineer role responsible for writing and possibly reviewing code.
+    Can distribute tasks among multiple engineers working in parallel, with different expertise levels.
 
     Attributes:
-        name (str): Name of the engineer.
+        name (str): Primary name of the engineering team lead.
         profile (str): Role profile, default is 'Engineer'.
         goal (str): Goal of the engineer.
         constraints (str): Constraints for the engineer.
-        n_borg (int): Number of borgs.
+        engineers (List[EngineerProfile]): List of engineer profiles to distribute tasks among.
         use_code_review (bool): Whether to use code review.
     """
 
-    name: str = "Alex"
+    name: str = "Eng"
     profile: str = "Engineer"
     goal: str = "write elegant, readable, extensible, efficient code"
     constraints: str = (
         "the code should conform to standards like google-style and be modular and maintainable. "
         "Use same language as user requirement"
     )
-    n_borg: int = 1
+    engineers: List[EngineerProfile] = []  # List of engineer profiles
     use_code_review: bool = False
     code_todos: list = []
     summarize_todos: list = []
     next_todo_action: str = ""
     n_summarize: int = 0
+    n_engineers : int = 1
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
-
+        
+        # Initialize engineers
+        self._initialize_engineers(**kwargs)
+        
+        # Initialize LLM for each engineer
+        self._initialize_engineer_llms()
+            
         self.set_actions([WriteCode])
         self._watch([WriteTasks, SummarizeCode, WriteCode, WriteCodeReview, FixBug, WriteCodePlanAndChange])
         self.code_todos = []
         self.summarize_todos = []
         self.next_todo_action = any_to_name(WriteCode)
+    
+    def _initialize_engineers(self, **kwargs):
+        """Initialize the list of engineers based on parameters."""
+        # If engineers are provided directly
+        if "engineers" in kwargs and isinstance(kwargs["engineers"], list):
+            for eng in kwargs["engineers"]:
+                if isinstance(eng, EngineerProfile):
+                    self.engineers.append(eng)
+                elif isinstance(eng, dict) and "name" in eng:
+                    expertise = eng.get("expertise", ExpertiseLevel.MID)
+                    self.engineers.append(EngineerProfile(eng["name"], expertise))
+                elif isinstance(eng, str):
+                    # If just a name is provided, default to mid-level
+                    self.engineers.append(EngineerProfile(eng))
+        
+        # If engineer_names is provided
+        elif "engineer_names" in kwargs and isinstance(kwargs["engineer_names"], list):
+            engineer_expertises = kwargs.get("engineer_expertises", [])
+            for i, name in enumerate(kwargs["engineer_names"]):
+                expertise = engineer_expertises[i] if i < len(engineer_expertises) else ExpertiseLevel.MID
+                self.engineers.append(EngineerProfile(name, expertise))
+        
+        # If n_engineers is provided without names
+        elif "n_engineers" in kwargs and isinstance(kwargs["n_engineers"], int) and kwargs["n_engineers"] > 0:
+            for i in range(kwargs["n_engineers"]):
+                # Create default engineer profiles
+                name = f"{self.name}_{i+1}" if i > 0 else self.name
+                # Distribute expertise - more senior engineers for smaller teams
+                if kwargs["n_engineers"] <= 3:
+                    expertise = [ExpertiseLevel.SENIOR, ExpertiseLevel.MID, ExpertiseLevel.JUNIOR][min(i, 2)]
+                else:
+                    # For larger teams, create a mix with more mid-level engineers
+                    if i == 0:
+                        expertise = ExpertiseLevel.SENIOR  # Team lead is senior
+                    elif i < kwargs["n_engineers"] // 3:
+                        expertise = ExpertiseLevel.SENIOR
+                    elif i < kwargs["n_engineers"] * 2 // 3:
+                        expertise = ExpertiseLevel.MID
+                    else:
+                        expertise = ExpertiseLevel.JUNIOR
+                
+                self.engineers.append(EngineerProfile(name, expertise))
+        
+        # Default case - just one engineer (the team lead)
+        if not self.engineers:
+            self.engineers = [EngineerProfile(self.name, ExpertiseLevel.SENIOR)]
+        
+        logger.info(f"Engineering team initialized with {len(self.engineers)} engineers:")
+        for eng in self.engineers:
+            logger.info(f"  - {eng}")
+
+    def _initialize_engineer_llms(self):
+        """Initialize a separate LLM instance for each engineer with appropriate system prompt."""
+        for engineer in self.engineers:
+            # Create a new LLM instance by cloning the main one
+            config_copy = self.config.copy()
+            
+            # You might want to modify the config here if needed for different engineers
+            # For example, junior engineers might use gpt-3.5-turbo while senior engineers use gpt-4
+            if engineer.expertise == ExpertiseLevel.JUNIOR:
+                # Optionally use a different model for junior engineers
+                pass
+            elif engineer.expertise == ExpertiseLevel.SENIOR:
+                # Optionally use a different model for senior engineers
+                pass
+            
+            # Create a new LLM instance based on the main one
+            from metagpt.provider.llm_provider_registry import create_llm_instance
+            engineer.llm = create_llm_instance(config_copy.llm)
+            
+            # Set the cost manager to be the same as the team's
+            engineer.llm.cost_manager = self.llm.cost_manager
+            
+            # Set a tailored system prompt for each engineer based on their expertise
+            coding_style = {
+                ExpertiseLevel.JUNIOR: "Focus on readable, well-commented code. Favor clarity over optimization.",
+                ExpertiseLevel.MID: "Balance readability with efficiency. Use established patterns and optimize common cases.",
+                ExpertiseLevel.SENIOR: "Write elegant, optimized code. Consider edge cases, performance, and maintainability."
+            }
+            
+            engineer_prompt = (
+                f"You are Engineer {engineer.name}, a {engineer.expertise}-level software developer. "
+                f"Your goal is to write elegant, readable, extensible, efficient code. "
+                f"{coding_style[engineer.expertise]} "
+                f"The code should conform to standards like google-style and be modular and maintainable. "
+                f"Use the same language as the user requirement."
+            )
+            
+            engineer.llm.system_prompt = engineer_prompt
+            logger.info(f"Initialized LLM for engineer {engineer.name} with expertise {engineer.expertise}")
 
     @staticmethod
     def _parse_tasks(task_msg: Document) -> list[str]:
         m = json.loads(task_msg.content)
         return m.get(TASK_LIST.key) or m.get(REFINED_TASK_LIST.key)
+    
+    def _estimate_task_complexity(self, task_filename: str, task_content: Optional[str] = None) -> int:
+        """
+        Estimate the complexity of a task based on filename and content.
+        Returns a complexity score from 1-10.
+        
+        This is a simplistic implementation - in a real-world scenario, 
+        you might want to use LLM to analyze the file and determine complexity.
+        """
+        complexity = 5  # Default mid-level complexity
+        
+        # Simple complexity rules based on file extensions and names
+        if task_filename.endswith(('.txt', '.md', '.css', '.html')):
+            complexity = 3  # Simple files
+        elif "main" in task_filename or "app" in task_filename:
+            complexity = 8  # Main application files - higher complexity
+        elif "test" in task_filename:
+            complexity = 4  # Test files - medium-low complexity
+        elif "util" in task_filename:
+            complexity = 5  # Utility files - medium complexity
+        elif "model" in task_filename or "service" in task_filename:
+            complexity = 7  # Model/service files - higher complexity
+        
+        # Adjust based on file extension
+        if task_filename.endswith('.py'):
+            complexity += 0  # Neutral for Python
+        elif task_filename.endswith('.js'):
+            complexity += 1  # Slightly higher for JavaScript
+        elif task_filename.endswith('.java'):
+            complexity += 2  # Higher for Java
+        
+        # Ensure complexity stays within 1-10 range
+        return max(1, min(10, complexity))
 
+    def _assign_tasks_by_expertise(self, tasks: list) -> Dict[EngineerProfile, list]:
+        """
+        Distribute tasks based on engineer expertise levels.
+        Returns a dictionary mapping engineers to their assigned tasks.
+        """
+        if not tasks:
+            return {}
+            
+        # If only one engineer, they get all tasks
+        if len(self.engineers) == 1:
+            return {self.engineers[0]: tasks}
+        
+        # Estimate complexity for each task
+        task_complexities = [(task, self._estimate_task_complexity(task)) for task in tasks]
+        
+        # Sort tasks by complexity (highest to lowest)
+        task_complexities.sort(key=lambda x: x[1], reverse=True)
+        
+        # Group engineers by expertise level
+        senior_engineers = [eng for eng in self.engineers if eng.expertise == ExpertiseLevel.SENIOR]
+        mid_engineers = [eng for eng in self.engineers if eng.expertise == ExpertiseLevel.MID]
+        junior_engineers = [eng for eng in self.engineers if eng.expertise == ExpertiseLevel.JUNIOR]
+        
+        # Ensure we have at least one engineer available at each level
+        # If not, promote engineers from lower levels
+        if not senior_engineers and mid_engineers:
+            senior_engineers = [mid_engineers.pop(0)]
+        if not mid_engineers and junior_engineers:
+            mid_engineers = [junior_engineers.pop(0)]
+        
+        # Initialize task assignments
+        assignments = {eng: [] for eng in self.engineers}
+        
+        # Assign tasks by complexity
+        for task, complexity in task_complexities:
+            if complexity > ExpertiseLevel.COMPLEXITY_THRESHOLDS[ExpertiseLevel.MID]:
+                # High complexity - assign to senior engineers
+                if senior_engineers:
+                    # Find the senior engineer with the least tasks
+                    engineer = min(senior_engineers, key=lambda e: len(assignments[e]))
+                    assignments[engineer].append(task)
+                    continue
+            
+            if complexity > ExpertiseLevel.COMPLEXITY_THRESHOLDS[ExpertiseLevel.JUNIOR]:
+                # Medium complexity - try mid engineers first, then senior
+                available_engineers = mid_engineers + senior_engineers
+                if available_engineers:
+                    engineer = min(available_engineers, key=lambda e: len(assignments[e]))
+                    assignments[engineer].append(task)
+                    continue
+            
+            # Low complexity or no appropriate engineers available - assign to anyone
+            all_engineers = junior_engineers + mid_engineers + senior_engineers
+            engineer = min(all_engineers, key=lambda e: len(assignments[e]))
+            assignments[engineer].append(task)
+        
+        # Log task assignments
+        logger.info("Task assignments by expertise:")
+        for eng, eng_tasks in assignments.items():
+            if eng_tasks:
+                logger.info(f"  - {eng}: {eng_tasks}")
+        
+        return assignments
+
+    async def _process_engineer_tasks(self, todos, engineer: EngineerProfile, review=False) -> Set[str]:
+        """Process a list of todos by a single engineer, using the engineer's dedicated LLM."""
+        changed_files = set()
+        for todo in todos:
+            logger.info(f"Engineer {engineer.name} ({engineer.expertise}) working on: {todo.i_context.filename}")
+            
+            # Store the original LLM
+            original_llm = todo.llm
+            
+            # Replace with the engineer's LLM
+            todo.llm = engineer.llm
+            
+            # Run the task with the engineer's LLM
+            try:
+                coding_context = await todo.run()
+                
+                # Code review if enabled (using the main engineer's LLM)
+                if review:
+                    # Use the main LLM for code review
+                    action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
+                    self._init_action(action)
+                    coding_context = await action.run()
+                
+                dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
+                if self.config.inc:
+                    dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
+                
+                await self.project_repo.srcs.save(
+                    filename=coding_context.filename,
+                    dependencies=list(dependencies),
+                    content=coding_context.code_doc.content,
+                )
+                
+                # Use the engineer's name with their expertise level
+                eng_role = f"{engineer.name} ({engineer.expertise})"
+                msg = Message(
+                    content=coding_context.model_dump_json(),
+                    instruct_content=coding_context,
+                    role=eng_role,
+                    cause_by=WriteCode,
+                )
+                self.rc.memory.add(msg)
+                
+                changed_files.add(coding_context.code_doc.filename)
+            finally:
+                # Restore the original LLM
+                todo.llm = original_llm
+        
+        return changed_files
+
+    # This manages the engineers to write the code
     async def _act_sp_with_cr(self, review=False) -> Set[str]:
         changed_files = set()
-        for todo in self.code_todos:
-            """
-            # Select essential information from the historical data to reduce the length of the prompt (summarized from human experience):
-            1. All from Architect
-            2. All from ProjectManager
-            3. Do we need other codes (currently needed)?
-            TODO: The goal is not to need it. After clear task decomposition, based on the design idea, you should be able to write a single file without needing other codes. If you can't, it means you need a clearer definition. This is the key to writing longer code.
-            """
-            coding_context = await todo.run()
-            # Code review
-            if review:
-                action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
-                self._init_action(action)
-                coding_context = await action.run()
+        logger.debug(f"Processing {len(self.code_todos)} code tasks")
+        
+        if not self.code_todos:
+            logger.info("No code todos to process.")
+            return changed_files
+        
+        # If only one engineer or one task, process sequentially
+        if len(self.engineers) <= 1 or len(self.code_todos) <= 1:
+            engineer = self.engineers[0]
+            for todo in self.code_todos:
+                # Use the engineer's LLM
+                original_llm = todo.llm
+                todo.llm = engineer.llm
+                
+                try:
+                    # Run the task with the engineer's LLM
+                    coding_context = await todo.run()
+                    
+                    if review:
+                        action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
+                        self._init_action(action)
+                        coding_context = await action.run()
 
-            dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
-            if self.config.inc:
-                dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
-            await self.project_repo.srcs.save(
-                filename=coding_context.filename,
-                dependencies=list(dependencies),
-                content=coding_context.code_doc.content,
-            )
-            msg = Message(
-                content=coding_context.model_dump_json(),
-                instruct_content=coding_context,
-                role=self.profile,
-                cause_by=WriteCode,
-            )
-            self.rc.memory.add(msg)
-
-            changed_files.add(coding_context.code_doc.filename)
+                    dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
+                    if self.config.inc:
+                        dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
+                    await self.project_repo.srcs.save(
+                        filename=coding_context.filename,
+                        dependencies=list(dependencies),
+                        content=coding_context.code_doc.content,
+                    )
+                    msg = Message(
+                        content=coding_context.model_dump_json(),
+                        instruct_content=coding_context,
+                        role=f"{engineer.name} ({engineer.expertise})",
+                        cause_by=WriteCode,
+                    )
+                    self.rc.memory.add(msg)
+                    changed_files.add(coding_context.code_doc.filename)
+                finally:
+                    # Restore the original LLM
+                    todo.llm = original_llm
+        else:
+            # Get a list of all task filenames
+            task_filenames = [todo.i_context.filename for todo in self.code_todos]
+            
+            # Create a mapping from task filename to todo object
+            todo_map = {todo.i_context.filename: todo for todo in self.code_todos}
+            
+            # Assign tasks based on expertise
+            todo_assignments = self._assign_tasks_by_expertise(task_filenames)
+            
+            # Create a list of tasks for each engineer
+            engineer_tasks = []
+            for engineer, assigned_tasks in todo_assignments.items():
+                if not assigned_tasks:
+                    continue
+                # Convert task filenames back to todo objects
+                engineer_todos = [todo_map[task] for task in assigned_tasks]
+                engineer_tasks.append(self._process_engineer_tasks(engineer_todos, engineer, review))
+            
+            # Wait for all engineers to complete their tasks
+            results = await asyncio.gather(*engineer_tasks)
+            
+            # Collect all changed files
+            for result in results:
+                changed_files.update(result)
+        
         if not changed_files:
             logger.info("Nothing has changed.")
         return changed_files
@@ -146,6 +1239,7 @@ class Engineer(Role):
             return await self._act_code_plan_and_change()
         if isinstance(self.rc.todo, WriteCode):
             self.next_todo_action = any_to_name(SummarizeCode)
+            logger.debug(f"CODE REVIEW : {self.use_code_review}")
             return await self._act_write_code()
         if isinstance(self.rc.todo, SummarizeCode):
             self.next_todo_action = any_to_name(WriteCode)
@@ -252,8 +1346,8 @@ class Engineer(Role):
             await self._new_code_plan_and_change_action(cause_by=msg.cause_by)
             return self.rc.todo
         if msg.cause_by in write_code_filters:
-            logger.debug(f"TODO WriteCode:{msg.model_dump_json()}")
             await self._new_code_actions()
+            logger.debug(f"TASK : {self.rc.todo}")
             return self.rc.todo
         if msg.cause_by in summarize_code_filters and msg.sent_from == any_to_str(self):
             logger.debug(f"TODO SummarizeCode:{msg.model_dump_json()}")
@@ -307,6 +1401,8 @@ class Engineer(Role):
             task_doc = await self.project_repo.docs.task.get(filename)
             code_plan_and_change_doc = await self.project_repo.docs.code_plan_and_change.get(filename)
             task_list = self._parse_tasks(task_doc)
+            logger.info(f"Processing task file: {filename}")
+            logger.debug(f"Task list: {task_list}")
             for task_filename in task_list:
                 old_code_doc = await self.project_repo.srcs.get(task_filename)
                 if not old_code_doc:
@@ -332,8 +1428,7 @@ class Engineer(Role):
                 )
                 if task_filename in changed_files.docs:
                     logger.warning(
-                        f"Log to expose potential conflicts: {coding_doc.model_dump_json()} & "
-                        f"{changed_files.docs[task_filename].model_dump_json()}"
+                        f"Potential conflict detected for file: {task_filename}"
                     )
                 changed_files.docs[task_filename] = coding_doc
         self.code_todos = [
@@ -372,6 +1467,7 @@ class Engineer(Role):
         if self.summarize_todos:
             self.set_todo(self.summarize_todos[0])
             self.summarize_todos.pop(0)
+
 
     async def _new_code_plan_and_change_action(self, cause_by: str):
         """Create a WriteCodePlanAndChange action for subsequent to-do actions."""
