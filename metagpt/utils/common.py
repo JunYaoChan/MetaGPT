@@ -576,6 +576,7 @@ def write_json_file(json_file: str, data: list, encoding: str = None, indent: in
     folder_path = Path(json_file).parent
     if not folder_path.exists():
         folder_path.mkdir(parents=True, exist_ok=True)
+        # path = create_numbered_folder(path)
 
     with open(json_file, "w", encoding=encoding) as fout:
         json.dump(data, fout, ensure_ascii=False, indent=indent, default=to_jsonable_python)
@@ -599,6 +600,7 @@ def add_jsonl_file(jsonl_file: str, data: list[dict], encoding: str = None):
     folder_path = Path(jsonl_file).parent
     if not folder_path.exists():
         folder_path.mkdir(parents=True, exist_ok=True)
+        # path = create_numbered_folder(path)
 
     with open(jsonl_file, "a", encoding=encoding) as fout:
         for json_item in data:
@@ -872,6 +874,7 @@ def download_model(file_url: str, target_folder: Path) -> Path:
     file_path = target_folder.joinpath(f"{file_name}")
     if not file_path.exists():
         file_path.mkdir(parents=True, exist_ok=True)
+        # path = create_numbered_folder(path)
         try:
             response = requests.get(file_url, stream=True)
             response.raise_for_status()  # 检查请求是否成功
@@ -883,3 +886,31 @@ def download_model(file_url: str, target_folder: Path) -> Path:
         except requests.exceptions.HTTPError as err:
             logger.info(f"权重文件下载过程中发生错误: {err}")
     return file_path
+
+
+def create_numbered_folder(base_path: str | Path) -> Path:
+    """
+    Create a folder at the given path. If the folder already exists,
+    append a sequential number to the folder name (folder1, folder2, etc.).
+    
+    Args:
+        base_path: The base path for the folder to create
+        
+    Returns:
+        Path: The path to the created folder
+    """
+    base_path = Path(base_path)
+    
+    # If the folder doesn't exist, create it and return
+    if not base_path.exists():
+        base_path.mkdir(parents=True, exist_ok=True)
+        return base_path
+    
+    # If the folder exists, try adding sequential numbers
+    counter = 1
+    while True:
+        numbered_path = Path(f"{base_path}{counter}")
+        if not numbered_path.exists():
+            numbered_path.mkdir(parents=True)
+            return numbered_path
+        counter += 1

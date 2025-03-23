@@ -196,7 +196,7 @@ from metagpt.schema import Document, Message, MESSAGE_ROUTE_TO_ALL
 from metagpt.logs import logger
 from metagpt.utils.common import NoMoneyException
 
-class Flat(BaseModel):
+class Paradigm(BaseModel):
     """
     Flat Organization: All agents are peers and communicate directly with each other.
     No hierarchy, decisions made through consensus or voting.

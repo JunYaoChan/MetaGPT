@@ -9,7 +9,7 @@ import typer
 
 from metagpt.logs import logger
 from metagpt.const import CONFIG_ROOT
-import flat
+import paradigm as para
 import federation
 import holarchy
 from metagpt.roles.engineer import EngineerProfile, ExpertiseLevel
@@ -84,24 +84,26 @@ def generate_repo(
         #     agentops.end_session("Success")
     elif(paradigm == "Flat"):
         print("hello")
-        flat_org = flat.Flat(context=ctx)
-        flat_org.hire(roles=[
+        org = para.Paradigm(context=ctx)
+        org.hire(roles=[
             ProductManager(),
             Architect(),
             ProjectManager(),
             Engineer(
+                paradigm="flat",
                 engineers=[
                     EngineerProfile("Alex", ExpertiseLevel.SENIOR),  # Team lead
-                    EngineerProfile("John", ExpertiseLevel.MID),     # Mid-level engineer
+                    EngineerProfile("John", ExpertiseLevel.MID, ),     # Mid-level engineer
                     EngineerProfile("Mary", ExpertiseLevel.JUNIOR)   # Junior engineer
                 ],
+                use_code_review=code_review
             ),
             # Engineer(name="eng2"),
             QaEngineer()
         ])
-        flat_org.invest(investment)
-        flat_org.run_project(idea)
-        asyncio.run(flat_org.run(n_round=n_round))
+        org.invest(investment)
+        org.run_project(idea)
+        asyncio.run(org.run(n_round=n_round))
         
     elif(paradigm == "Holarchy"):
         print("hello")
@@ -118,18 +120,26 @@ def generate_repo(
         
     elif(paradigm == "Hierarchy"):
         print("hello")
-        flat_org = flat.Flat(context=ctx)
-        flat_org.hire(roles=[
+        org = para.Paradigm(context=ctx)
+        org.hire(roles=[
             ProductManager(),
             Architect(),
             ProjectManager(),
-            Engineer(name="eng1"),
-            Engineer(name="eng2"),
+            Engineer(
+                paradigm="hierarchy",
+                engineers=[
+                    EngineerProfile("Alex", ExpertiseLevel.SENIOR),  
+                    EngineerProfile("John", ExpertiseLevel.MID),     
+                    EngineerProfile("Mary", ExpertiseLevel.JUNIOR)   
+                ],
+                 use_code_review=code_review
+            ),
+            # Engineer(name="eng2"),
             QaEngineer()
         ])
-        flat_org.invest(investment)
-        flat_org.run_project(idea)
-        asyncio.run(flat_org.run(n_round=n_round))
+        org.invest(investment)
+        org.run_project(idea)
+        asyncio.run(org.run(n_round=n_round))
         
     elif(paradigm == "Federation"):
         print("hello")
@@ -162,7 +172,7 @@ def startup(
     idea: str = typer.Argument(None, help="Your innovative idea, such as 'Create a 2048 game.'"),
     paradigm: str = typer.Argument("Team", help="Team, Flat, Hierarchy, Holarchy, Federation" ),
     investment: float = typer.Option(default=3.0, help="Dollar amount to invest in the AI company."),
-    n_round: int = typer.Option(default=5, help="Number of rounds for the simulation."),
+    n_round: int = typer.Option(default=7, help="Number of rounds for the simulation."),
     code_review: bool = typer.Option(default=True, help="Whether to use code review."),
     run_tests: bool = typer.Option(default=False, help="Whether to enable QA for adding & running tests."),
     implement: bool = typer.Option(default=True, help="Enable or disable code implementation."),
