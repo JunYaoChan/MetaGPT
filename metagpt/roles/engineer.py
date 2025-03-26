@@ -1,4 +1,5 @@
 
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
@@ -20,13 +21,14 @@
 
 from __future__ import annotations
 import asyncio
+from metagpt.configs.llm_config import LLMConfig
 from metagpt.provider.llm_provider_registry import create_llm_instance
 
 import json
 from collections import defaultdict
 from pathlib import Path
 from typing import List, Dict, Optional, Set, Tuple, Union
-
+import re
 
 from metagpt.actions import Action, WriteCode, WriteCodeReview, WriteTasks
 from metagpt.actions.fix_bug import FixBug
@@ -196,14 +198,26 @@ class Engineer(Role):
         """Initialize a separate LLM instance for each engineer with appropriate system prompt."""
         for engineer in self.engineers:
             # Create a new LLM instance by cloning the main one
+            logger.debug(f"LLM Detail : {self.config}")
             config_copy = self.config.copy()
             
             # You might want to modify the config here if needed for different engineers
             # For example, junior engineers might use gpt-3.5-turbo while senior engineers use gpt-4
             if engineer.expertise == ExpertiseLevel.JUNIOR:
                 # Optionally use a different model for junior engineers
-                pass
-            elif engineer.expertise == ExpertiseLevel.SENIOR:
+                config_copy.llm = LLMConfig(
+                        api_key="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",
+                        api_type="openai",
+                        base_url="https://api.openai.com/v1",
+                        model="gpt-4o-mini",
+                        # Add other default parameters
+                        temperature=0,
+                        max_token=4096,
+                        stream=True
+        )
+                
+            
+            elif engineer.expertise == ExpertiseLevel.MID:
                 # Optionally use a different model for senior engineers
                 pass
             
@@ -361,29 +375,27 @@ class Engineer(Role):
         
         return assignments
 
-    async def _process_engineer_tasks(self, todos, engineer: EngineerProfile, review=False) -> Set[str]:
-        """Process a list of todos by a single engineer, using the engineer's dedicated LLM."""
+    async def _process_engineer_tasks(self, todos, engineer: EngineerProfile, review=False) -> Tuple[Set[str], List]:
+        """Process a list of todos by a single engineer, using the engineer's dedicated LLM.
+        Returns a tuple of (changed_files, coding_contexts)"""
         changed_files = set()
+        coding_contexts = []  # Store all coding contexts for batch review
+        
         for todo in todos:
-            # logger.info(f"Engineer {engineer.name} ({engineer.expertise}) working on: {todo.i_context.filename}")
-            
             # Store the original LLM
             original_llm = todo.llm
             
             # Replace with the engineer's LLM
             todo.llm = engineer.llm
             
-            
             # Run the task with the engineer's LLM
             try:
                 coding_context = await todo.run()
                 
-                # Code review if enabled (using the main engineer's LLM)
-                if review:
-                    # Use the main LLM for code review
-                    action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
-                    self._init_action(action)
-                    coding_context = await action.run()
+                # Store the coding context for possible batch review later
+                coding_contexts.append(coding_context)
+                
+                # Don't do individual review anymore - moved to batch process
                 
                 dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
                 if self.config.inc:
@@ -410,12 +422,325 @@ class Engineer(Role):
                 # Restore the original LLM
                 todo.llm = original_llm
         
-        return changed_files
+        return changed_files, coding_contexts
+    
 
+    def extract_and_parse_json(self,text):
+        """
+        Extract JSON content from text that might contain other content around it,
+        and parse it into a Python object.
+        
+        Args:
+            text (str): Text that contains JSON somewhere within it
+            
+        Returns:
+            dict: Parsed JSON object
+        """
+        # Try to find JSON content between triple backticks
+        json_pattern = r'```json\s*([\s\S]*?)\s*```'
+        match = re.search(json_pattern, text)
+        
+        if match:
+            json_str = match.group(1)
+        else:
+            # If no triple backticks, try to find content that looks like JSON
+            # (starting with { and ending with })
+            json_pattern = r'(\{[\s\S]*\})'
+            match = re.search(json_pattern, text)
+            if match:
+                json_str = match.group(1)
+            else:
+                raise ValueError("Could not find JSON content in the text")
+        
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print(f"JSON parse error: {e}")
+            print(f"JSON string: {json_str[:100]}...")  # Print beginning of string for debugging
+            raise
+
+    
+            
+    # async def _refine_codebase_directly(self, all_coding_contexts: List) -> Set[str]:
+    #     """
+    #     Directly refines all code files as a single codebase instead of reviewing and then applying changes.
+    #     This is a simpler, more reliable approach than the review-then-apply pattern.
+    #     """
+    #     changed_files = set()
+        
+    #     if not all_coding_contexts:
+    #         return changed_files
+            
+    #     logger.info(f"Starting direct refinement of {len(all_coding_contexts)} files")
+        
+    #     # Step 1: Gather all code files
+    #     code_files = {}  # Dictionary of filename -> content
+    #     ctx_by_filename = {}  # Dictionary to map filename to context object
+        
+    #     for ctx in all_coding_contexts:
+    #         code_files[ctx.filename] = ctx.code_doc.content
+    #         ctx_by_filename[ctx.filename] = ctx
+        
+    #     # Step 2: Create a prompt for direct refinement
+    #     refinement_prompt = """
+    #     You are an experienced software engineer that tasked with improving a complete codebase to ensure it's consistent and well-integrated.
+        
+    #     1. Missing imports - Ensure every file imports all classes, functions and constants it uses from other files
+    #     2. Import correctness - Fix import paths and module names
+    #     3. Interface consistency - Make sure function parameters and return values match between definition and usage
+    #     4. Constant usage - Ensure constants are defined only once and imported elsewhere
+    #     5. Class inheritance - Check for proper inheritance chains and interface implementations
+    #     6. Naming consistency - Use consistent naming across all files
+        
+    #     For each file, provide the COMPLETE refined code, not just the changes.
+        
+    #     Return your response in this JSON format:
+    #     {
+    #     "overview": "Brief explanation of what improvements you made",
+    #     "refined_files": {
+    #         "filename1.py": "complete refined code for this file",
+    #         "filename2.py": "complete refined code for this file",
+    #         ...
+    #     }
+    #     }
+        
+    #     Important: Include the ENTIRE content of each file, not just the changed parts.
+    #     """
+        
+    #     # Step 3: Send all code files for refinement
+    #     refinement_input = {
+    #         "files": code_files,
+    #         "instructions": "Refine the entire codebase for consistency and proper integration"
+    #     }
+        
+    #     # Convert to JSON
+    #     input_json = json.dumps(refinement_input, indent=2)
+        
+    #     # Send the request to the LLM
+    #     refinement_result = await self.llm.aask(refinement_prompt + "\n\nCodebase to refine:\n" + input_json, stream=False)
+        
+    #     # Step 4: Parse the results and update files
+    #     try:
+    #         refined_data = self.extract_and_parse_json(refinement_result)
+    #         logger.info(f"Refinement overview: {refined_data}")
+            
+    #         # Update each file with its refined version
+    #         refined_files = refined_data.get("refined_files", {})
+    #         for filename, refined_content in refined_files.items():
+    #             if filename not in ctx_by_filename:
+    #                 logger.warning(f"Refinement includes unknown file: {filename}")
+    #                 continue
+                    
+    #             original_ctx = ctx_by_filename[filename]
+    #             original_content = original_ctx.code_doc.content
+                
+    #             # Only update if content actually changed
+    #             if refined_content != original_content:
+    #                 # Create updated document
+    #                 updated_code_doc = Document(
+    #                     root_path=original_ctx.code_doc.root_path,
+    #                     filename=original_ctx.filename,
+    #                     content=refined_content
+    #                 )
+                    
+    #                 # Update context with new document
+    #                 original_ctx.code_doc = updated_code_doc
+                    
+    #                 # Save the updated file
+    #                 dependencies = set()
+    #                 if hasattr(original_ctx, 'design_doc') and original_ctx.design_doc:
+    #                     dependencies.add(original_ctx.design_doc.root_relative_path)
+    #                 if hasattr(original_ctx, 'task_doc') and original_ctx.task_doc:
+    #                     dependencies.add(original_ctx.task_doc.root_relative_path)
+    #                 if self.config.inc and hasattr(original_ctx, 'code_plan_and_change_doc') and original_ctx.code_plan_and_change_doc:
+    #                     dependencies.add(original_ctx.code_plan_and_change_doc.root_relative_path)
+                    
+    #                 await self.project_repo.srcs.save(
+    #                     filename=original_ctx.filename,
+    #                     dependencies=list(dependencies),
+    #                     content=refined_content,
+    #                 )
+                    
+    #                 # Record the refinement
+    #                 msg = Message(
+    #                     content=original_ctx.model_dump_json(),
+    #                     instruct_content=original_ctx,
+    #                     role=self.profile,
+    #                     cause_by=WriteCodeReview,
+    #                 )
+    #                 self.rc.memory.add(msg)
+                    
+    #                 changed_files.add(filename)
+    #                 logger.info(f"Successfully refined {filename}")
+        
+    #     except json.JSONDecodeError:
+    #         logger.error("Failed to parse refinement results as JSON")
+    #         logger.error(refinement_result)
+        
+    #     return changed_files
+    async def _refine_codebase_directly(self, all_coding_contexts: List) -> Set[str]:
+        """
+        Refines all code files as a single codebase with multiple iterations if needed.
+        Supports the same iteration mechanism as WriteCodeReview with LGTM/LBTM pattern.
+        """
+        changed_files = set()
+        
+        if not all_coding_contexts:
+            return changed_files
+            
+        logger.info(f"Starting direct refinement of {len(all_coding_contexts)} files")
+        
+        # Get the number of review iterations to perform
+        k = self.context.config.code_review_k_times or 1
+        logger.info(f"Will perform up to {k} iterations of code refinement")
+        
+        # Step 1: Gather all code files
+        code_files = {}  # Dictionary of filename -> content
+        ctx_by_filename = {}  # Dictionary to map filename to context object
+        
+        for ctx in all_coding_contexts:
+            code_files[ctx.filename] = ctx.code_doc.content
+            ctx_by_filename[ctx.filename] = ctx
+        
+        # Initial code state
+        current_code_files = dict(code_files)
+        
+        # Perform up to k iterations
+        for iteration in range(k):
+            logger.info(f"Starting refinement iteration {iteration+1}/{k}")
+            
+            # Step 2: Create a prompt for direct refinement
+            refinement_prompt = """
+            You are an experienced software engineer tasked with improving a complete codebase to ensure it's consistent and well-integrated.
+            
+            1. Missing imports - Ensure every file imports all classes, functions and constants it uses from other files
+            2. Import correctness - Fix import paths and module names
+            3. Interface consistency - Make sure function parameters and return values match between definition and usage
+            4. Constant usage - Ensure constants are defined only once and imported elsewhere
+            5. Class inheritance - Check for proper inheritance chains and interface implementations
+            6. Naming consistency - Use consistent naming across all files
+            
+            For each file, provide the COMPLETE refined code, not just the changes.
+            
+            Return your response in this JSON format:
+            {
+            "review_status": "LGTM" or "LBTM", (LBTM = Looks Bad To Me, needs more work. LGTM = Looks Good To Me, good enough)
+            "overview": "Brief explanation of what improvements you made or what issues still remain",
+            "refined_files": {
+                "filename1.py": "complete refined code for this file",
+                "filename2.py": "complete refined code for this file",
+                ...
+            }
+            }
+            
+            Important: Include the ENTIRE content of each file, not just the changed parts.
+            If the code looks good and doesn't need changes, still include the full original code in refined_files,
+            but set review_status to LGTM.
+            """
+            
+            # Step 3: Send all code files for refinement
+            refinement_input = {
+                "files": current_code_files,
+                "instructions": "Refine the entire codebase for consistency and proper integration"
+            }
+            
+            # Convert to JSON
+            input_json = json.dumps(refinement_input, indent=2)
+            
+            # Send the request to the LLM
+            refinement_result = await self.llm.aask(refinement_prompt + "\n\nCodebase to refine:\n" + input_json, stream=False)
+            
+            # Step 4: Parse the results and update files
+            try:
+                refined_data = self.extract_and_parse_json(refinement_result)
+                review_status = refined_data.get("review_status", "LBTM")  # Default to LBTM if not specified
+                logger.info(f"Refinement iteration {iteration+1} overview: {refined_data.get('overview')}")
+                logger.info(f"Review status: {review_status}")
+                
+                # Update each file with its refined version
+                refined_files = refined_data.get("refined_files", {})
+                iteration_changes = False
+                
+                for filename, refined_content in refined_files.items():
+                    if filename not in ctx_by_filename:
+                        logger.warning(f"Refinement includes unknown file: {filename}")
+                        continue
+                        
+                    current_content = current_code_files.get(filename)
+                    
+                    # Only update if content actually changed
+                    if refined_content != current_content:
+                        # Update the current code state
+                        current_code_files[filename] = refined_content
+                        iteration_changes = True
+                
+                # If there were no changes in this iteration or we get LGTM, stop iterating
+                if not iteration_changes or review_status == "LGTM":
+                    logger.info(f"Stopping refinement after iteration {iteration+1}; " + 
+                            (f"No changes made." if not iteration_changes else f"Review status: {review_status}"))
+                    break
+                
+                # If this was the last iteration, we'll apply the changes regardless
+                if iteration == k - 1:
+                    logger.info(f"Reached maximum iterations ({k}), applying final changes.")
+                
+            except Exception as e:
+                logger.error(f"Failed to process refinement results: {e}")
+                logger.error(refinement_result)
+                break
+        
+        # After all iterations, apply the final changes to the actual files
+        for filename, final_content in current_code_files.items():
+            if filename not in ctx_by_filename:
+                continue
+                
+            original_ctx = ctx_by_filename[filename]
+            original_content = original_ctx.code_doc.content
+            
+            # Only update if content actually changed from the original
+            if final_content != original_content:
+                # Create updated document
+                updated_code_doc = Document(
+                    root_path=original_ctx.code_doc.root_path,
+                    filename=original_ctx.filename,
+                    content=final_content
+                )
+                
+                # Update context with new document
+                original_ctx.code_doc = updated_code_doc
+                
+                # Save the updated file
+                dependencies = set()
+                if hasattr(original_ctx, 'design_doc') and original_ctx.design_doc:
+                    dependencies.add(original_ctx.design_doc.root_relative_path)
+                if hasattr(original_ctx, 'task_doc') and original_ctx.task_doc:
+                    dependencies.add(original_ctx.task_doc.root_relative_path)
+                if self.config.inc and hasattr(original_ctx, 'code_plan_and_change_doc') and original_ctx.code_plan_and_change_doc:
+                    dependencies.add(original_ctx.code_plan_and_change_doc.root_relative_path)
+                
+                await self.project_repo.srcs.save(
+                    filename=original_ctx.filename,
+                    dependencies=list(dependencies),
+                    content=final_content,
+                )
+                
+                # Record the refinement
+                msg = Message(
+                    content=original_ctx.model_dump_json(),
+                    instruct_content=original_ctx,
+                    role=self.profile,
+                    cause_by=WriteCodeReview,
+                )
+                self.rc.memory.add(msg)
+                
+                changed_files.add(filename)
+                logger.info(f"Successfully refined {filename}")
+        
+        return changed_files
     # This manages the engineers to write the code
     async def _act_sp_with_cr(self, review=False) -> Set[str]:
         changed_files = set()
-        # logger.debug(f"Processing {len(self.code_todos)} code tasks with paradigm: {self.paradigm}")
+        all_coding_contexts = []  # Collect all coding contexts for batch review
         
         if not self.code_todos:
             logger.info("No code todos to process.")
@@ -432,12 +757,8 @@ class Engineer(Role):
                 try:
                     # Run the task with the engineer's LLM
                     coding_context = await todo.run()
+                    all_coding_contexts.append(coding_context)
                     
-                    if review:
-                        action = WriteCodeReview(i_context=coding_context, context=self.context, llm=self.llm)
-                        self._init_action(action)
-                        coding_context = await action.run()
-
                     dependencies = {coding_context.design_doc.root_relative_path, coding_context.task_doc.root_relative_path}
                     if self.config.inc:
                         dependencies.add(coding_context.code_plan_and_change_doc.root_relative_path)
@@ -470,6 +791,7 @@ class Engineer(Role):
                 todo_assignments = self._assign_tasks_flat(task_filenames)
             else:  # Default to hierarchy paradigm
                 todo_assignments = self._assign_tasks_by_expertise(task_filenames)            
+            
             # Create a list of tasks for each engineer
             engineer_tasks = []
             for engineer, assigned_tasks in todo_assignments.items():
@@ -477,14 +799,22 @@ class Engineer(Role):
                     continue
                 # Convert task filenames back to todo objects
                 engineer_todos = [todo_map[task] for task in assigned_tasks]
-                engineer_tasks.append(self._process_engineer_tasks(engineer_todos, engineer, review))
+                engineer_tasks.append(self._process_engineer_tasks(engineer_todos, engineer, False))  # Never review individual tasks
             
             # Wait for all engineers to complete their tasks
             results = await asyncio.gather(*engineer_tasks)
             
-            # Collect all changed files
-            for result in results:
-                changed_files.update(result)
+            # Collect all changed files and coding contexts
+            for changed, contexts in results:
+                changed_files.update(changed)
+                all_coding_contexts.extend(contexts)
+        
+        # After all engineers have completed their work, perform batch code review if enabled
+        if review and all_coding_contexts:
+            logger.info(f"All coding tasks completed. Starting direct code refinement...")
+            # Use the direct refinement method instead of review
+            refinement_changed_files = await self._refine_codebase_directly(all_coding_contexts)
+            changed_files.update(refinement_changed_files)
         
         if not changed_files:
             logger.info("Nothing has changed.")

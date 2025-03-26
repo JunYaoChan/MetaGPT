@@ -100,7 +100,8 @@ class RunCode(Action):
         additional_python_paths = [working_directory] + additional_python_paths
         additional_python_paths = ":".join(additional_python_paths)
         env["PYTHONPATH"] = additional_python_paths + ":" + env.get("PYTHONPATH", "")
-        RunCode._install_dependencies(working_directory=working_directory, env=env)
+        logger.info(f"Python Path : {env}")
+        # RunCode._install_dependencies(working_directory=working_directory, env=env)
 
         # Start the subprocess
         process = subprocess.Popen(
