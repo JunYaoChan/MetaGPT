@@ -92,9 +92,9 @@ def generate_repo(
             Engineer(
                 paradigm="flat",
                 engineers=[
-                    EngineerProfile("Alex", ExpertiseLevel.SENIOR),  # Team lead
-                    EngineerProfile("John", ExpertiseLevel.SENIOR ),     # Mid-level engineer
-                    EngineerProfile("Mary", ExpertiseLevel.SENIOR)   # Junior engineer
+                    EngineerProfile("Alex", ExpertiseLevel.JUNIOR),    # Junior engineer
+                    EngineerProfile("John", ExpertiseLevel.MID ),     # Mid-level engineer
+                    EngineerProfile("Nick", ExpertiseLevel.SENIOR)  # Team lead
                 ],
                 use_code_review=code_review
             ),

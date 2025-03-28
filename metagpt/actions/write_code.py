@@ -170,6 +170,9 @@ class WriteCode(Action):
         m = json.loads(task_doc.content)
         code_filenames = m.get(TASK_LIST.key, []) if not use_inc else m.get(REFINED_TASK_LIST.key, [])
         codes = []
+        if not project_repo.src_relative_path:
+            project_repo = project_repo.with_src_path(project_repo.git_repo.workdir / project_repo.git_repo.workdir.name)
+    
         src_file_repo = project_repo.srcs
 
         # Incremental development scenario

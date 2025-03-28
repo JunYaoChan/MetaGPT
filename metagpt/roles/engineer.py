@@ -206,7 +206,7 @@ class Engineer(Role):
             if engineer.expertise == ExpertiseLevel.JUNIOR:
                 # Optionally use a different model for junior engineers
                 config_copy.llm = LLMConfig(
-                        api_key="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",
+                        api_key="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",
                         api_type="openai",
                         base_url="https://api.openai.com/v1",
                         model="gpt-4o-mini",
@@ -250,39 +250,7 @@ class Engineer(Role):
         m = json.loads(task_msg.content)
         return m.get(TASK_LIST.key) or m.get(REFINED_TASK_LIST.key)
     
-    def _estimate_task_complexity(self, task_filename: str, task_content: Optional[str] = None) -> int:
-        """
-        Estimate the complexity of a task based on filename and content.
-        Returns a complexity score from 1-10.
-        
-        This is a simplistic implementation - in a real-world scenario, 
-        you might want to use LLM to analyze the file and determine complexity.
-        """
-        complexity = 5  # Default mid-level complexity
-        
-        # Simple complexity rules based on file extensions and names
-        if task_filename.endswith(('.txt', '.md', '.css', '.html')):
-            complexity = 3  # Simple files
-        elif "main" in task_filename or "app" in task_filename:
-            complexity = 8  # Main application files - higher complexity
-        elif "test" in task_filename:
-            complexity = 4  # Test files - medium-low complexity
-        elif "util" in task_filename:
-            complexity = 5  # Utility files - medium complexity
-        elif "model" in task_filename or "service" in task_filename:
-            complexity = 7  # Model/service files - higher complexity
-        
-        # Adjust based on file extension
-        if task_filename.endswith('.py'):
-            complexity += 0  # Neutral for Python
-        elif task_filename.endswith('.js'):
-            complexity += 1  # Slightly higher for JavaScript
-        elif task_filename.endswith('.java'):
-            complexity += 2  # Higher for Java
-        
-        # Ensure complexity stays within 1-10 range
-        return max(1, min(10, complexity))
-    
+   
     def _assign_tasks_flat(self, tasks: list) -> Dict[EngineerProfile, list]:
         """
         Distribute tasks sequentially across engineers in a round-robin fashion.
@@ -310,7 +278,7 @@ class Engineer(Role):
                 logger.info(f"  - {eng}: {eng_tasks}")
         
         return assignments
-    def _assign_tasks_by_expertise(self, tasks: list) -> Dict[EngineerProfile, list]:
+    def _assign_tasks_by_expertise(self, tasks : dict) -> Dict[EngineerProfile, list]:
         """
         Distribute tasks based on engineer expertise levels.
         Returns a dictionary mapping engineers to their assigned tasks.
@@ -323,7 +291,10 @@ class Engineer(Role):
             return {self.engineers[0]: tasks}
         
         # Estimate complexity for each task
-        task_complexities = [(task, self._estimate_task_complexity(task)) for task in tasks]
+        task_complexities = []
+        for task_name, task_context in tasks.items():
+            complexity = self._estimate_task_complexity(task_name, task_context.i_context)
+            task_complexities.append((task_name, complexity))
         # Sort tasks by complexity (highest to lowest)
         task_complexities.sort(key=lambda x: x[1], reverse=True)
         logger.info(f"Task Complexity : {task_complexities}")
@@ -375,6 +346,130 @@ class Engineer(Role):
         
         return assignments
 
+    def _estimate_task_complexity(self, task_filename: str, task_content) -> int:
+        """
+        Estimate the complexity of a task based on the filename and task content.
+        
+        Args:
+            task_filename (str): The filename of the task
+            task_content: Document object or other content with task information
+            
+        Returns:
+            int: A complexity score from 1-10
+        """
+        complexity = 3  # Base complexity
+        filename_base = task_filename.split('.')[0].lower()
+        if filename_base in ["config", "constants", "settings"]:
+            return complexity
+
+        logger.info(f"Taskk CONTENT : {task_content}")
+        # Default complexity if no content
+        if task_content is None:
+            return 5
+            
+        # Extract content as string for analysis
+        content_str = ""
+        
+        # Handle Document objects (most common case)
+        if hasattr(task_content, 'content'):
+            try:
+                content = task_content.content
+                # logger.info(f"CONT : {content}")
+                # Check if content is a JSON string that we can parse
+                if isinstance(content, str) and content.strip().startswith('{'):
+                    try:
+                        import json
+                        parsed_json = json.loads(content)
+                        # logger.info(f"JSON : {parsed_json}")
+                        # If this is a design doc with class diagrams, do special analysis
+                        if isinstance(parsed_json, dict) and 'design_doc' in parsed_json and 'content' in parsed_json['design_doc']:
+                            # Check for class diagram and sequence diagram
+                            design_doc_content = json.loads(parsed_json['design_doc']['content'])
+                            # Now we can access the actual fields
+                            class_diagram = design_doc_content.get("Data structures and interfaces", "")
+                            # class_diagram = parsed_json.get("Data structures and interfaces", "")
+                            # logger.info(f"CLASS DIAGRAM : {class_diagram}")
+                            sequence_diagram = parsed_json.get("Program call flow", "")
+                            class_blocks = self._extract_class_blocks(class_diagram)
+                            
+                            
+                            matching_class = None
+                            for class_name, class_content in class_blocks.items():
+                                # Check if class name matches filename
+                                if class_name.lower() == filename_base or filename_base in class_name.lower():
+                                    matching_class = class_name
+                                    break
+                            
+                          
+                            # If no matching class found, use default complexity
+                            if not matching_class:
+                                logger.info(f"No matching class found for {task_filename}")
+                                return 5
+                            
+                            # Get the class content
+                            class_content = class_blocks[matching_class]
+                            
+                            # Count functions (methods with +)
+                            function_count = len(re.findall(r'\+\w+\(', class_content))
+                            
+                            # Count variables (properties with -)
+                            variable_count = len(re.findall(r'-\w+:', class_content))
+                            
+                            logger.info(f"File: {task_filename}, Class: {matching_class}, Functions: {function_count}, Variables: {variable_count}")
+                            
+                            # Calculate complexity based on function and variable counts
+                            
+                            # Add complexity for functions (each function adds 1 point)
+                            complexity += min(4, function_count)  # Cap at +4 for functions
+                            
+                            # Add complexity for variables (every 2 variables add 0.5 point)
+                            complexity += min(3, (variable_count // 2) * 0.5)  # Cap at +3 for variables
+                            
+                            # Ensure complexity is within 1-10 range
+                            complexity = max(1, min(10, round(complexity)))
+                            
+                            return complexity
+                          
+                        
+                        # If we couldn't do special analysis, use the string content
+                    except json.JSONDecodeError:
+                        content_str = str(content)
+                else:
+                    content_str = str(content)
+            except Exception as e:
+                logger.warning(f"Error parsing content: {e}")
+                content_str = str(task_content)
+        return complexity
+ 
+
+
+    def _extract_class_blocks(self, class_diagram: str) -> dict:
+        """
+        Extract class blocks from a class diagram string.
+        """
+        class_blocks = {}
+        if not class_diagram:
+            logger.error("Empty class diagram provided")
+            return class_blocks
+
+        # Fix the escaped newlines and normalize whitespace
+        class_diagram = class_diagram.encode().decode('unicode_escape')
+
+        # Improved regex for multiline class content extraction
+        class_pattern = r'class\s+(\w+)\s*\{([^}]*)\}'
+        matches = re.findall(class_pattern, class_diagram, re.DOTALL)
+
+        if not matches:
+            logger.error("No matches found with regex.")
+            return class_blocks
+
+        for class_name, class_content in matches:
+            class_blocks[class_name.strip()] = class_content.strip()
+
+        logger.info(f"Extracted class blocks: {list(class_blocks.keys())}")
+        return class_blocks
+    
+    
     async def _process_engineer_tasks(self, todos, engineer: EngineerProfile, review=False) -> Tuple[Set[str], List]:
         """Process a list of todos by a single engineer, using the engineer's dedicated LLM.
         Returns a tuple of (changed_files, coding_contexts)"""
@@ -460,124 +555,94 @@ class Engineer(Role):
             raise
 
     
-            
-    # async def _refine_codebase_directly(self, all_coding_contexts: List) -> Set[str]:
-    #     """
-    #     Directly refines all code files as a single codebase instead of reviewing and then applying changes.
-    #     This is a simpler, more reliable approach than the review-then-apply pattern.
-    #     """
-    #     changed_files = set()
+    async def show_token_usage(self):
+        """
+        Display the total token usage statistics after code generation.
+        Shows both the total prompt tokens and completion tokens that were used
+        during the code generation process, along with total cost.
         
-    #     if not all_coding_contexts:
-    #         return changed_files
-            
-    #     logger.info(f"Starting direct refinement of {len(all_coding_contexts)} files")
+        Returns:
+            str: A formatted string with token usage statistics
+        """
+        if not self.llm.cost_manager:
+            logger.warning("No cost manager available to track token usage")
+            return "Token usage tracking not available"
         
-    #     # Step 1: Gather all code files
-    #     code_files = {}  # Dictionary of filename -> content
-    #     ctx_by_filename = {}  # Dictionary to map filename to context object
+        # Get token usage statistics from cost manager
+        costs = self.llm.cost_manager.get_costs()
         
-    #     for ctx in all_coding_contexts:
-    #         code_files[ctx.filename] = ctx.code_doc.content
-    #         ctx_by_filename[ctx.filename] = ctx
+        # Get aggregated stats across all engineers
+        total_stats = self._aggregate_token_usage()
         
-    #     # Step 2: Create a prompt for direct refinement
-    #     refinement_prompt = """
-    #     You are an experienced software engineer that tasked with improving a complete codebase to ensure it's consistent and well-integrated.
+        # Format the output
+        output = (
+            "\n==== TOKEN USAGE STATISTICS ====\n"
+            f"Team prompt tokens: {costs.total_prompt_tokens}\n"
+            f"Team completion tokens: {costs.total_completion_tokens}\n"
+            f"Team total tokens: {costs.total_prompt_tokens + costs.total_completion_tokens}\n"
+            f"Team cost: ${costs.total_cost:.4f}\n"
+            "\n==== AGGREGATE TOKEN USAGE ====\n"
+            f"Total prompt tokens: {total_stats['prompt_tokens']}\n"
+            f"Total completion tokens: {total_stats['completion_tokens']}\n"
+            f"Total tokens: {total_stats['total_tokens']}\n"
+            f"Total cost: ${total_stats['total_cost']:.4f}\n"
+            "=================================="
+        )
         
-    #     1. Missing imports - Ensure every file imports all classes, functions and constants it uses from other files
-    #     2. Import correctness - Fix import paths and module names
-    #     3. Interface consistency - Make sure function parameters and return values match between definition and usage
-    #     4. Constant usage - Ensure constants are defined only once and imported elsewhere
-    #     5. Class inheritance - Check for proper inheritance chains and interface implementations
-    #     6. Naming consistency - Use consistent naming across all files
-        
-    #     For each file, provide the COMPLETE refined code, not just the changes.
-        
-    #     Return your response in this JSON format:
-    #     {
-    #     "overview": "Brief explanation of what improvements you made",
-    #     "refined_files": {
-    #         "filename1.py": "complete refined code for this file",
-    #         "filename2.py": "complete refined code for this file",
-    #         ...
-    #     }
-    #     }
-        
-    #     Important: Include the ENTIRE content of each file, not just the changed parts.
-    #     """
-        
-    #     # Step 3: Send all code files for refinement
-    #     refinement_input = {
-    #         "files": code_files,
-    #         "instructions": "Refine the entire codebase for consistency and proper integration"
-    #     }
-        
-    #     # Convert to JSON
-    #     input_json = json.dumps(refinement_input, indent=2)
-        
-    #     # Send the request to the LLM
-    #     refinement_result = await self.llm.aask(refinement_prompt + "\n\nCodebase to refine:\n" + input_json, stream=False)
-        
-    #     # Step 4: Parse the results and update files
-    #     try:
-    #         refined_data = self.extract_and_parse_json(refinement_result)
-    #         logger.info(f"Refinement overview: {refined_data}")
-            
-    #         # Update each file with its refined version
-    #         refined_files = refined_data.get("refined_files", {})
-    #         for filename, refined_content in refined_files.items():
-    #             if filename not in ctx_by_filename:
-    #                 logger.warning(f"Refinement includes unknown file: {filename}")
-    #                 continue
+        # Also include per-engineer statistics if we have multiple engineers
+        if len(self.engineers) > 1:
+            output += "\n\n==== ENGINEER-SPECIFIC TOKEN USAGE ====\n"
+            for engineer in self.engineers:
+                if not engineer.llm or not engineer.llm.cost_manager:
+                    continue
                     
-    #             original_ctx = ctx_by_filename[filename]
-    #             original_content = original_ctx.code_doc.content
+                eng_costs = engineer.llm.cost_manager.get_costs()
+                output += (
+                    f"Engineer: {engineer.name} ({engineer.expertise})\n"
+                    f"  Prompt tokens: {eng_costs.total_prompt_tokens}\n"
+                    f"  Completion tokens: {eng_costs.total_completion_tokens}\n"
+                    f"  Total tokens: {eng_costs.total_prompt_tokens + eng_costs.total_completion_tokens}\n"
+                    f"  Cost: ${eng_costs.total_cost:.4f}\n\n"
+                )
+        
+        logger.info(output)
+        return output
+
+    def _aggregate_token_usage(self):
+        """
+        Aggregates token usage from all engineers and the main LLM.
+        
+        Returns:
+            dict: A dictionary containing aggregated token usage statistics
+        """
+        # Start with the team's LLM usage
+        total_prompt_tokens = 0
+        total_completion_tokens = 0
+        total_cost = 0.0
+        
+        # Add the main LLM's usage if available
+        if self.llm and self.llm.cost_manager:
+            costs = self.llm.cost_manager.get_costs()
+            total_prompt_tokens += costs.total_prompt_tokens
+            total_completion_tokens += costs.total_completion_tokens
+            total_cost += costs.total_cost
+        
+        # Add each engineer's usage
+        for engineer in self.engineers:
+            if not engineer.llm or not engineer.llm.cost_manager:
+                continue
                 
-    #             # Only update if content actually changed
-    #             if refined_content != original_content:
-    #                 # Create updated document
-    #                 updated_code_doc = Document(
-    #                     root_path=original_ctx.code_doc.root_path,
-    #                     filename=original_ctx.filename,
-    #                     content=refined_content
-    #                 )
-                    
-    #                 # Update context with new document
-    #                 original_ctx.code_doc = updated_code_doc
-                    
-    #                 # Save the updated file
-    #                 dependencies = set()
-    #                 if hasattr(original_ctx, 'design_doc') and original_ctx.design_doc:
-    #                     dependencies.add(original_ctx.design_doc.root_relative_path)
-    #                 if hasattr(original_ctx, 'task_doc') and original_ctx.task_doc:
-    #                     dependencies.add(original_ctx.task_doc.root_relative_path)
-    #                 if self.config.inc and hasattr(original_ctx, 'code_plan_and_change_doc') and original_ctx.code_plan_and_change_doc:
-    #                     dependencies.add(original_ctx.code_plan_and_change_doc.root_relative_path)
-                    
-    #                 await self.project_repo.srcs.save(
-    #                     filename=original_ctx.filename,
-    #                     dependencies=list(dependencies),
-    #                     content=refined_content,
-    #                 )
-                    
-    #                 # Record the refinement
-    #                 msg = Message(
-    #                     content=original_ctx.model_dump_json(),
-    #                     instruct_content=original_ctx,
-    #                     role=self.profile,
-    #                     cause_by=WriteCodeReview,
-    #                 )
-    #                 self.rc.memory.add(msg)
-                    
-    #                 changed_files.add(filename)
-    #                 logger.info(f"Successfully refined {filename}")
+            eng_costs = engineer.llm.cost_manager.get_costs()
+            total_prompt_tokens += eng_costs.total_prompt_tokens
+            total_completion_tokens += eng_costs.total_completion_tokens
+            total_cost += eng_costs.total_cost
         
-    #     except json.JSONDecodeError:
-    #         logger.error("Failed to parse refinement results as JSON")
-    #         logger.error(refinement_result)
-        
-    #     return changed_files
+        return {
+            "prompt_tokens": total_prompt_tokens,
+            "completion_tokens": total_completion_tokens,
+            "total_tokens": total_prompt_tokens + total_completion_tokens,
+            "total_cost": total_cost
+        }
     async def _refine_codebase_directly(self, all_coding_contexts: List) -> Set[str]:
         """
         Refines all code files as a single codebase with multiple iterations if needed.
@@ -779,6 +844,7 @@ class Engineer(Role):
                     # Restore the original LLM
                     todo.llm = original_llm
         else:
+           
             # Get a list of all task filenames
             task_filenames = [todo.i_context.filename for todo in self.code_todos]
             
@@ -790,7 +856,7 @@ class Engineer(Role):
                 logger.info(f"Assigned task : Flat")
                 todo_assignments = self._assign_tasks_flat(task_filenames)
             else:  # Default to hierarchy paradigm
-                todo_assignments = self._assign_tasks_by_expertise(task_filenames)            
+                todo_assignments = self._assign_tasks_by_expertise(todo_map)            
             
             # Create a list of tasks for each engineer
             engineer_tasks = []
@@ -822,6 +888,8 @@ class Engineer(Role):
 
     async def _act(self) -> Message | None:
         """Determines the mode of action based on whether code review is used."""
+        if not self.src_workspace:
+            self.src_workspace = self.git_repo.workdir / self.git_repo.workdir.name
         if self.rc.todo is None:
             return None
         if isinstance(self.rc.todo, WriteCodePlanAndChange):
@@ -838,6 +906,7 @@ class Engineer(Role):
 
     async def _act_write_code(self):
         changed_files = await self._act_sp_with_cr(review=self.use_code_review)
+        usage_stats = await self.show_token_usage()
         return Message(
             content="\n".join(changed_files),
             role=self.profile,
@@ -923,6 +992,7 @@ class Engineer(Role):
         return False, rsp
 
     async def _think(self) -> Action | None:
+        
         if not self.src_workspace:
             self.src_workspace = self.git_repo.workdir / self.git_repo.workdir.name
         write_plan_and_change_filters = any_to_str_set([WriteTasks, FixBug])

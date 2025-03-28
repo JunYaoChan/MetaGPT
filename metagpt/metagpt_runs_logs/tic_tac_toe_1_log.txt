@@ -1,0 +1,2149 @@
+2025-03-27 22:21:34.106 | INFO     | metagpt.const:get_metagpt_package_root:21 - Package root set to /Users/junyao/MetaGPT
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+2025-03-27 22:21:39.472 | INFO     | __main__:<module>:252 - Starting application [software_company.py]
+2025-03-27 22:21:39.522 | INFO     | metagpt.roles.engineer:_initialize_engineers:193 - Engineering team initialized with 6 engineers:
+2025-03-27 22:21:39.522 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Alex (junior)
+2025-03-27 22:21:39.522 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - John (mid)
+2025-03-27 22:21:39.522 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Nick (senior)
+2025-03-27 22:21:39.522 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Alex (junior)
+2025-03-27 22:21:39.523 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - John (mid)
+2025-03-27 22:21:39.523 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Nick (senior)
+2025-03-27 22:21:39.531 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Alex with expertise junior
+2025-03-27 22:21:39.540 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer John with expertise mid
+2025-03-27 22:21:39.549 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Nick with expertise senior
+2025-03-27 22:21:39.557 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Alex with expertise junior
+2025-03-27 22:21:39.566 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer John with expertise mid
+2025-03-27 22:21:39.574 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Nick with expertise senior
+2025-03-27 22:21:39.586 | INFO     | paradigm:invest:50 - Investment: $3.0.
+2025-03-27 22:21:39.588 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do PrepareDocuments(PrepareDocuments)
+2025-03-27 22:21:39.690 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/requirement.txt
+2025-03-27 22:21:39.690 | INFO     | metagpt.roles.role:_act:405 - Content: Create a Tic Tac Toe game
+2025-03-27 22:21:39.691 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do WritePRD(WritePRD)
+2025-03-27 22:21:39.691 | INFO     | metagpt.actions.write_prd:run:86 - New requirement detected: Create a Tic Tac Toe game
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:22:13.064 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:22:13.066 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.000 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 929, completion_tokens: 722
+2025-03-27 22:22:13.272 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/prd/20250327222213.json
+no mermaid
+2025-03-27 22:22:13.284 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-03-27 22:22:13.285 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/resources/prd/20250327222213.md
+2025-03-27 22:22:13.285 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250327222213.json":{"root_path":"docs/prd","filename":"20250327222213.json","content":"{\"Language\":\"en_us\",\"Programming Language\":\"Python\",\"Original Requirements\":\"Create a Tic Tac Toe game\",\"Product Goals\":[\"Create a simple and intuitive user interface\",\"Ensure the game is responsive and works on different devices\",\"Implement a fun and engaging gameplay experience\"],\"User Stories\":[\"As a player, I want to play against the computer with adjustable difficulty levels\",\"As a player, I want to see a clear indication of whose turn it is\",\"As a player, I want to be able to restart the game at any time\",\"As a player, I want to see a celebration when I win\",\"As a player, I want the game to be playable on both desktop and mobile\"],\"Competitive Analysis\":[\"Tic Tac Toe Game A: Simple interface, lacks AI opponent\",\"PlayTicTacToe.org: Basic AI opponent, no difficulty levels\",\"TicTacToe.com: Responsive UI, but cluttered with ads\",\"MathIsFun Tic Tac Toe: Educational focus, minimal UI\",\"Google Doodle Tic Tac Toe: Fun animations, limited features\"],\"Competitive Quadrant Chart\":\"quadrantChart\\n    title \\\"Tic Tac Toe Game Comparison\\\"\\n    x-axis \\\"Low Features\\\" --> \\\"High Features\\\"\\n    y-axis \\\"Low Engagement\\\" --> \\\"High Engagement\\\"\\n    quadrant-1 \\\"We should expand\\\"\\n    quadrant-2 \\\"Need to promote\\\"\\n    quadrant-3 \\\"Re-evaluate\\\"\\n    quadrant-4 \\\"May be improved\\\"\\n    \\\"Tic Tac Toe Game A\\\": [0.2, 0.3]\\n    \\\"PlayTicTacToe.org\\\": [0.4, 0.5]\\n    \\\"TicTacToe.com\\\": [0.6, 0.4]\\n    \\\"MathIsFun Tic Tac Toe\\\": [0.3, 0.6]\\n    \\\"Google Doodle Tic Tac Toe\\\": [0.7, 0.8]\\n    \\\"Our Target Product\\\": [0.65, 0.75]\",\"Requirement Analysis\":\"The game needs a 3x3 grid, player vs computer mode, turn indication, win detection, and restart functionality. It should be responsive and have a clean UI.\",\"Requirement Pool\":[[\"P0\",\"Implement the 3x3 game board and basic gameplay logic\"],[\"P0\",\"Create a simple AI opponent with adjustable difficulty\"],[\"P1\",\"Add visual feedback for wins and draws\"],[\"P1\",\"Implement responsive design for different screen sizes\"],[\"P2\",\"Add animations for moves and game outcomes\"]],\"UI Design draft\":\"A clean 3x3 grid with X and O markers. Turn indicator at the top. Restart button visible at all times. Simple color scheme with visual feedback for wins.\",\"Anything UNCLEAR\":\"Should the game include multiplayer functionality or focus solely on single-player vs AI?\"}"}}}
+2025-03-27 22:22:13.286 | INFO     | metagpt.roles.role:_act:403 - Bob(Architect_Bob): to do WriteDesign(WriteDesign)
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:22:43.531 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:22:43.532 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 1366, completion_tokens: 681
+2025-03-27 22:22:43.542 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/system_design/20250327222213.json
+2025-03-27 22:22:43.543 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/system_design/20250327222213.json:{'docs/prd/20250327222213.json'}
+no mermaid
+2025-03-27 22:22:43.554 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-03-27 22:22:43.554 | INFO     | metagpt.actions.design_api:_save_data_api_design:107 - Save class view to /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/resources/data_api_design/20250327222213
+no mermaid
+2025-03-27 22:22:43.560 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-03-27 22:22:43.560 | INFO     | metagpt.actions.design_api:_save_seq_flow:116 - Saving sequence flow to /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/resources/seq_flow/20250327222213
+2025-03-27 22:22:43.561 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/resources/system_design/20250327222213.md
+2025-03-27 22:22:43.561 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250327222213.json":{"root_path":"docs/system_design","filename":"20250327222213.json","content":"{\"Implementation approach\":\"We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.\",\"File list\":[\"main.py\",\"game.py\",\"ai.py\",\"ui.py\"],\"Data structures and interfaces\":\"\\nclassDiagram\\n    class Game {\\n        -board: list[list[str]]\\n        -current_player: str\\n        -game_over: bool\\n        +__init__()\\n        +make_move(row: int, col: int) bool\\n        +check_winner() str\\n        +is_draw() bool\\n        +reset_game()\\n    }\\n    class AI {\\n        -difficulty: str\\n        +__init__(difficulty: str)\\n        +get_move(game: Game) tuple[int, int]\\n    }\\n    class UI {\\n        -screen: pygame.Surface\\n        -game: Game\\n        -ai: AI\\n        +__init__(game: Game, ai: AI)\\n        +draw_board()\\n        +handle_click(pos: tuple[int, int]) bool\\n        +show_winner(winner: str)\\n        +show_draw()\\n    }\\n    Game --> UI\\n    AI --> Game\\n    UI --> Game\\n    UI --> AI\\n\",\"Program call flow\":\"\\nsequenceDiagram\\n    participant M as Main\\n    participant G as Game\\n    participant A as AI\\n    participant U as UI\\n    M->>G: __init__()\\n    M->>A: __init__(difficulty)\\n    M->>U: __init__(game, ai)\\n    loop Game Loop\\n        U->>U: draw_board()\\n        alt Player's turn\\n            U->>G: make_move(row, col)\\n            G-->>U: return success\\n            G->>G: check_winner()\\n            alt Winner found\\n                G-->>U: show_winner(winner)\\n            else Draw\\n                G-->>U: show_draw()\\n            end\\n        else AI's turn\\n            U->>A: get_move(game)\\n            A->>G: make_move(row, col)\\n            G-->>U: return success\\n            G->>G: check_winner()\\n            alt Winner found\\n                G-->>U: show_winner(winner)\\n            else Draw\\n                G-->>U: show_draw()\\n            end\\n        end\\n    end\\n\",\"Anything UNCLEAR\":\"The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class.\"}"}}}
+2025-03-27 22:22:43.564 | INFO     | metagpt.roles.role:_act:403 - Eve(Project Manager_Eve): to do WriteTasks(WriteTasks)
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:23:00.944 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:23:00.945 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 1181, completion_tokens: 282
+2025-03-27 22:23:00.955 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/task/20250327222213.json
+2025-03-27 22:23:00.958 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/docs/task/20250327222213.json:{'docs/system_design/20250327222213.json'}
+2025-03-27 22:23:00.959 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/requirements.txt
+2025-03-27 22:23:00.959 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250327222213.json":{"root_path":"docs/task","filename":"20250327222213.json","content":"{\"Required packages\":[\"pygame==2.0.1\"],\"Required Other language third-party packages\":[\"No third-party dependencies required\"],\"Logic Analysis\":[[\"game.py\",\"Contains Game class with board state management, move validation, win/draw detection, and game reset functionality\"],[\"ai.py\",\"Contains AI class with move selection strategies for different difficulty levels, depends on Game class\"],[\"ui.py\",\"Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes\"],[\"main.py\",\"Entry point that initializes Game, AI and UI classes, and runs the main game loop\"]],\"Task list\":[\"game.py\",\"ai.py\",\"ui.py\",\"main.py\"],\"Full API spec\":\"\",\"Shared Knowledge\":\"The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.\",\"Anything UNCLEAR\":\"The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms.\"}"}}}
+2025-03-27 22:23:01.062 | INFO     | metagpt.roles.engineer:_new_code_actions:1064 - Processing task file: 20250327222213.json
+2025-03-27 22:23:01.075 | INFO     | metagpt.roles.engineer:_act_sp_with_cr:856 - Assigned task : Flat
+2025-03-27 22:23:01.075 | INFO     | metagpt.roles.engineer:_assign_tasks_flat:275 - Task assignments (flat paradigm):
+2025-03-27 22:23:01.075 | INFO     | metagpt.roles.engineer:_assign_tasks_flat:278 -   - Alex (junior): ['game.py', 'main.py']
+2025-03-27 22:23:01.075 | INFO     | metagpt.roles.engineer:_assign_tasks_flat:278 -   - John (mid): ['ai.py']
+2025-03-27 22:23:01.075 | INFO     | metagpt.roles.engineer:_assign_tasks_flat:278 -   - Nick (senior): ['ui.py']
+2025-03-27 22:23:01.077 | INFO     | metagpt.actions.write_code:run:142 - Writing Prompt: 
+NOTICE
+Role: You are a professional engineer; the main goal is to write google-style, elegant, modular, easy to read and maintain code
+Language: Please use the same language as the user requirement, but the title and code should be still in English. For example, if the user speaks Chinese, the specific text of your answer should also be in Chinese.
+ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
+
+# Context
+## Design
+{"Implementation approach":"We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.","File list":["main.py","game.py","ai.py","ui.py"],"Data structures and interfaces":"\nclassDiagram\n    class Game {\n        -board: list[list[str]]\n        -current_player: str\n        -game_over: bool\n        +__init__()\n        +make_move(row: int, col: int) bool\n        +check_winner() str\n        +is_draw() bool\n        +reset_game()\n    }\n    class AI {\n        -difficulty: str\n        +__init__(difficulty: str)\n        +get_move(game: Game) tuple[int, int]\n    }\n    class UI {\n        -screen: pygame.Surface\n        -game: Game\n        -ai: AI\n        +__init__(game: Game, ai: AI)\n        +draw_board()\n        +handle_click(pos: tuple[int, int]) bool\n        +show_winner(winner: str)\n        +show_draw()\n    }\n    Game --> UI\n    AI --> Game\n    UI --> Game\n    UI --> AI\n","Program call flow":"\nsequenceDiagram\n    participant M as Main\n    participant G as Game\n    participant A as AI\n    participant U as UI\n    M->>G: __init__()\n    M->>A: __init__(difficulty)\n    M->>U: __init__(game, ai)\n    loop Game Loop\n        U->>U: draw_board()\n        alt Player's turn\n            U->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        else AI's turn\n            U->>A: get_move(game)\n            A->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        end\n    end\n","Anything UNCLEAR":"The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class."}
+
+## Task
+{"Required packages":["pygame==2.0.1"],"Required Other language third-party packages":["No third-party dependencies required"],"Logic Analysis":[["game.py","Contains Game class with board state management, move validation, win/draw detection, and game reset functionality"],["ai.py","Contains AI class with move selection strategies for different difficulty levels, depends on Game class"],["ui.py","Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes"],["main.py","Entry point that initializes Game, AI and UI classes, and runs the main game loop"]],"Task list":["game.py","ai.py","ui.py","main.py"],"Full API spec":"","Shared Knowledge":"The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.","Anything UNCLEAR":"The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms."}
+
+## Legacy Code
+```Code
+
+```
+
+## Debug logs
+```text
+
+
+
+```
+
+## Bug Feedback logs
+```text
+
+```
+
+# Format example
+## Code: ai.py
+```python
+## ai.py
+...
+```
+
+# Instruction: Based on the context, follow "Format example", write code.
+
+## Code: ai.py. Write code with triple quoto, based on the following attentions and context.
+1. Only One file: do your best to implement THIS ONLY ONE FILE.
+2. COMPLETE CODE: Your code will be part of the entire project, so please implement complete, reliable, reusable code snippets.
+3. Set default value: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE. AVOID circular import.
+4. Follow design: YOU MUST FOLLOW "Data structures and interfaces". DONT CHANGE ANY DESIGN. Do not use public member functions that do not exist in your design.
+5. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
+6. Before using a external variable/module, make sure you import it first.
+7. Write out EVERY CODE DETAIL, DON'T LEAVE TODO.
+
+ ..
+2025-03-27 22:23:01.080 | INFO     | metagpt.actions.write_code:run:142 - Writing Prompt: 
+NOTICE
+Role: You are a professional engineer; the main goal is to write google-style, elegant, modular, easy to read and maintain code
+Language: Please use the same language as the user requirement, but the title and code should be still in English. For example, if the user speaks Chinese, the specific text of your answer should also be in Chinese.
+ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
+
+# Context
+## Design
+{"Implementation approach":"We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.","File list":["main.py","game.py","ai.py","ui.py"],"Data structures and interfaces":"\nclassDiagram\n    class Game {\n        -board: list[list[str]]\n        -current_player: str\n        -game_over: bool\n        +__init__()\n        +make_move(row: int, col: int) bool\n        +check_winner() str\n        +is_draw() bool\n        +reset_game()\n    }\n    class AI {\n        -difficulty: str\n        +__init__(difficulty: str)\n        +get_move(game: Game) tuple[int, int]\n    }\n    class UI {\n        -screen: pygame.Surface\n        -game: Game\n        -ai: AI\n        +__init__(game: Game, ai: AI)\n        +draw_board()\n        +handle_click(pos: tuple[int, int]) bool\n        +show_winner(winner: str)\n        +show_draw()\n    }\n    Game --> UI\n    AI --> Game\n    UI --> Game\n    UI --> AI\n","Program call flow":"\nsequenceDiagram\n    participant M as Main\n    participant G as Game\n    participant A as AI\n    participant U as UI\n    M->>G: __init__()\n    M->>A: __init__(difficulty)\n    M->>U: __init__(game, ai)\n    loop Game Loop\n        U->>U: draw_board()\n        alt Player's turn\n            U->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        else AI's turn\n            U->>A: get_move(game)\n            A->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        end\n    end\n","Anything UNCLEAR":"The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class."}
+
+## Task
+{"Required packages":["pygame==2.0.1"],"Required Other language third-party packages":["No third-party dependencies required"],"Logic Analysis":[["game.py","Contains Game class with board state management, move validation, win/draw detection, and game reset functionality"],["ai.py","Contains AI class with move selection strategies for different difficulty levels, depends on Game class"],["ui.py","Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes"],["main.py","Entry point that initializes Game, AI and UI classes, and runs the main game loop"]],"Task list":["game.py","ai.py","ui.py","main.py"],"Full API spec":"","Shared Knowledge":"The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.","Anything UNCLEAR":"The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms."}
+
+## Legacy Code
+```Code
+
+```
+
+## Debug logs
+```text
+
+
+
+```
+
+## Bug Feedback logs
+```text
+
+```
+
+# Format example
+## Code: game.py
+```python
+## game.py
+...
+```
+
+# Instruction: Based on the context, follow "Format example", write code.
+
+## Code: game.py. Write code with triple quoto, based on the following attentions and context.
+1. Only One file: do your best to implement THIS ONLY ONE FILE.
+2. COMPLETE CODE: Your code will be part of the entire project, so please implement complete, reliable, reusable code snippets.
+3. Set default value: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE. AVOID circular import.
+4. Follow design: YOU MUST FOLLOW "Data structures and interfaces". DONT CHANGE ANY DESIGN. Do not use public member functions that do not exist in your design.
+5. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
+6. Before using a external variable/module, make sure you import it first.
+7. Write out EVERY CODE DETAIL, DON'T LEAVE TODO.
+
+ ..
+2025-03-27 22:23:01.082 | INFO     | metagpt.actions.write_code:run:142 - Writing Prompt: 
+NOTICE
+Role: You are a professional engineer; the main goal is to write google-style, elegant, modular, easy to read and maintain code
+Language: Please use the same language as the user requirement, but the title and code should be still in English. For example, if the user speaks Chinese, the specific text of your answer should also be in Chinese.
+ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
+
+# Context
+## Design
+{"Implementation approach":"We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.","File list":["main.py","game.py","ai.py","ui.py"],"Data structures and interfaces":"\nclassDiagram\n    class Game {\n        -board: list[list[str]]\n        -current_player: str\n        -game_over: bool\n        +__init__()\n        +make_move(row: int, col: int) bool\n        +check_winner() str\n        +is_draw() bool\n        +reset_game()\n    }\n    class AI {\n        -difficulty: str\n        +__init__(difficulty: str)\n        +get_move(game: Game) tuple[int, int]\n    }\n    class UI {\n        -screen: pygame.Surface\n        -game: Game\n        -ai: AI\n        +__init__(game: Game, ai: AI)\n        +draw_board()\n        +handle_click(pos: tuple[int, int]) bool\n        +show_winner(winner: str)\n        +show_draw()\n    }\n    Game --> UI\n    AI --> Game\n    UI --> Game\n    UI --> AI\n","Program call flow":"\nsequenceDiagram\n    participant M as Main\n    participant G as Game\n    participant A as AI\n    participant U as UI\n    M->>G: __init__()\n    M->>A: __init__(difficulty)\n    M->>U: __init__(game, ai)\n    loop Game Loop\n        U->>U: draw_board()\n        alt Player's turn\n            U->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        else AI's turn\n            U->>A: get_move(game)\n            A->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        end\n    end\n","Anything UNCLEAR":"The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class."}
+
+## Task
+{"Required packages":["pygame==2.0.1"],"Required Other language third-party packages":["No third-party dependencies required"],"Logic Analysis":[["game.py","Contains Game class with board state management, move validation, win/draw detection, and game reset functionality"],["ai.py","Contains AI class with move selection strategies for different difficulty levels, depends on Game class"],["ui.py","Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes"],["main.py","Entry point that initializes Game, AI and UI classes, and runs the main game loop"]],"Task list":["game.py","ai.py","ui.py","main.py"],"Full API spec":"","Shared Knowledge":"The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.","Anything UNCLEAR":"The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms."}
+
+## Legacy Code
+```Code
+
+```
+
+## Debug logs
+```text
+
+
+
+```
+
+## Bug Feedback logs
+```text
+
+```
+
+# Format example
+## Code: ui.py
+```python
+## ui.py
+...
+```
+
+# Instruction: Based on the context, follow "Format example", write code.
+
+## Code: ui.py. Write code with triple quoto, based on the following attentions and context.
+1. Only One file: do your best to implement THIS ONLY ONE FILE.
+2. COMPLETE CODE: Your code will be part of the entire project, so please implement complete, reliable, reusable code snippets.
+3. Set default value: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE. AVOID circular import.
+4. Follow design: YOU MUST FOLLOW "Data structures and interfaces". DONT CHANGE ANY DESIGN. Do not use public member functions that do not exist in your design.
+5. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
+6. Before using a external variable/module, make sure you import it first.
+7. Write out EVERY CODE DETAIL, DON'T LEAVE TODO.
+
+ ..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:metagpt.utils.token_counter:Counting tokens for model gpt-4o-mini
+2025-03-27 22:23:12.052 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: gpt-4o-mini
+2025-03-27 22:23:12.052 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $10.000 | Current cost: $0.001, prompt_tokens: 1263, completion_tokens: 548
+2025-03-27 22:23:12.057 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/game.py
+2025-03-27 22:23:12.058 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/game.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:23:12.060 | INFO     | metagpt.actions.write_code:run:142 - Writing Prompt: 
+NOTICE
+Role: You are a professional engineer; the main goal is to write google-style, elegant, modular, easy to read and maintain code
+Language: Please use the same language as the user requirement, but the title and code should be still in English. For example, if the user speaks Chinese, the specific text of your answer should also be in Chinese.
+ATTENTION: Use '##' to SPLIT SECTIONS, not '#'. Output format carefully referenced "Format example".
+
+# Context
+## Design
+{"Implementation approach":"We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.","File list":["main.py","game.py","ai.py","ui.py"],"Data structures and interfaces":"\nclassDiagram\n    class Game {\n        -board: list[list[str]]\n        -current_player: str\n        -game_over: bool\n        +__init__()\n        +make_move(row: int, col: int) bool\n        +check_winner() str\n        +is_draw() bool\n        +reset_game()\n    }\n    class AI {\n        -difficulty: str\n        +__init__(difficulty: str)\n        +get_move(game: Game) tuple[int, int]\n    }\n    class UI {\n        -screen: pygame.Surface\n        -game: Game\n        -ai: AI\n        +__init__(game: Game, ai: AI)\n        +draw_board()\n        +handle_click(pos: tuple[int, int]) bool\n        +show_winner(winner: str)\n        +show_draw()\n    }\n    Game --> UI\n    AI --> Game\n    UI --> Game\n    UI --> AI\n","Program call flow":"\nsequenceDiagram\n    participant M as Main\n    participant G as Game\n    participant A as AI\n    participant U as UI\n    M->>G: __init__()\n    M->>A: __init__(difficulty)\n    M->>U: __init__(game, ai)\n    loop Game Loop\n        U->>U: draw_board()\n        alt Player's turn\n            U->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        else AI's turn\n            U->>A: get_move(game)\n            A->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        end\n    end\n","Anything UNCLEAR":"The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class."}
+
+## Task
+{"Required packages":["pygame==2.0.1"],"Required Other language third-party packages":["No third-party dependencies required"],"Logic Analysis":[["game.py","Contains Game class with board state management, move validation, win/draw detection, and game reset functionality"],["ai.py","Contains AI class with move selection strategies for different difficulty levels, depends on Game class"],["ui.py","Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes"],["main.py","Entry point that initializes Game, AI and UI classes, and runs the main game loop"]],"Task list":["game.py","ai.py","ui.py","main.py"],"Full API spec":"","Shared Knowledge":"The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.","Anything UNCLEAR":"The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms."}
+
+## Legacy Code
+```Code
+----- game.py
+```## game.py
+import numpy as np
+
+class Game:
+    """Class to manage the Tic Tac Toe game state and rules."""
+
+    def __init__(self) -> None:
+        """Initialize the game board and set the starting player."""
+        self.board: list[list[str]] = [['' for _ in range(3)] for _ in range(3)]
+        self.current_player: str = 'X'  # Player 'X' starts the game
+        self.game_over: bool = False
+
+    def make_move(self, row: int, col: int) -> bool:
+        """Make a move on the board.
+
+        Args:
+            row (int): The row index for the move.
+            col (int): The column index for the move.
+
+        Returns:
+            bool: True if the move was successful, False otherwise.
+        """
+        if self.board[row][col] == '' and not self.game_over:
+            self.board[row][col] = self.current_player
+            return True
+        return False
+
+    def check_winner(self) -> str:
+        """Check for a winner in the game.
+
+        Returns:
+            str: The symbol of the winner ('X' or 'O'), or an empty string if no winner.
+        """
+        # Check rows, columns, and diagonals for a winner
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] != '':
+                return self.board[i][0]
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] != '':
+                return self.board[0][i]
+
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != '':
+            return self.board[0][0]
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != '':
+            return self.board[0][2]
+
+        return ''
+
+    def is_draw(self) -> bool:
+        """Check if the game is a draw.
+
+        Returns:
+            bool: True if the game is a draw, False otherwise.
+        """
+        return all(cell != '' for row in self.board for cell in row) and not self.check_winner()
+
+    def reset_game(self) -> None:
+        """Reset the game to the initial state."""
+        self.board = [['' for _ in range(3)] for _ in range(3)]
+        self.current_player = 'X'
+        self.game_over = False
+```
+```
+
+## Debug logs
+```text
+
+
+
+```
+
+## Bug Feedback logs
+```text
+
+```
+
+# Format example
+## Code: main.py
+```python
+## main.py
+...
+```
+
+# Instruction: Based on the context, follow "Format example", write code.
+
+## Code: main.py. Write code with triple quoto, based on the following attentions and context.
+1. Only One file: do your best to implement THIS ONLY ONE FILE.
+2. COMPLETE CODE: Your code will be part of the entire project, so please implement complete, reliable, reusable code snippets.
+3. Set default value: If there is any setting, ALWAYS SET A DEFAULT VALUE, ALWAYS USE STRONG TYPE AND EXPLICIT VARIABLE. AVOID circular import.
+4. Follow design: YOU MUST FOLLOW "Data structures and interfaces". DONT CHANGE ANY DESIGN. Do not use public member functions that do not exist in your design.
+5. CAREFULLY CHECK THAT YOU DONT MISS ANY NECESSARY CLASS/FUNCTION IN THIS FILE.
+6. Before using a external variable/module, make sure you import it first.
+7. Write out EVERY CODE DETAIL, DON'T LEAVE TODO.
+
+ ..
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:metagpt.utils.token_counter:Counting tokens for model gpt-4o-mini
+2025-03-27 22:23:19.168 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: gpt-4o-mini
+2025-03-27 22:23:19.168 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $10.000 | Current cost: $0.001, prompt_tokens: 1807, completion_tokens: 458
+2025-03-27 22:23:19.171 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/main.py
+2025-03-27 22:23:19.172 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/main.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:23:41.984 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:23:41.987 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.002 | Max budget: $10.000 | Current cost: $0.000, prompt_tokens: 1300, completion_tokens: 1051
+2025-03-27 22:23:41.994 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ui.py
+2025-03-27 22:23:41.997 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ui.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:23:47.058 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:23:47.059 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.002 | Max budget: $10.000 | Current cost: $0.001, prompt_tokens: 1297, completion_tokens: 1226
+2025-03-27 22:23:47.064 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py
+2025-03-27 22:23:47.066 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:23:47.067 | INFO     | metagpt.roles.engineer:_act_sp_with_cr:880 - All coding tasks completed. Starting direct code refinement...
+2025-03-27 22:23:47.067 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:656 - Starting direct refinement of 4 files
+2025-03-27 22:23:47.067 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:660 - Will perform up to 2 iterations of code refinement
+2025-03-27 22:23:47.068 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:675 - Starting refinement iteration 1/2
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:26:14.958 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:26:14.961 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.003 | Max budget: $3.000 | Current cost: $0.002, prompt_tokens: 4259, completion_tokens: 4096
+2025-03-27 22:26:14.964 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:722 - Refinement iteration 1 overview: Made several improvements across the codebase: 1) Fixed import statements and organization, 2) Ensured consistent string comparison (empty string vs space), 3) Improved type hints and docstrings, 4) Fixed minor logic issues in AI move validation, 5) Ensured consistent naming conventions.
+2025-03-27 22:26:14.965 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:723 - Review status: LGTM
+2025-03-27 22:26:14.965 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:744 - Stopping refinement after iteration 1; Review status: LGTM
+2025-03-27 22:26:14.971 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/game.py
+2025-03-27 22:26:14.973 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/game.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:26:14.974 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:802 - Successfully refined game.py
+2025-03-27 22:26:14.977 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/main.py
+2025-03-27 22:26:14.978 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/main.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:26:14.978 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:802 - Successfully refined main.py
+2025-03-27 22:26:14.981 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py
+2025-03-27 22:26:14.982 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:26:14.982 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:802 - Successfully refined ai.py
+2025-03-27 22:26:14.984 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ui.py
+2025-03-27 22:26:14.985 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ui.py:['docs/task/20250327222213.json', 'docs/system_design/20250327222213.json']
+2025-03-27 22:26:14.986 | INFO     | metagpt.roles.engineer:_refine_codebase_directly:802 - Successfully refined ui.py
+2025-03-27 22:26:14.986 | INFO     | metagpt.roles.engineer:show_token_usage:608 - 
+==== TOKEN USAGE STATISTICS ====
+Team prompt tokens: 7735
+Team completion tokens: 5781
+Team total tokens: 13516
+Team cost: $0.0027
+
+==== AGGREGATE TOKEN USAGE ====
+Total prompt tokens: 41737
+Total completion tokens: 25479
+Total tokens: 67216
+Total cost: $0.0151
+==================================
+
+==== ENGINEER-SPECIFIC TOKEN USAGE ====
+Engineer: Alex (junior)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+Engineer: John (mid)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+Engineer: Nick (senior)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+Engineer: Alex (junior)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+Engineer: John (mid)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+Engineer: Nick (senior)
+  Prompt tokens: 5667
+  Completion tokens: 3283
+  Total tokens: 8950
+  Cost: $0.0021
+
+
+2025-03-27 22:26:14.998 | INFO     | metagpt.roles.engineer:_act_summarize:943 - --max-auto-summarize-code=0
+2025-03-27 22:26:15.060 | INFO     | metagpt.roles.qa_engineer:_write_test:68 - Writing test_ai.py..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+Starting application [software_company.py]
+hello
+[CONTENT]
+{
+    "Language": "en_us",
+    "Programming Language": "Python",
+    "Original Requirements": "Create a Tic Tac Toe game",
+    "Product Goals": [
+        "Create a simple and intuitive user interface",
+        "Ensure the game is responsive and works on different devices",
+        "Implement a fun and engaging gameplay experience"
+    ],
+    "User Stories": [
+        "As a player, I want to play against the computer with adjustable difficulty levels",
+        "As a player, I want to see a clear indication of whose turn it is",
+        "As a player, I want to be able to restart the game at any time",
+        "As a player, I want to see a celebration when I win",
+        "As a player, I want the game to be playable on both desktop and mobile"
+    ],
+    "Competitive Analysis": [
+        "Tic Tac Toe Game A: Simple interface, lacks AI opponent",
+        "PlayTicTacToe.org: Basic AI opponent, no difficulty levels",
+        "TicTacToe.com: Responsive UI, but cluttered with ads",
+        "MathIsFun Tic Tac Toe: Educational focus, minimal UI",
+        "Google Doodle Tic Tac Toe: Fun animations, limited features"
+    ],
+    "Competitive Quadrant Chart": "quadrantChart\n    title \"Tic Tac Toe Game Comparison\"\n    x-axis \"Low Features\" --> \"High Features\"\n    y-axis \"Low Engagement\" --> \"High Engagement\"\n    quadrant-1 \"We should expand\"\n    quadrant-2 \"Need to promote\"\n    quadrant-3 \"Re-evaluate\"\n    quadrant-4 \"May be improved\"\n    \"Tic Tac Toe Game A\": [0.2, 0.3]\n    \"PlayTicTacToe.org\": [0.4, 0.5]\n    \"TicTacToe.com\": [0.6, 0.4]\n    \"MathIsFun Tic Tac Toe\": [0.3, 0.6]\n    \"Google Doodle Tic Tac Toe\": [0.7, 0.8]\n    \"Our Target Product\": [0.65, 0.75]",
+    "Requirement Analysis": "The game needs a 3x3 grid, player vs computer mode, turn indication, win detection, and restart functionality. It should be responsive and have a clean UI.",
+    "Requirement Pool": [
+        [
+            "P0",
+            "Implement the 3x3 game board and basic gameplay logic"
+        ],
+        [
+            "P0",
+            "Create a simple AI opponent with adjustable difficulty"
+        ],
+        [
+            "P1",
+            "Add visual feedback for wins and draws"
+        ],
+        [
+            "P1",
+            "Implement responsive design for different screen sizes"
+        ],
+        [
+            "P2",
+            "Add animations for moves and game outcomes"
+        ]
+    ],
+    "UI Design draft": "A clean 3x3 grid with X and O markers. Turn indicator at the top. Restart button visible at all times. Simple color scheme with visual feedback for wins.",
+    "Anything UNCLEAR": "Should the game include multiplayer functionality or focus solely on single-player vs AI?"
+}
+[/CONTENT]
+[CONTENT]
+{
+    "Implementation approach": "We will create a simple Tic Tac Toe game using Python with Pygame for the graphical interface. The game will feature a 3x3 grid, player vs AI gameplay with adjustable difficulty levels, turn indication, win detection, and restart functionality. The UI will be responsive and work on different devices. We'll use Pygame's built-in features for animations and visual feedback.",
+    "File list": [
+        "main.py",
+        "game.py",
+        "ai.py",
+        "ui.py"
+    ],
+    "Data structures and interfaces": "\nclassDiagram\n    class Game {\n        -board: list[list[str]]\n        -current_player: str\n        -game_over: bool\n        +__init__()\n        +make_move(row: int, col: int) bool\n        +check_winner() str\n        +is_draw() bool\n        +reset_game()\n    }\n    class AI {\n        -difficulty: str\n        +__init__(difficulty: str)\n        +get_move(game: Game) tuple[int, int]\n    }\n    class UI {\n        -screen: pygame.Surface\n        -game: Game\n        -ai: AI\n        +__init__(game: Game, ai: AI)\n        +draw_board()\n        +handle_click(pos: tuple[int, int]) bool\n        +show_winner(winner: str)\n        +show_draw()\n    }\n    Game --> UI\n    AI --> Game\n    UI --> Game\n    UI --> AI\n",
+    "Program call flow": "\nsequenceDiagram\n    participant M as Main\n    participant G as Game\n    participant A as AI\n    participant U as UI\n    M->>G: __init__()\n    M->>A: __init__(difficulty)\n    M->>U: __init__(game, ai)\n    loop Game Loop\n        U->>U: draw_board()\n        alt Player's turn\n            U->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        else AI's turn\n            U->>A: get_move(game)\n            A->>G: make_move(row, col)\n            G-->>U: return success\n            G->>G: check_winner()\n            alt Winner found\n                G-->>U: show_winner(winner)\n            else Draw\n                G-->>U: show_draw()\n            end\n        end\n    end\n",
+    "Anything UNCLEAR": "The requirement is clear about focusing on single-player vs AI mode, so we won't implement multiplayer functionality. The only unclear aspect is whether the difficulty levels should be implemented as separate AI algorithms or just different move selection strategies - we'll implement them as different strategies within the same AI class."
+}
+[/CONTENT]
+[CONTENT]
+{
+    "Required packages": [
+        "pygame==2.0.1"
+    ],
+    "Required Other language third-party packages": [
+        "No third-party dependencies required"
+    ],
+    "Logic Analysis": [
+        [
+            "game.py",
+            "Contains Game class with board state management, move validation, win/draw detection, and game reset functionality"
+        ],
+        [
+            "ai.py",
+            "Contains AI class with move selection strategies for different difficulty levels, depends on Game class"
+        ],
+        [
+            "ui.py",
+            "Contains UI class for rendering game board, handling user input, and displaying game state, depends on both Game and AI classes"
+        ],
+        [
+            "main.py",
+            "Entry point that initializes Game, AI and UI classes, and runs the main game loop"
+        ]
+    ],
+    "Task list": [
+        "game.py",
+        "ai.py",
+        "ui.py",
+        "main.py"
+    ],
+    "Full API spec": "",
+    "Shared Knowledge": "The Game class maintains the core game state and rules that are shared across the project. The UI class handles all user interactions and visual feedback.",
+    "Anything UNCLEAR": "The difficulty levels implementation is clarified to be different move selection strategies within the same AI class rather than separate algorithms."
+}
+[/CONTENT]
+## Code: game.py
+```python
+## game.py
+import numpy as np
+
+class Game:
+    """Class to manage the Tic Tac Toe game state and rules."""
+
+    def __init__(self) -> None:
+        """Initialize the game board and set the starting player."""
+        self.board: list[list[str]] = [['' for _ in range(3)] for _ in range(3)]
+        self.current_player: str = 'X'  # Player 'X' starts the game
+        self.game_over: bool = False
+
+    def make_move(self, row: int, col: int) -> bool:
+        """Make a move on the board.
+
+        Args:
+            row (int): The row index for the move.
+##            col (int): The column index for the move.
+
+        Returns:
+            bool: True if the move was successful Code, False## otherwise.
+        """
+: ai        if self.board.py[row][col] == ''
+```python and not self.game
+"""_over:
+            selfAI.board[row][col Code] = module for self.current: ui_player
+ Tic            return True
+.py        return Tac To False
+
+
+```python    defe game check_w
+inner(self implementing) ->"""
+UI str:
+        """ different difficultyCheck for module for a winner levels."" in the game.
+
+ Tic        Returns"
+
+import Tac To:
+            str: random The symbole game of the winner ('
+from typingX' using Py or ' import TupleO'),game or an.
+Handles empty string
+from game if no winner.
+ rendering,        """
+ import Game        # user input Check rows
+
+
+class, columns, and, and diagonals AI for a game state winner
+:
+    """        for visualization i inAI player.
+ range( for3):
+"""
+
+import pygame            if self.board Tic[i][
+from0] Tac To == self typing import.board[i][1e with] == Tuple, self.board[i][ adjustable2] Optional != '':
+                return
+from game difficulty levels self.board.
+[i][ import Game0]
+            if    
+    Attributes self.board
+from[0:
+       ][i ai import] == difficulty: AI self.board The difficulty
+
+# Constants[1][i level of] ==
+SC the AIREEN_SIZE self.board ('easy = ([2', '][i600, 600medium',] != 'hard)
+GR'ID_CO '':
+                return self).
+   .board[LOR = """
+    
+   0][ (0i]
+
+        if def __ self.board, [0init__(0,][0self,] == 0 self.board difficulty:[1][1 str =] ==)
+BACKGROUND_CO self.board[2][2 'mediumLOR =] != '':
+           ') -> return self (255.board[0][ None, 0]
+        if self.board:
+        """255,[0][2Initialize AI] == 255 self.board[1 with specified)
+PLAY][1] == difficulty levelER_X self.board[2.
+][0_COLOR] != '':
+                   
+        Args = ( return self.board[:
+           0][255,2]
+
+ 0 difficulty:        return The ''
+
+   ,  def is_draw(self difficulty0) -> bool:
+ level ('        """)
+PLAYERCheck if the gameeasy', is a_O_CO draw.
+
+        Returns 'mediumLOR =:
+            bool:', ' (0 True ifhard',  the game).
+                      0, is a draw, Defaults 255 False otherwise to ')
+LINE.
+       medium_WIDTH """
+       '.
+        =  return all """
+        self5(cell !=.dif '' for
+F row in self.boardficulty = for cellONT_SIZE in row difficulty.lower = ) and()
+        not self48.check_winner()
+
+ if self    def
+
+class UI reset_game(self).dif -> None:
+   :
+       ficulty not """Reset """Hand the game in (' to theles all initial state."""
+       easy', self.board user 'medium = [['' for interface components _ in range(', ' of3)] for _hard in range(3'):
+            raise)]
+        self.current the Tic Tac ValueError("_player = Toe 'X'
+       Difficulty self.game game_over = False
+."""
+    
+   ```
+
+ def __init__(self, game: Game, ai: AI) must be 'easy', ' -> Nonemedium':
+        or ' """Initializehard' the UI with game")
+
+    def get and AI_move(self instances, game## Code.
+        
+       : main: Game.py
+```python Args) ->
+## main.py:
+            game Tuple[int
+import pygame
+import sys: The
+from game import, int Game
+from ai import AI Game instance]:
+       
+from ui import managing game UI
+
+ """Getdef main() -> state None:
+ the AI    """Main function
+            ai to initialize the game's next: The and run move based the game AI instance on current for computer loop."""
+ game state    # moves Initialize P andygame
+    pygame.init
+        difficulty()
+
+    # Set """
+        pygame the difficulty.
+        
+        level for the AI
+    difficulty: str =.init 'medium Args()
+        self' :
+            game # Default difficulty level
+   .s ai: AI = AI(dcreen =: The current gameifficulty) pygame.display instance.set_mode  #.
+            
+        Create an(SC AI instance with the ReturnsREEN_SIZE specified difficulty:
+            A
+    game:)
+        Game = tuple ( Game() pygame.display  #row, Create a Game instance.set_c
+    col) ui: UI = UI(game representing theaption("Tic, ai AI's)  Tac To move # Createe a UI.
+        instance with")
+        self the game """
+        if and AI.game
+
+    # Main self.d = gameifficulty
+        game loop
+    while True:
+        # Handle == ' events
+ self.ai        foreasy event in = ai pygame.event':
+            return.get():
+
+        self._ self.fontget_random            if event.type == pygame.QUIT = pygame:
+                pygame.quit_move(game.font.S()
+                sys.exitysFont()
+
+           )
+        elif self(None.dif, Fficulty == # Handle mouse click events
+            if event.type == pygame.MOUSEONT_SIZEBUTTONDOWN and event 'medium.button ==)
+        1':
+           :  self.c # Left mouse button return self
+               ell_size pos:._get tuple[int = SC, int] = pygame.mouseREEN_SIZE_medium.get_pos_move(game() [0 # Get mouse position)
+       ] //
+                else: 3 if ui.handle_click  #(pos):
+        
+     # Handle the hard def draw click in the UI
+            return
+                   _board(self # Check for winner self._) -> or draw after player'sget_h move
+ None                    winner: strard_move = game.check_winner()
+(game                    if:
+        """Draw the winner:
+)
+
+    def game                        ui _get.show_w board andinner(winner)_random_move current state  #(self, Show winner."""
+        game: if found
+                    self.s elif game.is_draw Game)():
+                        ui.showcreen.fill_draw()  # -> Tuple Show draw(BACKGROUND if applicable
+                    else:
+[int,_COLOR                        # int AI's)
+ turn
+                        ai]:
+        """_move:        
+        # tuple[int, intGet a] = Draw grid ai.get_move(game completely random)  lines # Get AI's valid move
+        for move
+                        game.
+.make_move i in(ai_move[0        
+        Args range(], ai_move[:
+           1,1]) game: 3  # The current Make AI):
+           's move
+                        game instance # Vertical winner = game.check.
+ lines            
+        Returns_winner()  # Check
+            pygame for winner after AI's move.draw.line
+                        if winner(
+               :
+                           :
+            A tuple ui.show (row_winner self.s(winner, col)  # Showcreen, winner if) representing found
+                        elif a random game.is 
+                GR_draw():
+                            ui valid move.show_drawID_CO()  # Show.
+        draw ifLOR, applicable
+
+ """
+        
+                       # Draw the valid_m (i game board
+        ui.drawoves =_board()
+ * self        pygame.display.flip []
+       () .cell # Update the display
+
+if_size, for row __name__ == in range 0 "__main__":
+   (3 main()),  # Run the):
+            
+                ( main function
+```
+ for coli * in range self.c(3ell_size):
+               , SC if gameREEN_SIZE.board[row[1][col]),] == 
+                LINE '_WIDTH '
+            )
+            #:
+                    valid_moves Horizontal lines.append((
+           row, pygame.draw.line(
+                self col))
+        return random.choice.screen(valid, 
+                GR_moves)
+
+   ID_CO def _LOR,get_ 
+               medium_move (0(self,, i game: * self Game).cell -> Tuple_size),[int, 
+                (SC intREEN_SIZE]:
+        """[0Get], i a move * self that.cell_size), sometimes blocks 
+                or LINE_WIDTH wins,
+            sometimes )
+ random.
+        
+               
+        # Args Draw X's and:
+            game O's: The
+        current game for row instance in range.
+            
+       (3 Returns):
+           :
+            A for col tuple ( in rangerow,(3 col)):
+                representing the cell_value AI = self's move.game.board.
+       [row][ """
+       col # ]
+                if50% cell_value chance to != " make a " smart move:
+                    color, = PLAY 50ER_X% random_COLOR
+        if cell if random_value ==.random() "X < " else0. PLAYER5_O_CO:
+            returnLOR self._
+                    textget_random_move(game = self.font.render)
+(cell        
+        #_value, Check for winning True, color move)
+                    text
+        move = self_rect = text._find.get__winrect(
+                        centerning_move(game,= 'O(
+                           ')
+        col * if move self.cell_size:
+            return + self move.cell
+            
+        # Check_size // for blocking 2 move,
+                           
+        move row * = self self.c._findell_size_win + selfning_move.cell(game,_size // 'X 2')
+       
+                        if move )
+                   :
+            )
+                    return move self.s
+            
+       creen.bl return selfit(text._get, text_random_move_rect(game)
+)
+
+    def        
+        pygame _get.display.fl_hardip_move(self()
+    
+    def handle, game: Game_click) ->(self, Tuple[int pos:, int Tuple[int]:
+       , int """Get]) -> the optimal bool move using:
+        """ minimaxHandle player algorithm click and.
+        
+        make Args move if:
+            game valid:2025-03-27 22:27:30.507 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:27:30.509 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.003 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 1703, completion_tokens: 1958
+2025-03-27 22:27:30.516 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ai.py
+2025-03-27 22:27:30.519 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ai.py:{'tic_tac_toe_1/ai.py'}
+2025-03-27 22:27:30.527 | INFO     | metagpt.roles.qa_engineer:_write_test:68 - Writing test_ui.py..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:28:21.732 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:28:21.734 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.004 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 1532, completion_tokens: 1272
+2025-03-27 22:28:21.741 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py
+2025-03-27 22:28:21.744 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py:{'tic_tac_toe_1/ui.py'}
+2025-03-27 22:28:21.750 | INFO     | metagpt.roles.qa_engineer:_write_test:68 - Writing test_main.py..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:29:22.656 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:29:22.658 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.005 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 962, completion_tokens: 1512
+2025-03-27 22:29:22.666 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_main.py
+2025-03-27 22:29:22.669 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_main.py:{'tic_tac_toe_1/main.py'}
+2025-03-27 22:29:22.675 | INFO     | metagpt.roles.qa_engineer:_write_test:68 - Writing test_game.py..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+ The.
+        
+        current game Args instance:
+            pos.
+            
+       : Tuple Returns of (x,:
+            A tuple ( y)row, coordinates of col) mouse click representing the
+            
+        optimal move Returns.
+       :
+            bool """
+       : True best_score if move = - was madefloat(',inf False otherwise')
+        best
+       _move = """
+        None if self
+        
+        for.game.game row in_over or range( self.game3.current_player):
+            for == col in "O range(":
+           3 return False):
+                if
+            
+        game.board col =[row][ pos[col]0] == ' // self '.cell:
+                    game_size.board[row
+        row][col = pos] = 'O[1] //'
+                    self.c score =ell_size self._
+        
+       minim if ax(game0 <=, False row < 3)
+                    game and .board[row0 <=][col col <] = 3 ':
+            '
+                    
+                    return self if score.game.make > best_move(row, col_score)
+       :
+                        best_score = return False score
+    
+   
+                        best def show_move =_winner (row(self,, col winner:)
+        
+        return str) -> None best_move:
+        or self """Display._get_random_move the winner message(game.
+)
+
+    def _min        
+        Args:
+           imax winner:(self, The winning game: player (" Game, is_maxX" or "imizingO: bool) ->")
+        """
+        message int:
+        """ = fMinim"Player {winnerax algorithm} wins implementation for!"
+        optimal self move selection._.
+show_message        
+        Args(message,:
+            PLAYER game:_X_CO The current gameLOR if winner == instance "X.
+           " else is_max PLAYERimizing_O_CO: WhetherLOR the)
+    
+    current player def show is maximizing_draw.
+(self) -> None            
+        Returns:
+       :
+            """Display The score the draw of the message current board."""
+        self state._show.
+       _message(" """
+       Game ended winner = in a game.check draw!",_winner GRID()
+       _COLOR if winner)
+ == 'O':
+            return 1
+        elif winner == '    
+    defX _show':
+            return -1_message(self
+       , message: str elif game, color.is_d: Tupleraw[int,():
+            return int, 0
+
+        int]) -> None if is:
+       _maxim """Helperizing method to:
+            best display game_score = messages -float.
+        
+       ('inf Args')
+           :
+            message for row in range: The(3 message to):
+                display for col
+            color: RGB in range color(3):
+                    tuple for if game the message.board[row
+       ][col """
+       ] == text ' ' = self:
+                       .font.render(message, game.board[row][ True,col] color = ')
+        textO_rect'
+                        score = text = self.get_rect(center=(SCREEN._minimax(game, False)
+                        game.board[row][col_SIZE[0]//2, SC] =REEN_SIZE '[1 '
+                        best]//_score =2 max())
+score,        
+        # best_score Create semi)
+           -transparent return best overlay_score
+        overlay
+        else = pygame:
+           .Surface best_score(SC = floatREEN_SIZE('inf, pygame')
+           .SRC for rowALP in rangeHA(3)
+        overlay):
+               .fill(( for col255,  in range(3255,):
+                    255 if game, .board[row128][col))
+       ] == self.s ' 'creen.bl:
+                       it( game.boardoverlay[row][, (col]0, = ' 0X))
+'
+                        score        
+        self = self.screen._min.blitimax(text,(game, text_ Truerect)
+                        game)
+        pygame.board[row.display.fl][colip] =()
+ '        
+        # '
+                        best Wait for_score = min( 2score, seconds before best_score continuing)
+           
+        pygame return best.time.wait_score(200
+
+    def0 _find)
+```
+_winning_move(self, game: Game, player: str) -> Tuple[int, int] | None:
+        """Find a move that would win the game for the given player.
+        
+        Args:
+            game: The current game instance.
+            player: The player to check for ('X' or 'O').
+            
+        Returns:
+            A tuple (row, col) representing the winning move, or None if none exists.
+        """
+        for row in range(3):
+            for col in range(3):
+                if game.board[row][col] == ' ':
+                    game.board[row][col] = player
+                    winner = game.check_winner()
+                    game.board[row][col] = ' '
+                    if winner == player:
+                        return (row, col)
+        return None
+```
+```python
+"""Test cases for the AI module in Tic Tac Toe game."""
+
+import unittest
+from unittest.mock import patch
+from typing import Tuple, Optional
+from tic_tac_toe_1.ai import AI
+from tic_tac_toe_1.game import Game
+
+
+class TestAI(unittest.TestCase):
+    """Test cases for the AI class."""
+
+    ## INITIALIZATION TESTS
+    def test_initialization_valid_difficulty(self) -> None:
+        """Test AI initialization with valid difficulty levels."""
+        for difficulty in ('easy', 'medium', 'hard'):
+            ai = AI(difficulty)
+            self.assertEqual(ai.difficulty, difficulty)
+
+    def test_initialization_invalid_difficulty(self) -> None:
+        """Test AI initialization with invalid difficulty level."""
+        with self.assertRaises(ValueError):
+            AI('invalid')
+
+    def test_initialization_case_insensitive(self) -> None:
+        """Test AI initialization with case-insensitive difficulty."""
+        ai = AI('HARD')
+        self.assertEqual(ai.difficulty, 'hard')
+
+    ## GET_MOVE TESTS
+    def test_get_move_easy(self) -> None:
+        """Test get_move for easy difficulty calls _get_random_move."""
+        ai = AI('easy')
+        game = Game()
+        with patch.object(ai, '_get_random_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    def test_get_move_medium(self) -> None:
+        """Test get_move for medium difficulty calls _get_medium_move."""
+        ai = AI('medium')
+        game = Game()
+        with patch.object(ai, '_get_medium_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    def test_get_move_hard(self) -> None:
+        """Test get_move for hard difficulty calls _get_hard_move."""
+        ai = AI('hard')
+        game = Game()
+        with patch.object(ai, '_get_hard_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    ## _GET_RANDOM_MOVE TESTS
+    def test_get_random_move_empty_board(self) -> None:
+        """Test _get_random_move with empty board returns valid move."""
+        ai = AI()
+        game = Game()
+        move = ai._get_random_move(game)
+        self.assertIsInstance(move, tuple)
+        self.assertEqual(len(move), 2)
+        row, col = move
+        self.assertTrue(0 <= row < 3)
+        self.assertTrue(0 <= col < 3)
+        self.assertEqual(game.board[row][col], '')
+
+    def test_get_random_move_full_board(self) -> None:
+        """Test _get_random_move with full board returns (0, 0)."""
+        ai = AI()
+        game = Game()
+        game.board = [['X' for _ in range(3)] for _ in range(3)]
+        move = ai._get_random_move(game)
+        self.assertEqual(move, (0, 0))
+
+    ## _GET_MEDIUM_MOVE TESTS
+    @patch('random.random', return_value=0.4)  # Force smart move
+    def test_get_medium_move_smart_win(self, mock_random) -> None:
+        """Test _get_medium_move makes winning move when available."""
+        ai = AI('medium')
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_medium_move(game)
+        self.assertEqual(move, (0, 2))
+
+    @patch('random.random', return_value=0.4)  # Force smart move
+    def test_get_medium_move_smart_block(self, mock_random) -> None:
+        """Test _get_medium_move makes blocking move when needed."""
+        ai = AI('medium')
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', '', ''],
+            ['', '', '']
+        ]
+        move = ai._get_medium_move(game)
+        self.assertEqual(move, (0, 2))
+
+    @patch('random.random', return_value=0.6)  # Force random move
+    def test_get_medium_move_random(self, mock_random) -> None:
+        """Test _get_medium_move makes random move when appropriate."""
+        ai = AI('medium')
+        game = Game()
+        with patch.object(ai, '_get_random_move') as mock_method:
+            mock_method.return_value = (1, 1)
+            move = ai._get_medium_move(game)
+            mock_method.assert_called_once_with(game)
+            self.assertEqual(move, (1, 1))
+
+    ## _GET_HARD_MOVE TESTS
+    def test_get_hard_move_winning_move(self) -> None:
+        """Test _get_hard_move makes immediate winning move."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        self.assertEqual(move, (0, 2))
+
+    def test_get_hard_move_blocking_move(self) -> None:
+        """Test _get_hard_move makes blocking move when needed."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', '', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        self.assertEqual(move, (0, 2))
+
+    def test_get_hard_move_optimal_move(self) -> None:
+        """Test _get_hard_move makes optimal move in early game."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['', '', ''],
+            ['', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        # Center is the best response to opponent's center move
+        self.assertEqual(move, (0, 0) if move == (0, 0) else self.assertEqual(move, (2, 2))
+
+    ## _FIND_WINNING_MOVE TESTS
+    def test_find_winning_move_player_o(self) -> None:
+        """Test _find_winning_move finds winning move for O."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'O')
+        self.assertEqual(move, (0, 2))
+
+    def test_find_winning_move_player_x(self) -> None:
+        """Test _find_winning_move finds winning move for X."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', 'O', ''],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'X')
+        self.assertEqual(move, (0, 2))
+
+    def test_find_winning_move_no_win(self) -> None:
+        """Test _find_winning_move returns None when no winning move."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'O', 'X'],
+            ['O', 'X', 'O'],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'X')
+        self.assertIsNone(move)
+
+    ## _MINIMAX TESTS
+    def test_minimax_win(self) -> None:
+        """Test _minimax returns correct score for winning board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['O', 'O', 'O'],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, 1)
+
+    def test_minimax_loss(self) -> None:
+        """Test _minimax returns correct score for losing board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'X', 'X'],
+            ['O', 'O', ''],
+            ['', '', '']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, -1)
+
+    def test_minimax_draw(self) -> None:
+        """Test _minimax returns correct score for draw board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'O', 'X'],
+            ['X', 'O', 'O'],
+            ['O', 'X', 'X']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+```python
+"""
+Unit tests for the UI module of Tic Tac Toe game.
+"""
+
+import unittest
+from unittest.mock import MagicMock, patch
+import pygame
+from tic_tac_toe_1.ui import UI
+from tic_tac_toe_1.game import Game
+from tic_tac_toe_1.ai import AI
+
+class TestUI(unittest.TestCase):
+    """Test cases for the UI class."""
+
+    def setUp(self) -> None:
+        """Set up test fixtures."""
+        self.game = Game()
+        self.ai = AI(self.game)
+        self.ui = UI(self.game, self.ai)
+        
+        # Mock pygame.display.flip to avoid actual screen updates during tests
+        self.ui.screen = MagicMock()
+        self.ui.screen.fill = MagicMock()
+        self.ui.screen.blit = MagicMock()
+        pygame.display.flip = MagicMock()
+
+    def tearDown(self) -> None:
+        """Clean up after tests."""
+        pygame.quit()
+
+    ## INITIALIZATION TESTS
+    def test_initialization(self) -> None:
+        """Test UI initialization."""
+        self.assertIsInstance(self.ui.game, Game)
+        self.assertIsInstance(self.ui.ai, AI)
+        self.assertEqual(self.ui.cell_size, 200)  # 600 / 3
+        self.assertIsNotNone(self.ui.font)
+
+    ## DRAW BOARD TESTS
+    def test_draw_board_empty(self) -> None:
+        """Test drawing an empty board."""
+        self.game.board = [["", "", ""], ["", "", ""], ["", "", ""]]
+        self.ui.draw_board()
+        
+        # Verify background and grid lines are drawn
+        self.ui.screen.fill.assert_called_once_with((255, 255, 255))
+        self.assertEqual(pygame.draw.line.call_count, 4)  # 2 vertical + 2 horizontal lines
+        self.assertEqual(self.ui.screen.blit.call_count, 0)  # No X/O rendered
+
+    def test_draw_board_with_moves(self) -> None:
+        """Test drawing a board with some moves."""
+        self.game.board = [["X", "", "O"], ["", "X", ""], ["", "", "O"]]
+        self.ui.draw_board()
+        
+        # Verify X's and O's are rendered
+        self.assertGreater(self.ui.screen.blit.call_count, 0)
+
+    ## HANDLE CLICK TESTS
+    def test_handle_click_valid_move(self) -> None:
+        """Test handling a valid click."""
+        self.game.current_player = "X"
+        self.game.make_move = MagicMock(return_value=True)
+        
+        result = self.ui.handle_click((100, 100))  # Should be cell (0, 0)
+        self.assertTrue(result)
+        self.game.make_move.assert_called_once_with(0, 0)
+
+    def test_handle_click_invalid_position(self) -> None:
+        """Test handling click outside board."""
+        self.game.current_player = "X"
+        self.game.make_move = MagicMock()
+        
+        # Click outside board
+        result = self.ui.handle_click((-10, -10))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_occupied_cell(self) -> None:
+        """Test handling click on occupied cell."""
+        self.game.current_player = "X"
+        self.game.board[0][0] = "X"
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))  # Cell (0, 0) is occupied
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_when_game_over(self) -> None:
+        """Test handling click when game is over."""
+        self.game.game_over = True
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_when_ai_turn(self) -> None:
+        """Test handling click when it's AI's turn."""
+        self.game.current_player = "O"
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    ## MESSAGE DISPLAY TESTS
+    @patch('pygame.time.wait')
+    def test_show_winner(self, mock_wait: MagicMock) -> None:
+        """Test showing winner message."""
+        mock_wait.return_value = None
+        
+        # Test X winner
+        self.ui.show_winner("X")
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+        
+        # Test O winner
+        mock_wait.reset_mock()
+       2025-03-27 22:30:12.501 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:30:12.503 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.005 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 1094, completion_tokens: 1267
+2025-03-27 22:30:12.510 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_game.py
+2025-03-27 22:30:12.513 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_game.py:{'tic_tac_toe_1/game.py'}
+2025-03-27 22:30:12.518 | INFO     | metagpt.roles.qa_engineer:_write_test:93 - Done /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests generating.
+2025-03-27 22:30:12.518 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"bbc3e757e33147ceb70a2d11644c8973","content":"Round 1 of tests done","role":"QaEngineer_Edward","cause_by":"metagpt.actions.write_test.WriteTest","sent_from":"QaEngineer_Edward","send_to":["<none>"]}
+2025-03-27 22:30:12.528 | INFO     | metagpt.actions.run_code:run:122 - Running python tests/test_ai.py
+2025-03-27 22:30:12.528 | INFO     | metagpt.actions.run_code:run_script:103 - Python Path : {'NVM_RC_VERSION': '', 'TERM_PROGRAM': 'vscode', 'NVM_CD_FLAGS': '-q', 'TERM': 'xterm-256color', 'SHELL': '/bin/zsh', 'HOMEBREW_REPOSITORY': '/opt/homebrew', 'TMPDIR': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/', 'TERM_PROGRAM_VERSION': '0.46.8', 'ZDOTDIR': '/Users/junyao', 'CURSOR_TRACE_ID': '57f97d2bfba440bd83788893d7e294da', 'ORIGINAL_XDG_CURRENT_DESKTOP': 'undefined', 'MallocNanoZone': '0', 'NVM_DIR': '/Users/junyao/.nvm', 'USER': 'junyao', 'COMMAND_MODE': 'unix2003', 'RBENV_ROOT': 'Users/junyao/.rbenv-version', 'SSH_AUTH_SOCK': '/private/tmp/com.apple.launchd.ySwtqAHZpI/Listeners', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'PATH': '/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/junyao/google-cloud-sdk/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Users/junyao/Library/Application Support/JetBrains/Toolbox/scripts:/Users/junyao/flutter/bin:/Users/junyao/.cabal/bin:/Users/junyao/.ghcup/bin:/Users/junyao/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/junyao/flutter/bin', '_': '/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', 'USER_ZDOTDIR': '/Users/junyao', '__CFBundleIdentifier': 'com.todesktop.230313mzl4w4u92', 'PWD': '/Users/junyao/MetaGPT/metagpt', 'JAVA_HOME': '/Library/Java/JavaVirtualMachines/jdk-17.0.7.jdk/Contents/Home', 'LANG': 'en_US.UTF-8', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'XPC_FLAGS': '0x0', 'XPC_SERVICE_NAME': '0', 'VSCODE_INJECTION': '1', 'SHLVL': '2', 'HOME': '/Users/junyao', 'VSCODE_GIT_ASKPASS_MAIN': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass-main.js', 'HOMEBREW_PREFIX': '/opt/homebrew', 'LOGNAME': 'junyao', 'VSCODE_GIT_IPC_HANDLE': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/vscode-git-40b9462617.sock', 'VSCODE_GIT_ASKPASS_NODE': '/Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Plugin).app/Contents/MacOS/Cursor Helper (Plugin)', 'GIT_ASKPASS': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass.sh', 'INFOPATH': '/opt/homebrew/share/info:/opt/homebrew/share/info:', 'HOMEBREW_CELLAR': '/opt/homebrew/Cellar', 'COLORTERM': 'truecolor', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE', 'LD_LIBRARY_PATH': '/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/cv2/../../lib:', 'PYGAME_HIDE_SUPPORT_PROMPT': 'hide', 'PYTHONPATH': '/Users/junyao/MetaGPT/workspace/tic_tac_toe_1:/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1:'}
+2025-03-27 22:30:12.543 | INFO     | metagpt.actions.run_code:run_script:110 - python tests/test_ai.py
+2025-03-27 22:30:12.601 | INFO     | metagpt.actions.run_code:run:132 - outs=''
+2025-03-27 22:30:12.601 | INFO     | metagpt.actions.run_code:run:133 - errs='  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ai.py", line 150\n    self.assertEqual(move, (0, 0) if move == (0, 0) else self.assertEqual(move, (2, 2))\n                    ^\nSyntaxError: \'(\' was never closed\n'
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:30:24.969 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:30:24.972 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.006 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 3633, completion_tokens: 152
+2025-03-27 22:30:24.979 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_ai.py.json
+2025-03-27 22:30:24.982 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_ai.py.json:{'tic_tac_toe_1/ai.py', 'tests/test_ai.py'}
+2025-03-27 22:30:24.992 | INFO     | metagpt.actions.run_code:run:122 - Running python tests/test_ui.py
+2025-03-27 22:30:24.992 | INFO     | metagpt.actions.run_code:run_script:103 - Python Path : {'NVM_RC_VERSION': '', 'TERM_PROGRAM': 'vscode', 'NVM_CD_FLAGS': '-q', 'TERM': 'xterm-256color', 'SHELL': '/bin/zsh', 'HOMEBREW_REPOSITORY': '/opt/homebrew', 'TMPDIR': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/', 'TERM_PROGRAM_VERSION': '0.46.8', 'ZDOTDIR': '/Users/junyao', 'CURSOR_TRACE_ID': '57f97d2bfba440bd83788893d7e294da', 'ORIGINAL_XDG_CURRENT_DESKTOP': 'undefined', 'MallocNanoZone': '0', 'NVM_DIR': '/Users/junyao/.nvm', 'USER': 'junyao', 'COMMAND_MODE': 'unix2003', 'RBENV_ROOT': 'Users/junyao/.rbenv-version', 'SSH_AUTH_SOCK': '/private/tmp/com.apple.launchd.ySwtqAHZpI/Listeners', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'PATH': '/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/junyao/google-cloud-sdk/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Users/junyao/Library/Application Support/JetBrains/Toolbox/scripts:/Users/junyao/flutter/bin:/Users/junyao/.cabal/bin:/Users/junyao/.ghcup/bin:/Users/junyao/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/junyao/flutter/bin', '_': '/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', 'USER_ZDOTDIR': '/Users/junyao', '__CFBundleIdentifier': 'com.todesktop.230313mzl4w4u92', 'PWD': '/Users/junyao/MetaGPT/metagpt', 'JAVA_HOME': '/Library/Java/JavaVirtualMachines/jdk-17.0.7.jdk/Contents/Home', 'LANG': 'en_US.UTF-8', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'XPC_FLAGS': '0x0', 'XPC_SERVICE_NAME': '0', 'VSCODE_INJECTION': '1', 'SHLVL': '2', 'HOME': '/Users/junyao', 'VSCODE_GIT_ASKPASS_MAIN': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass-main.js', 'HOMEBREW_PREFIX': '/opt/homebrew', 'LOGNAME': 'junyao', 'VSCODE_GIT_IPC_HANDLE': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/vscode-git-40b9462617.sock', 'VSCODE_GIT_ASKPASS_NODE': '/Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Plugin).app/Contents/MacOS/Cursor Helper (Plugin)', 'GIT_ASKPASS': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass.sh', 'INFOPATH': '/opt/homebrew/share/info:/opt/homebrew/share/info:', 'HOMEBREW_CELLAR': '/opt/homebrew/Cellar', 'COLORTERM': 'truecolor', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE', 'LD_LIBRARY_PATH': '/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/cv2/../../lib:', 'PYGAME_HIDE_SUPPORT_PROMPT': 'hide', 'PYTHONPATH': '/Users/junyao/MetaGPT/workspace/tic_tac_toe_1:/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1:'}
+2025-03-27 22:30:25.001 | INFO     | metagpt.actions.run_code:run_script:110 - python tests/test_ui.py
+2025-03-27 22:30:26.755 | INFO     | metagpt.actions.run_code:run:132 - outs=''
+2025-03-27 22:30:26.756 | INFO     | metagpt.actions.run_code:run:133 - errs='EEEEEEEEEEE\n======================================================================\nERROR: test_draw_board_empty (__main__.TestUI.test_draw_board_empty)\nTest drawing an empty board.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_draw_board_with_moves (__main__.TestUI.test_draw_board_with_moves)\nTest drawing a board with some moves.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_handle_click_invalid_position (__main__.TestUI.test_handle_click_invalid_position)\nTest handling click outside board.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_handle_click_occupied_cell (__main__.TestUI.test_handle_click_occupied_cell)\nTest handling click on occupied cell.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_handle_click_valid_move (__main__.TestUI.test_handle_click_valid_move)\nTest handling a valid click.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_handle_click_when_ai_turn (__main__.TestUI.test_handle_click_when_ai_turn)\nTest handling click when it\'s AI\'s turn.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_handle_click_when_game_over (__main__.TestUI.test_handle_click_when_game_over)\nTest handling click when game is over.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_initialization (__main__.TestUI.test_initialization)\nTest UI initialization.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_show_draw (__main__.TestUI.test_show_draw)\nTest showing draw message.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_show_message (__main__.TestUI.test_show_message)\nTest the _show_message helper method.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n======================================================================\nERROR: test_show_winner (__main__.TestUI.test_show_winner)\nTest showing winner message.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py", line 18, in setUp\n    self.ai = AI(self.game)\n              ^^^^^^^^^^^^^\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1/ai.py", line 22, in __init__\n    self.difficulty = difficulty.lower()\n                      ^^^^^^^^^^^^^^^^\nAttributeError: \'Game\' object has no attribute \'lower\'\n\n----------------------------------------------------------------------\nRan 11 tests in 0.001s\n\nFAILED (errors=11)\n'
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:30:37.767 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:30:37.769 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.006 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 4477, completion_tokens: 154
+2025-03-27 22:30:37.774 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_ui.py.json
+2025-03-27 22:30:37.776 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_ui.py.json:{'tests/test_ui.py', 'tic_tac_toe_1/ui.py'}
+2025-03-27 22:30:37.782 | INFO     | metagpt.actions.run_code:run:122 - Running python tests/test_main.py
+2025-03-27 22:30:37.782 | INFO     | metagpt.actions.run_code:run_script:103 - Python Path : {'NVM_RC_VERSION': '', 'TERM_PROGRAM': 'vscode', 'NVM_CD_FLAGS': '-q', 'TERM': 'xterm-256color', 'SHELL': '/bin/zsh', 'HOMEBREW_REPOSITORY': '/opt/homebrew', 'TMPDIR': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/', 'TERM_PROGRAM_VERSION': '0.46.8', 'ZDOTDIR': '/Users/junyao', 'CURSOR_TRACE_ID': '57f97d2bfba440bd83788893d7e294da', 'ORIGINAL_XDG_CURRENT_DESKTOP': 'undefined', 'MallocNanoZone': '0', 'NVM_DIR': '/Users/junyao/.nvm', 'USER': 'junyao', 'COMMAND_MODE': 'unix2003', 'RBENV_ROOT': 'Users/junyao/.rbenv-version', 'SSH_AUTH_SOCK': '/private/tmp/com.apple.launchd.ySwtqAHZpI/Listeners', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'PATH': '/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/junyao/google-cloud-sdk/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Users/junyao/Library/Application Support/JetBrains/Toolbox/scripts:/Users/junyao/flutter/bin:/Users/junyao/.cabal/bin:/Users/junyao/.ghcup/bin:/Users/junyao/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/junyao/flutter/bin', '_': '/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', 'USER_ZDOTDIR': '/Users/junyao', '__CFBundleIdentifier': 'com.todesktop.230313mzl4w4u92', 'PWD': '/Users/junyao/MetaGPT/metagpt', 'JAVA_HOME': '/Library/Java/JavaVirtualMachines/jdk-17.0.7.jdk/Contents/Home', 'LANG': 'en_US.UTF-8', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'XPC_FLAGS': '0x0', 'XPC_SERVICE_NAME': '0', 'VSCODE_INJECTION': '1', 'SHLVL': '2', 'HOME': '/Users/junyao', 'VSCODE_GIT_ASKPASS_MAIN': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass-main.js', 'HOMEBREW_PREFIX': '/opt/homebrew', 'LOGNAME': 'junyao', 'VSCODE_GIT_IPC_HANDLE': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/vscode-git-40b9462617.sock', 'VSCODE_GIT_ASKPASS_NODE': '/Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Plugin).app/Contents/MacOS/Cursor Helper (Plugin)', 'GIT_ASKPASS': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass.sh', 'INFOPATH': '/opt/homebrew/share/info:/opt/homebrew/share/info:', 'HOMEBREW_CELLAR': '/opt/homebrew/Cellar', 'COLORTERM': 'truecolor', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE', 'LD_LIBRARY_PATH': '/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/cv2/../../lib:', 'PYGAME_HIDE_SUPPORT_PROMPT': 'hide', 'PYTHONPATH': '/Users/junyao/MetaGPT/workspace/tic_tac_toe_1:/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1:'}
+2025-03-27 22:30:37.790 | INFO     | metagpt.actions.run_code:run_script:110 - python tests/test_main.py
+2025-03-27 22:30:47.792 | INFO     | metagpt.actions.run_code:run_script:116 - The command did not complete within the given timeout.
+2025-03-27 22:30:47.820 | INFO     | metagpt.actions.run_code:run:132 - outs=''
+2025-03-27 22:30:47.820 | INFO     | metagpt.actions.run_code:run:133 - errs=''
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:30:56.438 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:30:56.439 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.007 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 2371, completion_tokens: 103
+2025-03-27 22:30:56.447 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_main.py.json
+2025-03-27 22:30:56.449 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_main.py.json:{'tic_tac_toe_1/main.py', 'tests/test_main.py'}
+2025-03-27 22:30:56.450 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"04475336285e4ab5bcb92c747ccefadb","content":"{\"mode\":\"script\",\"code\":null,\"code_filename\":\"main.py\",\"test_code\":null,\"test_filename\":\"test_main.py\",\"command\":[\"python\",\"tests/test_main.py\"],\"working_directory\":\"/Users/junyao/MetaGPT/workspace/tic_tac_toe_1\",\"additional_python_paths\":[\"/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1\"],\"output_filename\":\"test_main.py.json\",\"output\":null}","role":"QaEngineer_Edward","cause_by":"metagpt.actions.run_code.RunCode","sent_from":"metagpt.roles.qa_engineer.QaEngineer","send_to":["<none>"]}
+2025-03-27 22:30:56.459 | INFO     | metagpt.actions.run_code:run:122 - Running python tests/test_game.py
+2025-03-27 22:30:56.459 | INFO     | metagpt.actions.run_code:run_script:103 - Python Path : {'NVM_RC_VERSION': '', 'TERM_PROGRAM': 'vscode', 'NVM_CD_FLAGS': '-q', 'TERM': 'xterm-256color', 'SHELL': '/bin/zsh', 'HOMEBREW_REPOSITORY': '/opt/homebrew', 'TMPDIR': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/', 'TERM_PROGRAM_VERSION': '0.46.8', 'ZDOTDIR': '/Users/junyao', 'CURSOR_TRACE_ID': '57f97d2bfba440bd83788893d7e294da', 'ORIGINAL_XDG_CURRENT_DESKTOP': 'undefined', 'MallocNanoZone': '0', 'NVM_DIR': '/Users/junyao/.nvm', 'USER': 'junyao', 'COMMAND_MODE': 'unix2003', 'RBENV_ROOT': 'Users/junyao/.rbenv-version', 'SSH_AUTH_SOCK': '/private/tmp/com.apple.launchd.ySwtqAHZpI/Listeners', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'PATH': '/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/junyao/google-cloud-sdk/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Users/junyao/Library/Application Support/JetBrains/Toolbox/scripts:/Users/junyao/flutter/bin:/Users/junyao/.cabal/bin:/Users/junyao/.ghcup/bin:/Users/junyao/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/junyao/flutter/bin', '_': '/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', 'USER_ZDOTDIR': '/Users/junyao', '__CFBundleIdentifier': 'com.todesktop.230313mzl4w4u92', 'PWD': '/Users/junyao/MetaGPT/metagpt', 'JAVA_HOME': '/Library/Java/JavaVirtualMachines/jdk-17.0.7.jdk/Contents/Home', 'LANG': 'en_US.UTF-8', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'XPC_FLAGS': '0x0', 'XPC_SERVICE_NAME': '0', 'VSCODE_INJECTION': '1', 'SHLVL': '2', 'HOME': '/Users/junyao', 'VSCODE_GIT_ASKPASS_MAIN': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass-main.js', 'HOMEBREW_PREFIX': '/opt/homebrew', 'LOGNAME': 'junyao', 'VSCODE_GIT_IPC_HANDLE': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/vscode-git-40b9462617.sock', 'VSCODE_GIT_ASKPASS_NODE': '/Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Plugin).app/Contents/MacOS/Cursor Helper (Plugin)', 'GIT_ASKPASS': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass.sh', 'INFOPATH': '/opt/homebrew/share/info:/opt/homebrew/share/info:', 'HOMEBREW_CELLAR': '/opt/homebrew/Cellar', 'COLORTERM': 'truecolor', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE', 'LD_LIBRARY_PATH': '/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/cv2/../../lib:', 'PYGAME_HIDE_SUPPORT_PROMPT': 'hide', 'PYTHONPATH': '/Users/junyao/MetaGPT/workspace/tic_tac_toe_1:/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1:'}
+2025-03-27 22:30:56.468 | INFO     | metagpt.actions.run_code:run_script:110 - python tests/test_game.py
+2025-03-27 22:30:56.638 | INFO     | metagpt.actions.run_code:run:132 - outs=''
+2025-03-27 22:30:56.638 | INFO     | metagpt.actions.run_code:run:133 - errs='.......F......\n======================================================================\nFAIL: test_is_draw_false_with_winner (__main__.TestGame.test_is_draw_false_with_winner)\nTest is_draw when there is a winner (should not be draw).\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File "/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_game.py", line 99, in test_is_draw_false_with_winner\n    self.assertTrue(self.game.game_over)  # Because there\'s a winner\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 14 tests in 0.001s\n\nFAILED (failures=1)\n'
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:31:06.924 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:31:06.925 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.007 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 2411, completion_tokens: 137
+2025-03-27 22:31:06.929 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_game.py.json
+2025-03-27 22:31:06.931 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/test_outputs/test_game.py.json:{'tests/test_game.py', 'tic_tac_toe_1/game.py'}
+2025-03-27 22:31:06.931 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"a7734d822c9b49309cef402d4a55e7f0","content":"{\"mode\":\"script\",\"code\":null,\"code_filename\":\"game.py\",\"test_code\":null,\"test_filename\":\"test_game.py\",\"command\":[\"python\",\"tests/test_game.py\"],\"working_directory\":\"/Users/junyao/MetaGPT/workspace/tic_tac_toe_1\",\"additional_python_paths\":[\"/Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tic_tac_toe_1\"],\"output_filename\":\"test_game.py.json\",\"output\":null}","role":"QaEngineer_Edward","cause_by":"metagpt.actions.run_code.RunCode","sent_from":"metagpt.roles.qa_engineer.QaEngineer","send_to":["Alex"]}
+2025-03-27 22:31:06.932 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"b898b0073e2e44fab82d320e46aad777","content":"Round 2 of tests done","role":"QaEngineer_Edward","cause_by":"metagpt.actions.write_test.WriteTest","sent_from":"QaEngineer_Edward","send_to":["<none>"]}
+2025-03-27 22:31:06.935 | INFO     | metagpt.actions.debug_error:run:61 - Debug and rewrite test_ai.py
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 22:32:27.459 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:32:27.462 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.008 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 3515, completion_tokens: 2156
+2025-03-27 22:32:27.469 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ai.py
+2025-03-27 22:32:27.475 | INFO     | metagpt.actions.debug_error:run:61 - Debug and rewrite test_ui.py
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 200 OK"
+ self.ui.show_winner("O")
+        mock_wait.assert_called_once_with(2000)
+
+    @patch('pygame.time.wait')
+    def test_show_draw(self, mock_wait: MagicMock) -> None:
+        """Test showing draw message."""
+        mock_wait.return_value = None
+        self.ui.show_draw()
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+
+    ## HELPER METHOD TESTS
+    @patch('pygame.time.wait')
+    def test_show_message(self, mock_wait: MagicMock) -> None:
+        """Test the _show_message helper method."""
+        mock_wait.return_value = None
+        test_message = "Test Message"
+        test_color = (255, 0, 0)
+        
+        self.ui._show_message(test_message, test_color)
+        
+        # Verify overlay and message are displayed
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+```python
+"""
+Test cases for main.py in the Tic Tac Toe game implementation.
+These tests verify the main game loop and event handling functionality.
+"""
+
+import unittest
+from unittest.mock import patch, MagicMock
+import pygame
+import sys
+from tic_tac_toe_1.main import main
+from tic_tac_toe_1.game import Game
+from tic_tac_toe_1.ai import AI
+from tic_tac_toe_1.ui import UI
+
+class TestMain(unittest.TestCase):
+    """Test cases for the main game function and loop."""
+
+    def setUp(self) -> None:
+        """Set up test fixtures."""
+        pygame.init = MagicMock()
+        pygame.quit = MagicMock()
+        pygame.event.get = MagicMock()
+        pygame.mouse.get_pos = MagicMock()
+        pygame.display.flip = MagicMock()
+        sys.exit = MagicMock()
+
+    def tearDown(self) -> None:
+        """Clean up after tests."""
+        patch.stopall()
+
+    ## TEST INITIALIZATION
+    def test_main_initializes_pygame(self) -> None:
+        """Test that pygame is initialized when main() is called."""
+        with patch('tic_tac_toe_1.main.Game'), \
+             patch('tic_tac_toe_1.main.AI'), \
+             patch('tic_tac_toe_1.main.UI'):
+            main()
+            pygame.init.assert_called_once()
+
+    def test_main_creates_game_objects(self) -> None:
+        """Test that Game, AI and UI objects are created with correct parameters."""
+        with patch('tic_tac_toe_1.main.Game') as mock_game, \
+             patch('tic_tac_toe_1.main.AI') as mock_ai, \
+             patch('tic_tac_toe_1.main.UI') as mock_ui:
+            main()
+            mock_ai.assert_called_once_with('medium')
+            mock_game.assert_called_once()
+            mock_ui.assert_called_once_with(mock_game.return_value, mock_ai.return_value)
+
+    ## TEST EVENT HANDLING
+    def test_main_handles_quit_event(self) -> None:
+        """Test that the game exits cleanly when QUIT event is received."""
+        mock_event = MagicMock()
+        mock_event.type = pygame.QUIT
+        pygame.event.get.return_value = [mock_event]
+
+        with patch('tic_tac_toe_1.main.Game'), \
+             patch('tic_tac_toe_1.main.AI'), \
+             patch('tic_tac_toe_1.main.UI'):
+            main()
+            pygame.quit.assert_called_once()
+            sys.exit.assert_called_once_with(0)
+
+    def test_main_handles_mouse_click(self) -> None:
+        """Test that mouse clicks are properly handled."""
+        mock_event = MagicMock()
+        mock_event.type = pygame.MOUSEBUTTONDOWN
+        mock_event.button = 1  # Left mouse button
+        pygame.event.get.return_value = [mock_event]
+        pygame.mouse.get_pos.return_value = (100, 100)
+
+        mock_ui = MagicMock()
+        mock_ui.handle_click.return_value = True
+        mock_game = MagicMock()
+        mock_game.check_winner.return_value = None
+        mock_game.is_draw.return_value = False
+        mock_ai = MagicMock()
+        mock_ai.get_move.return_value = (0, 0)
+
+        with patch('tic_tac_toe_1.main.Game', return_value=mock_game), \
+             patch('tic_tac_toe_1.main.AI', return_value=mock_ai), \
+             patch('tic_tac_toe_1.main.UI', return_value=mock_ui):
+            main()
+            mock_ui.handle_click.assert_called_once_with((100, 100))
+            mock_game.check_winner.assert_called()
+            mock_game.make_move.assert_called_once_with(0, 0)
+
+    ## TEST GAME STATE CHANGES
+    def test_main_detects_player_win(self) -> None:
+        """Test that player win is properly detected and handled."""
+        mock_event = MagicMock()
+        mock_event.type = pygame.MOUSEBUTTONDOWN
+        mock_event.button = 1
+        pygame.event.get.return_value = [mock_event]
+        pygame.mouse.get_pos.return_value = (100, 100)
+
+        mock_ui = MagicMock()
+        mock_ui.handle_click.return_value = True
+        mock_game = MagicMock()
+        mock_game.check_winner.side_effect = ['X', None]  # Player wins first check
+        mock_game.is_draw.return_value = False
+        mock_ai = MagicMock()
+
+        with patch('tic_tac_toe_1.main.Game', return_value=mock_game), \
+             patch('tic_tac_toe_1.main.AI', return_value=mock_ai), \
+             patch('tic_tac_toe_1.main.UI', return_value=mock_ui):
+            main()
+            mock_ui.show_winner.assert_called_once_with('X')
+            mock_game.reset_game.assert_called_once()
+
+    def test_main_detects_draw(self) -> None:
+        """Test that draw is properly detected and handled."""
+        mock_event = MagicMock()
+        mock_event.type = pygame.MOUSEBUTTONDOWN
+        mock_event.button = 1
+        pygame.event.get.return_value = [mock_event]
+        pygame.mouse.get_pos.return_value = (100, 100)
+
+        mock_ui = MagicMock()
+        mock_ui.handle_click.return_value = True
+        mock_game = MagicMock()
+        mock_game.check_winner.return_value = None
+        mock_game.is_draw.side_effect = [True, False]  # Draw after player move
+        mock_ai = MagicMock()
+
+        with patch('tic_tac_toe_1.main.Game', return_value=mock_game), \
+             patch('tic_tac_toe_1.main.AI', return_value=mock_ai), \
+             patch('tic_tac_toe_1.main.UI', return_value=mock_ui):
+            main()
+            mock_ui.show_draw.assert_called_once()
+            mock_game.reset_game.assert_called_once()
+
+    ## TEST DISPLAY UPDATES
+    def test_main_updates_display(self) -> None:
+        """Test that the display is properly updated each frame."""
+        mock_event = MagicMock()
+        mock_event.type = pygame.QUIT
+        pygame.event.get.return_value = [mock_event]
+
+        mock_ui = MagicMock()
+        mock_ui.draw_board.return_value = None
+
+        with patch('tic_tac_toe_1.main.Game'), \
+             patch('tic_tac_toe_1.main.AI'), \
+             patch('tic_tac_toe_1.main.UI', return_value=mock_ui):
+            main()
+            mock_ui.draw_board.assert_called_once()
+            pygame.display.flip.assert_called_once()
+
+if __name__ == '__main__':
+    unittest.main()
+```
+```python
+"""
+Test cases for the Tic Tac Toe Game class implementation.
+"""
+
+import unittest
+from tic_tac_toe_1.game import Game
+
+class TestGame(unittest.TestCase):
+    """Test suite for the Game class."""
+
+    def setUp(self) -> None:
+        """Set up a fresh Game instance for each test."""
+        self.game: Game = Game()
+
+    ## Test Initialization
+    def test_initialization(self) -> None:
+        """Test that the game initializes correctly."""
+        expected_board: list[list[str]] = [['', '', ''], ['', '', ''], ['', '', '']]
+        self.assertEqual(self.game.board, expected_board)
+        self.assertEqual(self.game.current_player, 'X')
+        self.assertFalse(self.game.game_over)
+
+    ## Test make_move
+    def test_make_valid_move(self) -> None:
+        """Test making a valid move."""
+        self.assertTrue(self.game.make_move(0, 0))
+        self.assertEqual(self.game.board[0][0], 'X')
+        self.assertEqual(self.game.current_player, 'O')
+
+    def test_make_invalid_move_occupied(self) -> None:
+        """Test making a move on an occupied cell."""
+        self.game.make_move(0, 0)  # X moves first
+        self.assertFalse(self.game.make_move(0, 0))  # O tries same spot
+        self.assertEqual(self.game.board[0][0], 'X')  # Should remain X
+        self.assertEqual(self.game.current_player, 'O')  # Should still be O's turn
+
+    def test_make_move_after_game_over(self) -> None:
+        """Test making a move after game is over."""
+        # Force game over by creating a winner
+        self.game.board = [['X', 'X', 'X'], ['', '', ''], ['', '', '']]
+        self.game.game_over = True
+        self.assertFalse(self.game.make_move(1, 0))
+        self.assertEqual(self.game.current_player, 'X')  # Should not change
+
+    def test_make_move_out_of_bounds(self) -> None:
+        """Test making a move with out-of-bounds indices."""
+        with self.assertRaises(IndexError):
+            self.game.make_move(3, 0)  # Row out of bounds
+        with self.assertRaises(IndexError):
+            self.game.make_move(0, 3)  # Column out of bounds
+
+    ## Test check_winner
+    def test_check_winner_row(self) -> None:
+        """Test checking for a winner in a row."""
+        self.game.board = [['X', 'X', 'X'], ['', '', ''], ['', '', '']]
+        self.assertEqual(self.game.check_winner(), 'X')
+        self.assertTrue(self.game.game_over)
+
+    def test_check_winner_column(self) -> None:
+        """Test checking for a winner in a column."""
+        self.game.board = [['O', '', ''], ['O', '', ''], ['O', '', '']]
+        self.assertEqual(self.game.check_winner(), 'O')
+        self.assertTrue(self.game.game_over)
+
+    def test_check_winner_diagonal(self) -> None:
+        """Test checking for a winner in a diagonal."""
+        self.game.board = [['X', '', ''], ['', 'X', ''], ['', '', 'X']]
+        self.assertEqual(self.game.check_winner(), 'X')
+        self.assertTrue(self.game.game_over)
+
+    def test_check_winner_anti_diagonal(self) -> None:
+        """Test checking for a winner in the anti-diagonal."""
+        self.game.board = [['', '', 'O'], ['', 'O', ''], ['O', '', '']]
+        self.assertEqual(self.game.check_winner(), 'O')
+        self.assertTrue(self.game.game_over)
+
+    def test_check_no_winner(self) -> None:
+        """Test checking when there is no winner."""
+        self.assertEqual(self.game.check_winner(), '')
+        self.assertFalse(self.game.game_over)
+
+    ## Test is_draw
+    def test_is_draw_true(self) -> None:
+        """Test is_draw when the game is a draw."""
+        self.game.board = [['X', 'O', 'X'], ['X', 'X', 'O'], ['O', 'X', 'O']]
+        self.assertTrue(self.game.is_draw())
+        self.assertTrue(self.game.game_over)
+
+    def test_is_draw_false_with_empty_cells(self) -> None:
+        """Test is_draw when there are empty cells."""
+        self.game.board = [['X', 'O', 'X'], ['X', '', 'O'], ['O', 'X', 'O']]
+        self.assertFalse(self.game.is_draw())
+        self.assertFalse(self.game.game_over)
+
+    def test_is_draw_false_with_winner(self) -> None:
+        """Test is_draw when there is a winner (should not be draw)."""
+        self.game.board = [['X', 'X', 'X'], ['O', 'O', ''], ['', '', '']]
+        self.assertFalse(self.game.is_draw())
+        self.assertTrue(self.game.game_over)  # Because there's a winner
+
+    ## Test reset_game
+    def test_reset_game(self) -> None:
+        """Test resetting the game to initial state."""
+        # Modify game state
+        self.game.board = [['X', 'O', 'X'], ['X', 'X', 'O'], ['O', 'X', 'O']]
+        self.game.current_player = 'O'
+        self.game.game_over = True
+
+        # Reset and verify
+        self.game.reset_game()
+        expected_board: list[list[str]] = [['', '', ''], ['', '', ''], ['', '', '']]
+        self.assertEqual(self.game.board, expected_board)
+        self.assertEqual(self.game.current_player, 'X')
+        self.assertFalse(self.game.game_over)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+---
+## instruction:
+The error is a syntax error in the test file `test_ai.py`. The issue is on line 150 where there's an unclosed parenthesis in the assertion statement. The line should be properly formatted to check the move against either (0, 0) or (2, 2) without syntax errors.
+
+Correction instruction:
+1. In `test_ai.py`, line 150 should be rewritten to properly close the parenthesis and format the assertion correctly.
+2. The corrected line should be: `self.assertTrue(move in [(0, 0), (2, 2)])`
+
+## File To Rewrite:
+test_ai.py
+
+## Status:
+FAIL
+
+## Send To:
+QaEngineer
+---
+---
+## instruction:
+The errors are occurring because the AI class constructor expects a difficulty parameter (string) but is being passed a Game object instead. This causes the AttributeError when trying to call .lower() on the Game object. 
+
+To fix this, we need to:
+1. Modify the test_ui.py file to properly initialize the AI class with a difficulty parameter
+2. The test should pass a string difficulty level ("easy", "medium", or "hard") when creating the AI instance
+
+The main issue is in the test file's setUp method where it creates the AI instance incorrectly. The development code (ui.py) is fine.
+
+## File To Rewrite:
+test_ui.py
+
+## Status:
+FAIL
+
+## Send To:
+QaEngineer
+---
+## instruction:
+The test execution output shows no errors or failures, indicating that all test cases in test_main.py are passing successfully. The tests verify the main game loop, event handling, game state changes, and display updates in main.py. Since there are no errors reported in either the standard output or standard errors, the code is functioning as expected.
+
+## File To Rewrite:
+No file needs to be rewritten as all tests are passing.
+
+## Status:
+PASS
+
+## Send To:
+NoOne
+---
+---
+## instruction:
+The error occurs in the test case `test_is_draw_false_with_winner` where the test expects `game_over` to be True when there's a winner, but it remains False. This indicates that the `check_winner()` method is not being called in the `is_draw()` method before checking for a draw condition. 
+
+To fix this, we need to modify the `is_draw()` method in game.py to call `check_winner()` first to properly set the `game_over` flag when there's a winner.
+
+## File To Rewrite:
+game.py
+
+## Status:
+FAIL
+
+## Send To:
+Engineer
+---
+Based on the console logs, there's a syntax error in the test case for `test_get_hard_move_optimal_move`. The issue is with an unclosed parenthesis in the assertion. I'll fix this test case while maintaining all other functionality.
+
+```python
+"""Test cases for the AI module in Tic Tac Toe game."""
+
+import unittest
+from unittest.mock import patch
+from typing import Tuple, Optional
+from tic_tac_toe_1.ai import AI
+from tic_tac_toe_1.game import Game
+
+
+class TestAI(unittest.TestCase):
+    """Test cases for the AI class."""
+
+    ## INITIALIZATION TESTS
+    def test_initialization_valid_difficulty(self) -> None:
+        """Test AI initialization with valid difficulty levels."""
+        for difficulty in ('easy', 'medium', 'hard'):
+            ai = AI(difficulty)
+            self.assertEqual(ai.difficulty, difficulty)
+
+    def test_initialization_invalid_difficulty(self) -> None:
+        """Test AI initialization with invalid difficulty level."""
+        with self.assertRaises(ValueError):
+            AI('invalid')
+
+    def test_initialization_case_insensitive(self) -> None:
+        """Test AI initialization with case-insensitive difficulty."""
+        ai = AI('HARD')
+        self.assertEqual(ai.difficulty, 'hard')
+
+    ## GET_MOVE TESTS
+    def test_get_move_easy(self) -> None:
+        """Test get_move for easy difficulty calls _get_random_move."""
+        ai = AI('easy')
+        game = Game()
+        with patch.object(ai, '_get_random_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    def test_get_move_medium(self) -> None:
+        """Test get_move for medium difficulty calls _get_medium_move."""
+        ai = AI('medium')
+        game = Game()
+        with patch.object(ai, '_get_medium_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    def test_get_move_hard(self) -> None:
+        """Test get_move for hard difficulty calls _get_hard_move."""
+        ai = AI('hard')
+        game = Game()
+        with patch.object(ai, '_get_hard_move') as mock_method:
+            ai.get_move(game)
+            mock_method.assert_called_once_with(game)
+
+    ## _GET_RANDOM_MOVE TESTS
+    def test_get_random_move_empty_board(self) -> None:
+        """Test _get2025-03-27 22:33:33.053 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-03-27 22:33:33.054 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.009 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 4359, completion_tokens: 1608
+2025-03-27 22:33:33.060 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_1/tests/test_ui.py
+2025-03-27 22:33:33.061 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"8772d157777e4682ae2c9460fc5a6665","content":"Round 3 of tests done","role":"QaEngineer_Edward","cause_by":"metagpt.actions.write_test.WriteTest","sent_from":"QaEngineer_Edward","send_to":["<none>"]}
+2025-03-27 22:33:33.149 | INFO     | metagpt.utils.git_repository:archive:168 - Archive: ['.dependencies.json', 'docs/prd/20250327222213.json', 'docs/requirement.txt', 'docs/system_design/20250327222213.json', 'docs/task/20250327222213.json', 'requirements.txt', 'resources/competitive_analysis/20250327222213.mmd', 'resources/data_api_design/20250327222213.mmd', 'resources/prd/20250327222213.md', 'resources/seq_flow/20250327222213.mmd', 'resources/system_design/20250327222213.md', 'test_outputs/test_ai.py.json', 'test_outputs/test_game.py.json', 'test_outputs/test_main.py.json', 'test_outputs/test_ui.py.json', 'tests/test_ai.py', 'tests/test_game.py', 'tests/test_main.py', 'tests/test_ui.py', 'tic_tac_toe_1/ai.py', 'tic_tac_toe_1/game.py', 'tic_tac_toe_1/main.py', 'tic_tac_toe_1/ui.py']
+_random_move with empty board returns valid move."""
+        ai = AI()
+        game = Game()
+        move = ai._get_random_move(game)
+        self.assertIsInstance(move, tuple)
+        self.assertEqual(len(move), 2)
+        row, col = move
+        self.assertTrue(0 <= row < 3)
+        self.assertTrue(0 <= col < 3)
+        self.assertEqual(game.board[row][col], '')
+
+    def test_get_random_move_full_board(self) -> None:
+        """Test _get_random_move with full board returns (0, 0)."""
+        ai = AI()
+        game = Game()
+        game.board = [['X' for _ in range(3)] for _ in range(3)]
+        move = ai._get_random_move(game)
+        self.assertEqual(move, (0, 0))
+
+    ## _GET_MEDIUM_MOVE TESTS
+    @patch('random.random', return_value=0.4)  # Force smart move
+    def test_get_medium_move_smart_win(self, mock_random) -> None:
+        """Test _get_medium_move makes winning move when available."""
+        ai = AI('medium')
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_medium_move(game)
+        self.assertEqual(move, (0, 2))
+
+    @patch('random.random', return_value=0.4)  # Force smart move
+    def test_get_medium_move_smart_block(self, mock_random) -> None:
+        """Test _get_medium_move makes blocking move when needed."""
+        ai = AI('medium')
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', '', ''],
+            ['', '', '']
+        ]
+        move = ai._get_medium_move(game)
+        self.assertEqual(move, (0, 2))
+
+    @patch('random.random', return_value=0.6)  # Force random move
+    def test_get_medium_move_random(self, mock_random) -> None:
+        """Test _get_medium_move makes random move when appropriate."""
+        ai = AI('medium')
+        game = Game()
+        with patch.object(ai, '_get_random_move') as mock_method:
+            mock_method.return_value = (1, 1)
+            move = ai._get_medium_move(game)
+            mock_method.assert_called_once_with(game)
+            self.assertEqual(move, (1, 1))
+
+    ## _GET_HARD_MOVE TESTS
+    def test_get_hard_move_winning_move(self) -> None:
+        """Test _get_hard_move makes immediate winning move."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        self.assertEqual(move, (0, 2))
+
+    def test_get_hard_move_blocking_move(self) -> None:
+        """Test _get_hard_move makes blocking move when needed."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', '', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        self.assertEqual(move, (0, 2))
+
+    def test_get_hard_move_optimal_move(self) -> None:
+        """Test _get_hard_move makes optimal move in early game."""
+        ai = AI('hard')
+        game = Game()
+        game.board = [
+            ['', '', ''],
+            ['', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._get_hard_move(game)
+        # Center is the best response to opponent's center move
+        # The optimal move could be any corner, so we check if it's one of them
+        self.assertIn(move, [(0, 0), (0, 2), (2, 0), (2, 2)])
+
+    ## _FIND_WINNING_MOVE TESTS
+    def test_find_winning_move_player_o(self) -> None:
+        """Test _find_winning_move finds winning move for O."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['O', 'O', ''],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'O')
+        self.assertEqual(move, (0, 2))
+
+    def test_find_winning_move_player_x(self) -> None:
+        """Test _find_winning_move finds winning move for X."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'X', ''],
+            ['O', 'O', ''],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'X')
+        self.assertEqual(move, (0, 2))
+
+    def test_find_winning_move_no_win(self) -> None:
+        """Test _find_winning_move returns None when no winning move."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'O', 'X'],
+            ['O', 'X', 'O'],
+            ['', '', '']
+        ]
+        move = ai._find_winning_move(game, 'X')
+        self.assertIsNone(move)
+
+    ## _MINIMAX TESTS
+    def test_minimax_win(self) -> None:
+        """Test _minimax returns correct score for winning board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['O', 'O', 'O'],
+            ['X', 'X', ''],
+            ['', '', '']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, 1)
+
+    def test_minimax_loss(self) -> None:
+        """Test _minimax returns correct score for losing board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'X', 'X'],
+            ['O', 'O', ''],
+            ['', '', '']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, -1)
+
+    def test_minimax_draw(self) -> None:
+        """Test _minimax returns correct score for draw board."""
+        ai = AI()
+        game = Game()
+        game.board = [
+            ['X', 'O', 'X'],
+            ['X', 'O', 'O'],
+            ['O', 'X', 'X']
+        ]
+        score = ai._minimax(game, True)
+        self.assertEqual(score, 0)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+The main changes made:
+1. Fixed the syntax error in `test_get_hard_move_optimal_move` by changing the assertion to check if the move is one of the corner positions, which is a valid optimal move when the opponent has taken the center.
+2. Maintained all other test cases exactly as they were, as they were working correctly.
+3. Ensured all parentheses are properly closed in all test cases.
+
+The test suite now properly tests all functionality of the AI class without any syntax errors. The test for optimal move is more flexible as it accepts any corner move as valid, which is correct behavior for the hard difficulty AI.
+Based on the error logs, the issue is in the test file where the AI class is being initialized incorrectly. The AI constructor expects a difficulty parameter, but the test is passing a Game instance instead. I'll rewrite the test file to properly mock the AI class and fix all the test cases.
+
+## TEST CODE REWRITE
+```python
+"""
+Unit tests for the UI module of Tic Tac Toe game.
+"""
+
+import unittest
+from unittest.mock import MagicMock, patch
+import pygame
+from tic_tac_toe_1.ui import UI
+from tic_tac_toe_1.game import Game
+from tic_tac_toe_1.ai import AI
+
+class TestUI(unittest.TestCase):
+    """Test cases for the UI class."""
+
+    def setUp(self) -> None:
+        """Set up test fixtures."""
+        self.game = Game()
+        # Mock AI with proper initialization
+        self.ai = MagicMock(spec=AI)
+        self.ai.game = self.game
+        self.ui = UI(self.game, self.ai)
+        
+        # Mock pygame.display.flip to avoid actual screen updates during tests
+        self.ui.screen = MagicMock()
+        self.ui.screen.fill = MagicMock()
+        self.ui.screen.blit = MagicMock()
+        pygame.display.flip = MagicMock()
+        pygame.draw.line = MagicMock()
+
+    def tearDown(self) -> None:
+        """Clean up after tests."""
+        pygame.quit()
+
+    ## INITIALIZATION TESTS
+    def test_initialization(self) -> None:
+        """Test UI initialization."""
+        self.assertIsInstance(self.ui.game, Game)
+        self.assertIsInstance(self.ui.ai, AI)
+        self.assertEqual(self.ui.cell_size, 200)  # 600 / 3
+        self.assertIsNotNone(self.ui.font)
+
+    ## DRAW BOARD TESTS
+    def test_draw_board_empty(self) -> None:
+        """Test drawing an empty board."""
+        self.game.board = [["", "", ""], ["", "", ""], ["", "", ""]]
+        self.ui.draw_board()
+        
+        # Verify background and grid lines are drawn
+        self.ui.screen.fill.assert_called_once_with((255, 255, 255))
+        self.assertEqual(pygame.draw.line.call_count, 4)  # 2 vertical + 2 horizontal lines
+        self.assertEqual(self.ui.screen.blit.call_count, 0)  # No X/O rendered
+
+    def test_draw_board_with_moves(self) -> None:
+        """Test drawing a board with some moves."""
+        self.game.board = [["X", "", "O"], ["", "X", ""], ["", "", "O"]]
+        self.ui.draw_board()
+        
+        # Verify X's and O's are rendered
+        self.assertEqual(self.ui.screen.blit.call_count, 3)  # 3 moves on board
+
+    ## HANDLE CLICK TESTS
+    def test_handle_click_valid_move(self) -> None:
+        """Test handling a valid click."""
+        self.game.current_player = "X"
+        self.game.make_move = MagicMock(return_value=True)
+        
+        result = self.ui.handle_click((100, 100))  # Should be cell (0, 0)
+        self.assertTrue(result)
+        self.game.make_move.assert_called_once_with(0, 0)
+
+    def test_handle_click_invalid_position(self) -> None:
+        """Test handling click outside board."""
+        self.game.current_player = "X"
+        self.game.make_move = MagicMock()
+        
+        # Click outside board
+        result = self.ui.handle_click((-10, -10))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+        # Click on edge case (borderline positions)
+        result = self.ui.handle_click((600, 600))  # Exactly at screen size
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_occupied_cell(self) -> None:
+        """Test handling click on occupied cell."""
+        self.game.current_player = "X"
+        self.game.board[0][0] = "X"
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))  # Cell (0, 0) is occupied
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_when_game_over(self) -> None:
+        """Test handling click when game is over."""
+        self.game.game_over = True
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    def test_handle_click_when_ai_turn(self) -> None:
+        """Test handling click when it's AI's turn."""
+        self.game.current_player = "O"
+        self.game.make_move = MagicMock()
+        
+        result = self.ui.handle_click((100, 100))
+        self.assertFalse(result)
+        self.game.make_move.assert_not_called()
+
+    ## MESSAGE DISPLAY TESTS
+    @patch('pygame.time.wait')
+    def test_show_winner(self, mock_wait: MagicMock) -> None:
+        """Test showing winner message."""
+        mock_wait.return_value = None
+        
+        # Test X winner
+        self.ui.show_winner("X")
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+        
+        # Test O winner
+        mock_wait.reset_mock()
+        self.ui.screen.blit.reset_mock()
+        self.ui.show_winner("O")
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+
+    @patch('pygame.time.wait')
+    def test_show_draw(self, mock_wait: MagicMock) -> None:
+        """Test showing draw message."""
+        mock_wait.return_value = None
+        self.ui.show_draw()
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+
+    ## HELPER METHOD TESTS
+    @patch('pygame.time.wait')
+    def test_show_message(self, mock_wait: MagicMock) -> None:
+        """Test the _show_message helper method."""
+        mock_wait.return_value = None
+        test_message = "Test Message"
+        test_color = (255, 0, 0)
+        
+        self.ui._show_message(test_message, test_color)
+        
+        # Verify overlay and message are displayed
+        self.ui.screen.blit.assert_called()
+        mock_wait.assert_called_once_with(2000)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+The key changes made to fix the tests:
+1. Properly mocked the AI class using MagicMock with spec=AI
+2. Added the game reference to the mocked AI instance
+3. Added mock for pygame.draw.line which was missing
+4. Added more specific assertions in test_draw_board_with_moves
+5. Added edge case test for handle_click_invalid_position
+6. Reset mocks between test cases where needed
+7. All tests now properly initialize the UI with mocked dependencies
+
+The tests should now run without errors while maintaining all the original test coverage. The test cases verify all the core functionality of the UI class including:
+- Initialization
+- Board drawing (empty and with moves)
+- Click handling (valid, invalid, edge cases)
+- Winner/draw message display
+- Helper methods
+
+Run #1 completed with return code 0
+Duration: 720.36 seconds (12.01 minutes)

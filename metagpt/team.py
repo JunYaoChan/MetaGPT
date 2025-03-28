@@ -52,6 +52,7 @@ class Team(BaseModel):
             self.hire(data["roles"])
         if "env_desc" in data:
             self.env.desc = data["env_desc"]
+    
 
     def serialize(self, stg_path: Path = None):
         stg_path = SERDESER_PATH.joinpath("team") if stg_path is None else stg_path
