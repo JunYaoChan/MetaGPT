@@ -145,31 +145,59 @@ class Engineer(Role):
         self.next_todo_action = any_to_name(WriteCode)
     
     def _initialize_engineers(self, **kwargs):
-        """Initialize the list of engineers based on parameters."""
+        """Initialize the list of engineers based on parameters, preventing duplicates."""
+        # Keep track of engineer names to prevent duplicates
+        engineer_names = set()
+        self.engineers = []
+        
         # If engineers are provided directly
         if "engineers" in kwargs and isinstance(kwargs["engineers"], list):
             for eng in kwargs["engineers"]:
                 if isinstance(eng, EngineerProfile):
-                    self.engineers.append(eng)
+                    if eng.name not in engineer_names:
+                        self.engineers.append(eng)
+                        engineer_names.add(eng.name)
+                    else:
+                        logger.warning(f"Skipping duplicate engineer: {eng.name}")
                 elif isinstance(eng, dict) and "name" in eng:
-                    expertise = eng.get("expertise", ExpertiseLevel.MID)
-                    self.engineers.append(EngineerProfile(eng["name"], expertise))
+                    if eng["name"] not in engineer_names:
+                        expertise = eng.get("expertise", ExpertiseLevel.MID)
+                        self.engineers.append(EngineerProfile(eng["name"], expertise))
+                        engineer_names.add(eng["name"])
+                    else:
+                        logger.warning(f"Skipping duplicate engineer: {eng['name']}")
                 elif isinstance(eng, str):
                     # If just a name is provided, default to mid-level
-                    self.engineers.append(EngineerProfile(eng))
+                    if eng not in engineer_names:
+                        self.engineers.append(EngineerProfile(eng))
+                        engineer_names.add(eng)
+                    else:
+                        logger.warning(f"Skipping duplicate engineer: {eng}")
         
         # If engineer_names is provided
         elif "engineer_names" in kwargs and isinstance(kwargs["engineer_names"], list):
             engineer_expertises = kwargs.get("engineer_expertises", [])
             for i, name in enumerate(kwargs["engineer_names"]):
-                expertise = engineer_expertises[i] if i < len(engineer_expertises) else ExpertiseLevel.MID
-                self.engineers.append(EngineerProfile(name, expertise))
+                if name not in engineer_names:
+                    expertise = engineer_expertises[i] if i < len(engineer_expertises) else ExpertiseLevel.MID
+                    self.engineers.append(EngineerProfile(name, expertise))
+                    engineer_names.add(name)
+                else:
+                    logger.warning(f"Skipping duplicate engineer: {name}")
         
         # If n_engineers is provided without names
         elif "n_engineers" in kwargs and isinstance(kwargs["n_engineers"], int) and kwargs["n_engineers"] > 0:
             for i in range(kwargs["n_engineers"]):
                 # Create default engineer profiles
-                name = f"{self.name}_{i+1}" if i > 0 else self.name
+                base_name = f"{self.name}_{i+1}" if i > 0 else self.name
+                
+                # Ensure unique names by appending a number if needed
+                name = base_name
+                counter = 1
+                while name in engineer_names:
+                    name = f"{base_name}_{counter}"
+                    counter += 1
+                
                 # Distribute expertise - more senior engineers for smaller teams
                 if kwargs["n_engineers"] <= 3:
                     expertise = [ExpertiseLevel.SENIOR, ExpertiseLevel.MID, ExpertiseLevel.JUNIOR][min(i, 2)]
@@ -185,6 +213,7 @@ class Engineer(Role):
                         expertise = ExpertiseLevel.JUNIOR
                 
                 self.engineers.append(EngineerProfile(name, expertise))
+                engineer_names.add(name)
         
         # Default case - just one engineer (the team lead)
         if not self.engineers:
@@ -289,11 +318,13 @@ class Engineer(Role):
         # If only one engineer, they get all tasks
         if len(self.engineers) == 1:
             return {self.engineers[0]: tasks}
-        
+       
+
         # Estimate complexity for each task
         task_complexities = []
         for task_name, task_context in tasks.items():
             complexity = self._estimate_task_complexity(task_name, task_context.i_context)
+            logger.debug(f"Code Context : {task_name} , {task_context.i_context}")
             task_complexities.append((task_name, complexity))
         # Sort tasks by complexity (highest to lowest)
         task_complexities.sort(key=lambda x: x[1], reverse=True)
@@ -482,6 +513,8 @@ class Engineer(Role):
             
             # Replace with the engineer's LLM
             todo.llm = engineer.llm
+            
+            # logger.info("Coding context : {todo.i_context}")
             
             # Run the task with the engineer's LLM
             try:
@@ -863,9 +896,52 @@ class Engineer(Role):
             for engineer, assigned_tasks in todo_assignments.items():
                 if not assigned_tasks:
                     continue
-                # Convert task filenames back to todo objects
-                engineer_todos = [todo_map[task] for task in assigned_tasks]
+                
+                engineer_todos = []
+
+                # Process each task separately instead of bundling them
+                for index, task in enumerate(assigned_tasks):
+                    todo_obj = todo_map[task]
+                    parsed_json = json.loads(todo_obj.i_context.content)
+                    filename = todo_obj.i_context.filename.split('.')[0].capitalize().replace('_','')
+
+                    
+                    
+                    if index ==0 and engineer.expertise == ExpertiseLevel.JUNIOR:
+                        if 'design_doc' in parsed_json and parsed_json['design_doc']:
+                             parsed_json = self.filter_class_for_junior(parsed_json, filename)
+                             logger.info(f"Manage Access : {parsed_json}")
+                            
+                            
+                    if index >0:
+                        parsed_json = json.loads(todo_obj.i_context.content)
+                        logger.info(f"Before : { parsed_json}")
+
+                        # Empty the design_doc
+                        if 'design_doc' in parsed_json and parsed_json['design_doc']:
+                            # Keep the existing document structure but set content to empty
+                            parsed_json['design_doc']['content'] = "{}"  # Empty JSON object as a string
+                        
+                        if 'task_doc' in parsed_json and parsed_json['task_doc']:
+                            # Keep the existing document structure but set content to empty
+                            parsed_json['task_doc']['content'] = "{}"  # Empty JSON object as a string
+                                    # json.loads(parsed_json['design_doc']['content'])
+                        
+                        # Update the content with modified JSON
+                    todo_obj.i_context.content = json.dumps(parsed_json)
+                    logger.info(f"Updated : { todo_obj.i_context.content}")
+                        
+                        
+                    
+                    engineer_todos.append(todo_obj)
+                    
+                    
                 engineer_tasks.append(self._process_engineer_tasks(engineer_todos, engineer, False))  # Never review individual tasks
+
+                
+                # # Convert task filenames back to todo objects
+                # engineer_todos = [todo_map[task] for task in assigned_tasks]
+                # engineer_tasks.append(self._process_engineer_tasks(engineer_todos, engineer, False))  # Never review individual tasks
             
             # Wait for all engineers to complete their tasks
             results = await asyncio.gather(*engineer_tasks)
@@ -885,6 +961,34 @@ class Engineer(Role):
         if not changed_files:
             logger.info("Nothing has changed.")
         return changed_files
+    
+    def filter_class_for_junior(self, parsed_json, class_name="Main"):
+        if 'design_doc' in parsed_json and parsed_json['design_doc']:
+            # Parse the content string as JSON
+            design_content = json.loads(parsed_json['design_doc']['content'])
+            
+            # Check if Data structures and interfaces exists
+            if 'Data structures and interfaces' in design_content:
+                class_diagram = design_content['Data structures and interfaces']
+                
+                # Extract only the specified class part using regex with the class name as a variable
+             
+                class_pattern = r'class ' + re.escape(class_name) + r' \{[^}]+\}'
+                class_match = re.search(class_pattern, class_diagram)
+                
+                if class_match:
+                    class_content = class_match.group(0)
+                    
+                    # Create a simplified class diagram with only the specified class
+                    simplified_diagram = "\nclassDiagram\n " + class_content + "\n"
+                    
+                    # Update the content with only the specified class
+                    design_content['Data structures and interfaces'] = simplified_diagram
+                    
+                    # Update the parsed_json with the modified content
+                    parsed_json['design_doc']['content'] = json.dumps(design_content)
+        
+        return parsed_json
 
     async def _act(self) -> Message | None:
         """Determines the mode of action based on whether code review is used."""
@@ -904,6 +1008,7 @@ class Engineer(Role):
             return await self._act_summarize()
         return None
 
+    
     async def _act_write_code(self):
         changed_files = await self._act_sp_with_cr(review=self.use_code_review)
         usage_stats = await self.show_token_usage()

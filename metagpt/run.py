@@ -5,9 +5,9 @@ import os
 from datetime import datetime
 
 # Configuration
-TOTAL_RUNS = 10
-BASE_PROJECT_NAME = "tic_tac_toe_h"
-IDEA = "Create a Tic Tac Toe game"
+TOTAL_RUNS = 1
+BASE_PROJECT_NAME = "tic_tac_toe_t"
+IDEA = " Create a Tic-Tac-Toe game that delivers a complete gaming experience. The game should alternate turns between X and O players while accurately detecting all winning patterns (horizontal, vertical, and diagonal lines) and draw scenarios when the board fills without a winner. Implement validation to prevent players from selecting already occupied cells, and include a reset function that completely clears the board for new games. Add a score tracking system that records and displays each player's wins, losses, and draws. The user interface should provide clear visual or audio feedback indicating current player turns, game outcomes, and important events. If you choose to include an AI opponent, ensure it makes legal moves and offers adjustable difficulty levels for different player experiences. The game should handle boundary cases reliably, particularly when interacting with edge and corner cells, and demonstrate robust error handling for invalid inputs or unexpected interruptions during gameplay."
 PARADIGM = "Hierarchy"
 COMMAND = "python3 organisation.py"
 

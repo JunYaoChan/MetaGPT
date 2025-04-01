@@ -62,9 +62,9 @@ def generate_repo(
             )
 
             if implement or code_review:
-                company.hire([Engineer(n_borg=5, use_code_review=code_review)])
+                company.hire([Engineer(n_borg=5, use_code_review=True, engineers=[EngineerProfile("Alex", ExpertiseLevel.SENIOR)])])
 
-            if True:
+            if False:
                 company.hire([QaEngineer()])
                 if n_round < 8:
                     n_round = 8  # If `--run-tests` is enabled, at least 8 rounds are required to run all QA actions.
@@ -129,8 +129,8 @@ def generate_repo(
                 paradigm="hierarchy",
                 engineers=[
                     EngineerProfile("Alex", ExpertiseLevel.SENIOR),  
-                    EngineerProfile("John", ExpertiseLevel.MID),     
-                    EngineerProfile("Mary", ExpertiseLevel.JUNIOR)   
+                    EngineerProfile("John", ExpertiseLevel.JUNIOR),     
+                  
                 ],
                  use_code_review=code_review
             ),
@@ -172,7 +172,7 @@ def startup(
     idea: str = typer.Argument(None, help="Your innovative idea, such as 'Create a 2048 game.'"),
     paradigm: str = typer.Argument("Team", help="Team, Flat, Hierarchy, Holarchy, Federation" ),
     investment: float = typer.Option(default=3.0, help="Dollar amount to invest in the AI company."),
-    n_round: int = typer.Option(default=8, help="Number of rounds for the simulation."),
+    n_round: int = typer.Option(default=5, help="Number of rounds for the simulation."),
     code_review: bool = typer.Option(default=True, help="Whether to use code review."),
     run_tests: bool = typer.Option(default=False, help="Whether to enable QA for adding & running tests."),
     implement: bool = typer.Option(default=True, help="Enable or disable code implementation."),

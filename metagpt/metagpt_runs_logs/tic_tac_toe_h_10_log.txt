@@ -1,0 +1,285 @@
+2025-03-28 12:06:29.966 | INFO     | metagpt.const:get_metagpt_package_root:21 - Package root set to /Users/junyao/MetaGPT
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+2025-03-28 12:06:35.379 | INFO     | __main__:<module>:252 - Starting application [software_company.py]
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:193 - Engineering team initialized with 6 engineers:
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Alex (senior)
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - John (mid)
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Mary (junior)
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Alex (senior)
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - John (mid)
+2025-03-28 12:06:35.543 | INFO     | metagpt.roles.engineer:_initialize_engineers:195 -   - Mary (junior)
+2025-03-28 12:06:35.553 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Alex with expertise senior
+2025-03-28 12:06:35.562 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer John with expertise mid
+2025-03-28 12:06:35.572 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Mary with expertise junior
+2025-03-28 12:06:35.585 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Alex with expertise senior
+2025-03-28 12:06:35.603 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer John with expertise mid
+2025-03-28 12:06:35.614 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:246 - Initialized LLM for engineer Mary with expertise junior
+2025-03-28 12:06:35.627 | INFO     | paradigm:invest:50 - Investment: $3.0.
+2025-03-28 12:06:35.628 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do PrepareDocuments(PrepareDocuments)
+2025-03-28 12:06:35.731 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/tic_tac_toe_h_10/docs/requirement.txt
+2025-03-28 12:06:35.731 | INFO     | metagpt.roles.role:_act:405 - Content: Create a Tic Tac Toe game
+2025-03-28 12:06:35.732 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do WritePRD(WritePRD)
+2025-03-28 12:06:35.732 | INFO     | metagpt.actions.write_prd:run:86 - New requirement detected: Create a Tic Tac Toe game
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:06:36.527 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 0.793(s), this was the 1st time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:06:37.376 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 1.642(s), this was the 2nd time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:06:38.842 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 3.109(s), this was the 3rd time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:06:42.445 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 6.712(s), this was the 4th time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:06:44.524 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 8.791(s), this was the 5th time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-03-28 12:07:01.231 | ERROR    | metagpt.utils.common:log_it:554 - Finished call to 'metagpt.actions.action_node.ActionNode._aask_v1' after 25.498(s), this was the 6th time calling it. exp: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}
+2025-03-28 12:07:01.231 | WARNING  | metagpt.utils.common:wrapper:675 - There is a exception in role's execution, in order to resume, we delete the newest role communication message in the role's memory.
+Starting application [software_company.py]
+hello
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /Users/junyao/MetaGPT/metagpt/organisation.py:205 in startup                                     │
+│                                                                                                  │
+│   202 │   │   typer.echo("Missing argument 'IDEA'. Run 'metagpt --help' for more information."   │
+│   203 │   │   raise typer.Exit()                                                                 │
+│   204 │                                                                                          │
+│ ❱ 205 │   return generate_repo(                                                                  │
+│   206 │   │   idea,                                                                              │
+│   207 │   │   paradigm,                                                                          │
+│   208 │   │   investment,                                                                        │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/organisation.py:142 in generate_repo                               │
+│                                                                                                  │
+│   139 │   │   ])                                                                                 │
+│   140 │   │   org.invest(investment)                                                             │
+│   141 │   │   org.run_project(idea)                                                              │
+│ ❱ 142 │   │   asyncio.run(org.run(n_round=n_round))                                              │
+│   143 │                                                                                          │
+│   144 │   elif(paradigm == "Federation"):                                                        │
+│   145 │   │   print("hello")                                                                     │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py:190 in run  │
+│                                                                                                  │
+│   187 │   │   │   "asyncio.run() cannot be called from a running event loop")                    │
+│   188 │                                                                                          │
+│   189 │   with Runner(debug=debug) as runner:                                                    │
+│ ❱ 190 │   │   return runner.run(main)                                                            │
+│   191                                                                                            │
+│   192                                                                                            │
+│   193 def _cancel_all_tasks(loop):                                                               │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py:118 in run  │
+│                                                                                                  │
+│   115 │   │                                                                                      │
+│   116 │   │   self._interrupt_count = 0                                                          │
+│   117 │   │   try:                                                                               │
+│ ❱ 118 │   │   │   return self._loop.run_until_complete(task)                                     │
+│   119 │   │   except exceptions.CancelledError:                                                  │
+│   120 │   │   │   if self._interrupt_count > 0:                                                  │
+│   121 │   │   │   │   uncancel = getattr(task, "uncancel", None)                                 │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py:653 in  │
+│ run_until_complete                                                                               │
+│                                                                                                  │
+│    650 │   │   if not future.done():                                                             │
+│    651 │   │   │   raise RuntimeError('Event loop stopped before Future completed.')             │
+│    652 │   │                                                                                     │
+│ ❱  653 │   │   return future.result()                                                            │
+│    654 │                                                                                         │
+│    655 │   def stop(self):                                                                       │
+│    656 │   │   """Stop running the event loop.                                                   │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/paradigm.py:86 in run                                              │
+│                                                                                                  │
+│   83 │   │   │                                                                                   │
+│   84 │   │   │   n_round -= 1                                                                    │
+│   85 │   │   │   self._check_balance()                                                           │
+│ ❱ 86 │   │   │   await self.env.run()                                                            │
+│   87 │   │   │   logger.debug(f"max {n_round=} left.")                                           │
+│   88 │   │   self.env.archive()                                                                  │
+│   89                                                                                             │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/environment/base_env.py:207 in run                                 │
+│                                                                                                  │
+│   204 │   │   │   │   future = role.run()                                                        │
+│   205 │   │   │   │   futures.append(future)                                                     │
+│   206 │   │   │                                                                                  │
+│ ❱ 207 │   │   │   await asyncio.gather(*futures)                                                 │
+│   208 │   │   │   logger.debug(f"is idle: {self.is_idle}")                                       │
+│   209 │                                                                                          │
+│   210 │   def get_roles(self) -> dict[str, "Role"]:                                              │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/utils/common.py:686 in wrapper                                     │
+│                                                                                                  │
+│   683 │   │   │   │   last_error = e.last_attempt._exception                                     │
+│   684 │   │   │   │   name = any_to_str(last_error)                                              │
+│   685 │   │   │   │   if re.match(r"^openai\.", name) or re.match(r"^httpx\.", name):            │
+│ ❱ 686 │   │   │   │   │   raise last_error                                                       │
+│   687 │   │   │                                                                                  │
+│   688 │   │   │   raise Exception(format_trackback_info(limit=None))                             │
+│   689                                                                                            │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/tenacity/_asynci │
+│ o.py:50 in __call__                                                                              │
+│                                                                                                  │
+│   47 │   │   │   do = self.iter(retry_state=retry_state)                                         │
+│   48 │   │   │   if isinstance(do, DoAttempt):                                                   │
+│   49 │   │   │   │   try:                                                                        │
+│ ❱ 50 │   │   │   │   │   result = await fn(*args, **kwargs)                                      │
+│   51 │   │   │   │   except BaseException:  # noqa: B902                                         │
+│   52 │   │   │   │   │   retry_state.set_exception(sys.exc_info())  # type: ignore[arg-type]     │
+│   53 │   │   │   │   else:                                                                       │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/actions/action_node.py:437 in _aask_v1                             │
+│                                                                                                  │
+│   434 │   │   timeout=USE_CONFIG_TIMEOUT,                                                        │
+│   435 │   ) -> (str, BaseModel):                                                                 │
+│   436 │   │   """Use ActionOutput to wrap the output of aask"""                                  │
+│ ❱ 437 │   │   content = await self.llm.aask(prompt, system_msgs, images=images, timeout=timeou   │
+│   438 │   │   logger.debug(f"llm raw output:\n{content}")                                        │
+│   439 │   │   output_class = self.create_model_class(output_class_name, output_data_mapping)     │
+│   440                                                                                            │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/provider/base_llm.py:152 in aask                                   │
+│                                                                                                  │
+│   149 │   │   if stream is None:                                                                 │
+│   150 │   │   │   stream = self.config.stream                                                    │
+│   151 │   │   logger.debug(message)                                                              │
+│ ❱ 152 │   │   rsp = await self.acompletion_text(message, stream=stream, timeout=self.get_timeo   │
+│   153 │   │   return rsp                                                                         │
+│   154 │                                                                                          │
+│   155 │   def _extract_assistant_rsp(self, context):                                             │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/tenacity/_asynci │
+│ o.py:88 in async_wrapped                                                                         │
+│                                                                                                  │
+│   85 │   │                                                                                       │
+│   86 │   │   @functools.wraps(fn)                                                                │
+│   87 │   │   async def async_wrapped(*args: t.Any, **kwargs: t.Any) -> t.Any:                    │
+│ ❱ 88 │   │   │   return await fn(*args, **kwargs)                                                │
+│   89 │   │                                                                                       │
+│   90 │   │   # Preserve attributes                                                               │
+│   91 │   │   async_wrapped.retry = fn.retry  # type: ignore[attr-defined]                        │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/tenacity/_asynci │
+│ o.py:47 in __call__                                                                              │
+│                                                                                                  │
+│   44 │   │                                                                                       │
+│   45 │   │   retry_state = RetryCallState(retry_object=self, fn=fn, args=args, kwargs=kwargs)    │
+│   46 │   │   while True:                                                                         │
+│ ❱ 47 │   │   │   do = self.iter(retry_state=retry_state)                                         │
+│   48 │   │   │   if isinstance(do, DoAttempt):                                                   │
+│   49 │   │   │   │   try:                                                                        │
+│   50 │   │   │   │   │   result = await fn(*args, **kwargs)                                      │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/tenacity/__init_ │
+│ _.py:314 in iter                                                                                 │
+│                                                                                                  │
+│   311 │   │                                                                                      │
+│   312 │   │   is_explicit_retry = fut.failed and isinstance(fut.exception(), TryAgain)           │
+│   313 │   │   if not (is_explicit_retry or self.retry(retry_state)):                             │
+│ ❱ 314 │   │   │   return fut.result()                                                            │
+│   315 │   │                                                                                      │
+│   316 │   │   if self.after is not None:                                                         │
+│   317 │   │   │   self.after(retry_state)                                                        │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:44 │
+│ 9 in result                                                                                      │
+│                                                                                                  │
+│   446 │   │   │   │   if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:                     │
+│   447 │   │   │   │   │   raise CancelledError()                                                 │
+│   448 │   │   │   │   elif self._state == FINISHED:                                              │
+│ ❱ 449 │   │   │   │   │   return self.__get_result()                                             │
+│   450 │   │   │   │                                                                              │
+│   451 │   │   │   │   self._condition.wait(timeout)                                              │
+│   452                                                                                            │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/_base.py:40 │
+│ 1 in __get_result                                                                                │
+│                                                                                                  │
+│   398 │   def __get_result(self):                                                                │
+│   399 │   │   if self._exception:                                                                │
+│   400 │   │   │   try:                                                                           │
+│ ❱ 401 │   │   │   │   raise self._exception                                                      │
+│   402 │   │   │   finally:                                                                       │
+│   403 │   │   │   │   # Break a reference cycle with the exception in self._exception            │
+│   404 │   │   │   │   self = None                                                                │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/tenacity/_asynci │
+│ o.py:50 in __call__                                                                              │
+│                                                                                                  │
+│   47 │   │   │   do = self.iter(retry_state=retry_state)                                         │
+│   48 │   │   │   if isinstance(do, DoAttempt):                                                   │
+│   49 │   │   │   │   try:                                                                        │
+│ ❱ 50 │   │   │   │   │   result = await fn(*args, **kwargs)                                      │
+│   51 │   │   │   │   except BaseException:  # noqa: B902                                         │
+│   52 │   │   │   │   │   retry_state.set_exception(sys.exc_info())  # type: ignore[arg-type]     │
+│   53 │   │   │   │   else:                                                                       │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/provider/openai_api.py:165 in acompletion_text                     │
+│                                                                                                  │
+│   162 │   async def acompletion_text(self, messages: list[dict], stream=False, timeout=USE_CON   │
+│   163 │   │   """when streaming, print each token in place."""                                   │
+│   164 │   │   if stream:                                                                         │
+│ ❱ 165 │   │   │   return await self._achat_completion_stream(messages, timeout=timeout)          │
+│   166 │   │                                                                                      │
+│   167 │   │   rsp = await self._achat_completion(messages, timeout=self.get_timeout(timeout))    │
+│   168 │   │   return self.get_choice_text(rsp)                                                   │
+│                                                                                                  │
+│ /Users/junyao/MetaGPT/metagpt/provider/openai_api.py:89 in _achat_completion_stream              │
+│                                                                                                  │
+│    86 │   │   return params                                                                      │
+│    87 │                                                                                          │
+│    88 │   async def _achat_completion_stream(self, messages: list[dict], timeout=USE_CONFIG_TI   │
+│ ❱  89 │   │   response: AsyncStream[ChatCompletionChunk] = await self.aclient.chat.completions   │
+│    90 │   │   │   **self._cons_kwargs(messages, timeout=self.get_timeout(timeout)), stream=Tru   │
+│    91 │   │   )                                                                                  │
+│    92 │   │   usage = None                                                                       │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/resources │
+│ /chat/completions.py:1295 in create                                                              │
+│                                                                                                  │
+│   1292 │   │   extra_body: Body | None = None,                                                   │
+│   1293 │   │   timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,                     │
+│   1294 │   ) -> ChatCompletion | AsyncStream[ChatCompletionChunk]:                               │
+│ ❱ 1295 │   │   return await self._post(                                                          │
+│   1296 │   │   │   "/chat/completions",                                                          │
+│   1297 │   │   │   body=await async_maybe_transform(                                             │
+│   1298 │   │   │   │   {                                                                         │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_base_cli │
+│ ent.py:1836 in post                                                                              │
+│                                                                                                  │
+│   1833 │   │   opts = FinalRequestOptions.construct(                                             │
+│   1834 │   │   │   method="post", url=path, json_data=body, files=await async_to_httpx_files(fi  │
+│   1835 │   │   )                                                                                 │
+│ ❱ 1836 │   │   return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)    │
+│   1837 │                                                                                         │
+│   1838 │   async def patch(                                                                      │
+│   1839 │   │   self,                                                                             │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_base_cli │
+│ ent.py:1524 in request                                                                           │
+│                                                                                                  │
+│   1521 │   │   stream_cls: type[_AsyncStreamT] | None = None,                                    │
+│   1522 │   │   remaining_retries: Optional[int] = None,                                          │
+│   1523 │   ) -> ResponseT | _AsyncStreamT:                                                       │
+│ ❱ 1524 │   │   return await self._request(                                                       │
+│   1525 │   │   │   cast_to=cast_to,                                                              │
+│   1526 │   │   │   options=options,                                                              │
+│   1527 │   │   │   stream=stream,                                                                │
+│                                                                                                  │
+│ /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/openai/_base_cli │
+│ ent.py:1625 in _request                                                                          │
+│                                                                                                  │
+│   1622 │   │   │   │   await err.response.aread()                                                │
+│   1623 │   │   │                                                                                 │
+│   1624 │   │   │   log.debug("Re-raising status error")                                          │
+│ ❱ 1625 │   │   │   raise self._make_status_error_from_response(err.response) from None           │
+│   1626 │   │                                                                                     │
+│   1627 │   │   return await self._process_response(                                              │
+│   1628 │   │   │   cast_to=cast_to,                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 
+'invalid_request_error'}}
+
+Run #10 completed with return code 1
+Duration: 32.82 seconds (0.55 minutes)

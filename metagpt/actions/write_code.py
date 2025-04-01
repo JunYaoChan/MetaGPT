@@ -139,7 +139,7 @@ class WriteCode(Action):
                 summary_log=summary_doc.content if summary_doc else "",
             )
         # logger.info(f"Writing 111 {prompt}..")
-        logger.info(f"Writing Prompt: {prompt} ..")
+        # logger.info(f"Writing Prompt: {prompt} ..")
 
         code = await self.write_code(prompt)
         if not coding_context.code_doc:
