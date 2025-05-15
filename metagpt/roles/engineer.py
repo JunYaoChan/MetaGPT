@@ -235,7 +235,7 @@ class Engineer(Role):
             if engineer.expertise == ExpertiseLevel.JUNIOR:
                 # Optionally use a different model for junior engineers
                 config_copy.llm = LLMConfig(
-                        api_key="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",
+                        api_key="",
                         api_type="openai",
                         base_url="https://api.openai.com/v1",
                         model="gpt-4o-mini",
