@@ -5,9 +5,9 @@ import os
 from datetime import datetime
 
 # Configuration
-TOTAL_RUNS = 1
-BASE_PROJECT_NAME = "tic_tac_toe_t"
-IDEA = " Create a Tic-Tac-Toe game that delivers a complete gaming experience. The game should alternate turns between X and O players while accurately detecting all winning patterns (horizontal, vertical, and diagonal lines) and draw scenarios when the board fills without a winner. Implement validation to prevent players from selecting already occupied cells, and include a reset function that completely clears the board for new games. Add a score tracking system that records and displays each player's wins, losses, and draws. The user interface should provide clear visual or audio feedback indicating current player turns, game outcomes, and important events. If you choose to include an AI opponent, ensure it makes legal moves and offers adjustable difficulty levels for different player experiences. The game should handle boundary cases reliably, particularly when interacting with edge and corner cells, and demonstrate robust error handling for invalid inputs or unexpected interruptions during gameplay."
+TOTAL_RUNS = 15
+BASE_PROJECT_NAME = "tic_tac_toe_h_"
+IDEA = "Create a Tic Tac Toe Game using Pygame"
 PARADIGM = "Hierarchy"
 COMMAND = "python3 organisation.py"
 
@@ -19,7 +19,7 @@ def main():
     print(f"Starting {TOTAL_RUNS} runs of {COMMAND} with project name base: {BASE_PROJECT_NAME}")
     print("-" * 80)
     
-    for run_num in range(  1
+    for run_num in range(  11
                          , TOTAL_RUNS + 1):
         project_name = f"{BASE_PROJECT_NAME}_{run_num}"
         
@@ -48,9 +48,9 @@ def main():
                 
                 # Stream and log the output in real time
                 for line in process.stdout:
-                    print(line, end='')  # Print to console
-                    log_file.write(line)  # Write to log file
-                    log_file.flush()      # Ensure output is written immediately
+                    print(line, end='')  #
+                    log_file.write(line)  
+                    log_file.flush()      
                 
                 # Wait for the process to complete
                 return_code = process.wait()

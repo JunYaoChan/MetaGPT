@@ -70,7 +70,7 @@ class LLMConfig(YamlModel):
     domain: Optional[str] = None
 
     # For Chat Completion
-    max_token: int = 4096
+    max_token: int = 8192
     temperature: float = 0.0
     top_p: float = 1.0
     top_k: int = 0

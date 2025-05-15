@@ -1,0 +1,5 @@
+Files processed: 10 out of 10
+Average prompt tokens: 4456
+Average completion tokens: 2099
+Average total tokens: 6555
+Average duration: 1.50 minutes

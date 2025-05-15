@@ -1,0 +1,678 @@
+2025-04-23 21:03:56.186 | INFO     | metagpt.const:get_metagpt_package_root:21 - Package root set to /Users/junyao/MetaGPT
+INFO:numexpr.utils:NumExpr defaulting to 8 threads.
+2025-04-23 21:04:01.229 | INFO     | __main__:<module>:253 - Starting application [software_company.py]
+2025-04-23 21:04:01.277 | INFO     | metagpt.roles.engineer:_initialize_engineers:222 - Engineering team initialized with 3 engineers:
+2025-04-23 21:04:01.277 | INFO     | metagpt.roles.engineer:_initialize_engineers:224 -   - Alex (junior)
+2025-04-23 21:04:01.277 | INFO     | metagpt.roles.engineer:_initialize_engineers:224 -   - John (junior)
+2025-04-23 21:04:01.277 | INFO     | metagpt.roles.engineer:_initialize_engineers:224 -   - Nick (senior)
+2025-04-23 21:04:01.287 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:275 - Initialized LLM for engineer Alex with expertise junior
+2025-04-23 21:04:01.296 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:275 - Initialized LLM for engineer John with expertise junior
+2025-04-23 21:04:01.305 | INFO     | metagpt.roles.engineer:_initialize_engineer_llms:275 - Initialized LLM for engineer Nick with expertise senior
+2025-04-23 21:04:01.326 | INFO     | paradigm:invest:50 - Investment: $3.0.
+2025-04-23 21:04:01.327 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do PrepareDocuments(PrepareDocuments)
+2025-04-23 21:04:01.440 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/requirement.txt
+2025-04-23 21:04:01.441 | INFO     | metagpt.roles.role:_act:405 - Content: Create a management program based on the crud addition, deletion, modification and query processing of the customer business entity. The customer needs to save this information: name, birthday, age, sex, and phone. The data is stored in client.db, and there is a judgement whether the customer table exists. If it doesn’t, it needs to be created first. Querying is done by name; same for deleting. The program is required to be concise, easy to maintain, and not over-designed. The screen is realized through streamlit and sqlite—no need to introduce other additional packages
+2025-04-23 21:04:01.441 | INFO     | metagpt.roles.role:_act:403 - Alice(Product Manager_Alice): to do WritePRD(WritePRD)
+2025-04-23 21:04:01.442 | INFO     | metagpt.actions.write_prd:run:86 - New requirement detected: Create a management program based on the crud addition, deletion, modification and query processing of the customer business entity. The customer needs to save this information: name, birthday, age, sex, and phone. The data is stored in client.db, and there is a judgement whether the customer table exists. If it doesn’t, it needs to be created first. Querying is done by name; same for deleting. The program is required to be concise, easy to maintain, and not over-designed. The screen is realized through streamlit and sqlite—no need to introduce other additional packages
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2025-04-23 21:04:46.619 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-04-23 21:04:46.620 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.000 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 1039, completion_tokens: 966
+2025-04-23 21:04:46.636 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/prd/20250423210446.json
+no mermaid
+2025-04-23 21:04:46.670 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-04-23 21:04:46.671 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/resources/prd/20250423210446.md
+2025-04-23 21:04:46.672 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250423210446.json":{"root_path":"docs/prd","filename":"20250423210446.json","content":"{\"Language\":\"en_us\",\"Programming Language\":\"Python\",\"Original Requirements\":\"Create a management program based on the crud addition, deletion, modification and query processing of the customer business entity. The customer needs to save this information: name, birthday, age, sex, and phone. The data is stored in client.db, and there is a judgement whether the customer table exists. If it doesn’t, it needs to be created first. Querying is done by name; same for deleting. The program is required to be concise, easy to maintain, and not over-designed. The screen is realized through streamlit and sqlite—no need to introduce other additional packages\",\"Product Goals\":[\"Create a simple and efficient CRM system for managing customer data\",\"Ensure the program is easy to maintain and extend\",\"Provide a user-friendly interface for basic CRUD operations\"],\"User Stories\":[\"As a user, I want to add a new customer with their details (name, birthday, age, sex, phone) so that I can keep track of my customers\",\"As a user, I want to search for a customer by name so that I can quickly find their details\",\"As a user, I want to update a customer's information so that I can keep their records up-to-date\",\"As a user, I want to delete a customer's record so that I can remove outdated or incorrect information\",\"As a user, I want the system to automatically check and create the customer table if it doesn't exist so that I don't have to manually set up the database\"],\"Competitive Analysis\":[\"CRM System A: Basic CRUD operations but lacks a user-friendly interface\",\"CRM System B: Good UI but requires additional packages and complex setup\",\"CRM System C: Simple and lightweight but lacks some essential features like age calculation\",\"CRM System D: Comprehensive features but over-designed and hard to maintain\",\"CRM System E: Uses SQLite but doesn't automatically handle table creation\"],\"Competitive Quadrant Chart\":\"quadrantChart\\n    title \\\"Reach and engagement of campaigns\\\"\\n    x-axis \\\"Low Simplicity\\\" --> \\\"High Simplicity\\\"\\n    y-axis \\\"Low Functionality\\\" --> \\\"High Functionality\\\"\\n    quadrant-1 \\\"We should expand\\\"\\n    quadrant-2 \\\"Need to promote\\\"\\n    quadrant-3 \\\"Re-evaluate\\\"\\n    quadrant-4 \\\"May be improved\\\"\\n    \\\"CRM System A\\\": [0.3, 0.5]\\n    \\\"CRM System B\\\": [0.6, 0.7]\\n    \\\"CRM System C\\\": [0.8, 0.4]\\n    \\\"CRM System D\\\": [0.5, 0.8]\\n    \\\"CRM System E\\\": [0.7, 0.5]\\n    \\\"Our Target Product\\\": [0.9, 0.8]\",\"Requirement Analysis\":\"The program needs to handle basic CRUD operations for customer data stored in an SQLite database. The interface should be simple and built with Streamlit. The system should automatically check for and create the customer table if it doesn't exist. The focus is on simplicity and maintainability, avoiding over-engineering.\",\"Requirement Pool\":[[\"P0\",\"Implement CRUD operations (Create, Read, Update, Delete) for customer data\"],[\"P0\",\"Automatically check and create the customer table in SQLite if it doesn't exist\"],[\"P1\",\"Provide a simple Streamlit interface for user interactions\"],[\"P1\",\"Ensure the program is concise and easy to maintain\"],[\"P2\",\"Add validation for customer data inputs (e.g., phone number format)\"]],\"UI Design draft\":\"The UI will consist of a simple Streamlit interface with tabs or sections for each CRUD operation. The main screen will have options to add, search, update, and delete customer records. Input fields will be provided for name, birthday, age, sex, and phone. Search functionality will be name-based, and results will be displayed in a clean, readable format.\",\"Anything UNCLEAR\":\"The requirements are clear, but it would be helpful to confirm if any additional validation or error handling is expected beyond basic CRUD operations.\"}"}}}
+2025-04-23 21:04:46.679 | INFO     | metagpt.roles.role:_act:403 - Bob(Architect_Bob): to do WriteDesign(WriteDesign)
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2025-04-23 21:05:16.861 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-04-23 21:05:16.862 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 1611, completion_tokens: 646
+2025-04-23 21:05:16.871 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/system_design/20250423210446.json
+2025-04-23 21:05:16.879 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/system_design/20250423210446.json:{'docs/prd/20250423210446.json'}
+no mermaid
+2025-04-23 21:05:16.894 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-04-23 21:05:16.895 | INFO     | metagpt.actions.design_api:_save_data_api_design:107 - Save class view to /Users/junyao/MetaGPT/workspace/crm_f_9/resources/data_api_design/20250423210446
+no mermaid
+2025-04-23 21:05:16.899 | WARNING  | metagpt.utils.mermaid:mermaid_to_file:35 - RUN `npm install -g @mermaid-js/mermaid-cli` to install mmdc,or consider changing engine to `playwright`, `pyppeteer`, or `ink`.
+2025-04-23 21:05:16.899 | INFO     | metagpt.actions.design_api:_save_seq_flow:116 - Saving sequence flow to /Users/junyao/MetaGPT/workspace/crm_f_9/resources/seq_flow/20250423210446
+2025-04-23 21:05:16.900 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/resources/system_design/20250423210446.md
+2025-04-23 21:05:16.900 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250423210446.json":{"root_path":"docs/system_design","filename":"20250423210446.json","content":"{\"Implementation approach\":\"We will create a simple CRM system using Python with Streamlit for the UI and SQLite for data storage. The program will automatically check for and create the customer table if it doesn't exist. CRUD operations will be implemented with basic validation for phone numbers. The focus is on simplicity and maintainability, using only the required packages (Streamlit and SQLite).\",\"File list\":[\"main.py\"],\"Data structures and interfaces\":\"\\nclassDiagram\\n    class CustomerManager {\\n        +db_connection: sqlite3.Connection\\n        +cursor: sqlite3.Cursor\\n        +__init__()\\n        +create_table()\\n        +add_customer(name: str, birthday: str, age: int, sex: str, phone: str) -> bool\\n        +get_customer(name: str) -> dict\\n        +update_customer(name: str, birthday: str, age: int, sex: str, phone: str) -> bool\\n        +delete_customer(name: str) -> bool\\n        +validate_phone(phone: str) -> bool\\n    }\\n    class StreamlitUI {\\n        +customer_manager: CustomerManager\\n        +__init__(customer_manager: CustomerManager)\\n        +render()\\n        +render_add_form()\\n        +render_search_form()\\n        +render_update_form()\\n        +render_delete_form()\\n    }\\n    CustomerManager --> StreamlitUI\\n\",\"Program call flow\":\"\\nsequenceDiagram\\n    participant U as User\\n    participant S as StreamlitUI\\n    participant C as CustomerManager\\n    U->>S: Open Application\\n    S->>C: __init__()\\n    C->>C: create_table()\\n    S->>U: Render Main UI\\n    alt Add Customer\\n        U->>S: Fill Add Form\\n        S->>C: add_customer(name, birthday, age, sex, phone)\\n        C-->>S: Success/Failure\\n        S-->>U: Show Result\\n    else Search Customer\\n        U->>S: Fill Search Form\\n        S->>C: get_customer(name)\\n        C-->>S: Customer Data\\n        S-->>U: Display Customer\\n    else Update Customer\\n        U->>S: Fill Update Form\\n        S->>C: update_customer(name, birthday, age, sex, phone)\\n        C-->>S: Success/Failure\\n        S-->>U: Show Result\\n    else Delete Customer\\n        U->>S: Fill Delete Form\\n        S->>C: delete_customer(name)\\n        C-->>S: Success/Failure\\n        S-->>U: Show Result\\n    end\\n\",\"Anything UNCLEAR\":\"The requirements are clear, but it would be helpful to confirm if any additional validation or error handling is expected beyond basic CRUD operations and phone number validation.\"}"}}}
+2025-04-23 21:05:16.904 | INFO     | metagpt.roles.role:_act:403 - Eve(Project Manager_Eve): to do WriteTasks(WriteTasks)
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2025-04-23 21:05:29.931 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-04-23 21:05:29.933 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $3.000 | Current cost: $0.000, prompt_tokens: 1201, completion_tokens: 195
+2025-04-23 21:05:29.946 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/task/20250423210446.json
+2025-04-23 21:05:29.948 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/crm_f_9/docs/task/20250423210446.json:{'docs/system_design/20250423210446.json'}
+2025-04-23 21:05:29.949 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/requirements.txt
+2025-04-23 21:05:29.950 | INFO     | metagpt.roles.role:_act:405 - Content: {"docs":{"20250423210446.json":{"root_path":"docs/task","filename":"20250423210446.json","content":"{\"Required packages\":[\"streamlit==1.12.2\",\"sqlite3==3.35.5\"],\"Required Other language third-party packages\":[\"No third-party dependencies required\"],\"Logic Analysis\":[[\"main.py\",\"Contains CustomerManager class with database operations and StreamlitUI class for user interface. CustomerManager handles SQLite operations while StreamlitUI renders the UI forms.\"]],\"Task list\":[\"main.py\"],\"Full API spec\":\"\",\"Shared Knowledge\":\"The CustomerManager class handles all database operations and validation, while StreamlitUI manages the user interface and form rendering.\",\"Anything UNCLEAR\":\"Clarification needed on whether additional validation beyond phone number validation is required for other fields like name, birthday, age, and sex.\"}"}}}
+2025-04-23 21:05:30.066 | INFO     | metagpt.roles.engineer:_new_code_actions:1291 - Processing task file: 20250423210446.json
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:metagpt.utils.token_counter:Counting tokens for model gpt-4o-mini
+2025-04-23 21:05:57.202 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: gpt-4o-mini
+2025-04-23 21:05:57.202 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.001 | Max budget: $10.000 | Current cost: $0.001, prompt_tokens: 1167, completion_tokens: 1572
+2025-04-23 21:05:57.204 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/crm_f_9/main.py
+2025-04-23 21:05:57.205 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/crm_f_9/crm_f_9/main.py:['docs/system_design/20250423210446.json', 'docs/task/20250423210446.json']
+2025-04-23 21:05:57.206 | INFO     | metagpt.roles.engineer:show_token_usage:700 - 
+==== TOKEN USAGE STATISTICS ====
+Team prompt tokens: 3851
+Team completion tokens: 1807
+Team total tokens: 5658
+Team cost: $0.0010
+
+==== AGGREGATE TOKEN USAGE ====
+Total prompt tokens: 7352
+Total completion tokens: 6523
+Total tokens: 13875
+Total cost: $0.0044
+==================================
+
+==== ENGINEER-SPECIFIC TOKEN USAGE ====
+Engineer: Alex (junior)
+  Prompt tokens: 1167
+  Completion tokens: 1572
+  Total tokens: 2739
+  Cost: $0.0011
+
+Engineer: John (junior)
+  Prompt tokens: 1167
+  Completion tokens: 1572
+  Total tokens: 2739
+  Cost: $0.0011
+
+Engineer: Nick (senior)
+  Prompt tokens: 1167
+  Completion tokens: 1572
+  Total tokens: 2739
+  Cost: $0.0011
+
+
+2025-04-23 21:05:57.210 | INFO     | metagpt.roles.engineer:_act_summarize:1170 - --max-auto-summarize-code=0
+2025-04-23 21:05:57.286 | INFO     | metagpt.roles.qa_engineer:_write_test:68 - Writing test_main.py..
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+Starting application [software_company.py]
+hello
+[CONTENT]
+{
+    "Language": "en_us",
+    "Programming Language": "Python",
+    "Original Requirements": "Create a management program based on the crud addition, deletion, modification and query processing of the customer business entity. The customer needs to save this information: name, birthday, age, sex, and phone. The data is stored in client.db, and there is a judgement whether the customer table exists. If it doesn’t, it needs to be created first. Querying is done by name; same for deleting. The program is required to be concise, easy to maintain, and not over-designed. The screen is realized through streamlit and sqlite—no need to introduce other additional packages",
+    "Product Goals": [
+        "Create a simple and efficient CRM system for managing customer data",
+        "Ensure the program is easy to maintain and extend",
+        "Provide a user-friendly interface for basic CRUD operations"
+    ],
+    "User Stories": [
+        "As a user, I want to add a new customer with their details (name, birthday, age, sex, phone) so that I can keep track of my customers",
+        "As a user, I want to search for a customer by name so that I can quickly find their details",
+        "As a user, I want to update a customer's information so that I can keep their records up-to-date",
+        "As a user, I want to delete a customer's record so that I can remove outdated or incorrect information",
+        "As a user, I want the system to automatically check and create the customer table if it doesn't exist so that I don't have to manually set up the database"
+    ],
+    "Competitive Analysis": [
+        "CRM System A: Basic CRUD operations but lacks a user-friendly interface",
+        "CRM System B: Good UI but requires additional packages and complex setup",
+        "CRM System C: Simple and lightweight but lacks some essential features like age calculation",
+        "CRM System D: Comprehensive features but over-designed and hard to maintain",
+        "CRM System E: Uses SQLite but doesn't automatically handle table creation"
+    ],
+    "Competitive Quadrant Chart": "quadrantChart\n    title \"Reach and engagement of campaigns\"\n    x-axis \"Low Simplicity\" --> \"High Simplicity\"\n    y-axis \"Low Functionality\" --> \"High Functionality\"\n    quadrant-1 \"We should expand\"\n    quadrant-2 \"Need to promote\"\n    quadrant-3 \"Re-evaluate\"\n    quadrant-4 \"May be improved\"\n    \"CRM System A\": [0.3, 0.5]\n    \"CRM System B\": [0.6, 0.7]\n    \"CRM System C\": [0.8, 0.4]\n    \"CRM System D\": [0.5, 0.8]\n    \"CRM System E\": [0.7, 0.5]\n    \"Our Target Product\": [0.9, 0.8]",
+    "Requirement Analysis": "The program needs to handle basic CRUD operations for customer data stored in an SQLite database. The interface should be simple and built with Streamlit. The system should automatically check for and create the customer table if it doesn't exist. The focus is on simplicity and maintainability, avoiding over-engineering.",
+    "Requirement Pool": [
+        [
+            "P0",
+            "Implement CRUD operations (Create, Read, Update, Delete) for customer data"
+        ],
+        [
+            "P0",
+            "Automatically check and create the customer table in SQLite if it doesn't exist"
+        ],
+        [
+            "P1",
+            "Provide a simple Streamlit interface for user interactions"
+        ],
+        [
+            "P1",
+            "Ensure the program is concise and easy to maintain"
+        ],
+        [
+            "P2",
+            "Add validation for customer data inputs (e.g., phone number format)"
+        ]
+    ],
+    "UI Design draft": "The UI will consist of a simple Streamlit interface with tabs or sections for each CRUD operation. The main screen will have options to add, search, update, and delete customer records. Input fields will be provided for name, birthday, age, sex, and phone. Search functionality will be name-based, and results will be displayed in a clean, readable format.",
+    "Anything UNCLEAR": "The requirements are clear, but it would be helpful to confirm if any additional validation or error handling is expected beyond basic CRUD operations."
+}
+[/CONTENT]
+[CONTENT]
+{
+    "Implementation approach": "We will create a simple CRM system using Python with Streamlit for the UI and SQLite for data storage. The program will automatically check for and create the customer table if it doesn't exist. CRUD operations will be implemented with basic validation for phone numbers. The focus is on simplicity and maintainability, using only the required packages (Streamlit and SQLite).",
+    "File list": [
+        "main.py"
+    ],
+    "Data structures and interfaces": "\nclassDiagram\n    class CustomerManager {\n        +db_connection: sqlite3.Connection\n        +cursor: sqlite3.Cursor\n        +__init__()\n        +create_table()\n        +add_customer(name: str, birthday: str, age: int, sex: str, phone: str) -> bool\n        +get_customer(name: str) -> dict\n        +update_customer(name: str, birthday: str, age: int, sex: str, phone: str) -> bool\n        +delete_customer(name: str) -> bool\n        +validate_phone(phone: str) -> bool\n    }\n    class StreamlitUI {\n        +customer_manager: CustomerManager\n        +__init__(customer_manager: CustomerManager)\n        +render()\n        +render_add_form()\n        +render_search_form()\n        +render_update_form()\n        +render_delete_form()\n    }\n    CustomerManager --> StreamlitUI\n",
+    "Program call flow": "\nsequenceDiagram\n    participant U as User\n    participant S as StreamlitUI\n    participant C as CustomerManager\n    U->>S: Open Application\n    S->>C: __init__()\n    C->>C: create_table()\n    S->>U: Render Main UI\n    alt Add Customer\n        U->>S: Fill Add Form\n        S->>C: add_customer(name, birthday, age, sex, phone)\n        C-->>S: Success/Failure\n        S-->>U: Show Result\n    else Search Customer\n        U->>S: Fill Search Form\n        S->>C: get_customer(name)\n        C-->>S: Customer Data\n        S-->>U: Display Customer\n    else Update Customer\n        U->>S: Fill Update Form\n        S->>C: update_customer(name, birthday, age, sex, phone)\n        C-->>S: Success/Failure\n        S-->>U: Show Result\n    else Delete Customer\n        U->>S: Fill Delete Form\n        S->>C: delete_customer(name)\n        C-->>S: Success/Failure\n        S-->>U: Show Result\n    end\n",
+    "Anything UNCLEAR": "The requirements are clear, but it would be helpful to confirm if any additional validation or error handling is expected beyond basic CRUD operations and phone number validation."
+}
+[/CONTENT]
+[CONTENT]
+{
+    "Required packages": [
+        "streamlit==1.12.2",
+        "sqlite3==3.35.5"
+    ],
+    "Required Other language third-party packages": [
+        "No third-party dependencies required"
+    ],
+    "Logic Analysis": [
+        [
+            "main.py",
+            "Contains CustomerManager class with database operations and StreamlitUI class for user interface. CustomerManager handles SQLite operations while StreamlitUI renders the UI forms."
+        ]
+    ],
+    "Task list": [
+        "main.py"
+    ],
+    "Full API spec": "",
+    "Shared Knowledge": "The CustomerManager class handles all database operations and validation, while StreamlitUI manages the user interface and form rendering.",
+    "Anything UNCLEAR": "Clarification needed on whether additional validation beyond phone number validation is required for other fields like name, birthday, age, and sex."
+}
+[/CONTENT]
+## Code: main.py
+```python
+## main.py
+import sqlite3
+import streamlit as st
+
+class CustomerManager:
+    """Class to manage customer data in the SQLite database."""
+
+    def __init__(self) -> None:
+        """Initialize the database connection and create the customer table if it doesn't exist."""
+        self.db_connection: sqlite3.Connection = sqlite3.connect('customers.db')
+        self.cursor: sqlite3.Cursor = self.db_connection.cursor()
+        self.create_table()
+
+    def create_table(self) -> None:
+        """Create the customer table in the database if it doesn't exist."""
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS customers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                birthday TEXT NOT NULL,
+                age INTEGER NOT NULL,
+                sex TEXT NOT NULL,
+                phone TEXT NOT NULL UNIQUE
+            )
+        ''')
+        self.db_connection.commit()
+
+    def add_customer(self, name: str, birthday: str, age: int, sex: str, phone: str) -> bool:
+        """Add a new customer to the database.
+
+        Args:
+            name (str): The name of the customer.
+            birthday (str): The birthday of the customer.
+            age (int): The age of the customer.
+            sex (str): The sex of the customer.
+            phone (str): The phone number of the customer.
+
+        Returns:
+            bool: True if the customer was added successfully, False otherwise.
+        """
+        if not self.validate_phone(phone):
+            return False
+        
+        try:
+            self.cursor.execute('''
+                INSERT INTO customers (name, birthday, age, sex, phone)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (name, birthday, age, sex, phone))
+            self.db_connection.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
+
+    def get_customer(self, name: str) -> dict:
+        """Retrieve a customer's data by name.
+
+        Args:
+            name (str): The name of the customer.
+
+        Returns:
+            dict: A dictionary containing the customer's data or an empty dictionary if not found.
+        """
+        self.cursor.execute('SELECT * FROM customers WHERE name = ?', (name,))
+        row = self.cursor.fetchone()
+        if row:
+            return {
+                'id': row[0],
+                'name': row[1],
+                'birthday': row[2],
+                'age': row[3],
+                'sex': row[4],
+                'phone': row[5]
+            }
+        return {}
+
+    def update_customer(self, name: str, birthday: str, age: int, sex: str, phone: str) -> bool:
+        """Update an existing customer's data.
+
+        Args:
+            name (str): The name of the customer.
+            birthday (str): The new birthday of the customer.
+            age (int): The new age of the customer.
+            sex (str): The new sex of the customer.
+            phone (str): The new phone number of the customer.
+
+        Returns:
+            bool: True if the customer was updated successfully, False otherwise.
+        """
+        if not self.validate_phone(phone):
+            return False
+        
+        self.cursor.execute('''
+            UPDATE customers
+            SET birthday = ?, age = ?, sex = ?, phone = ?
+            WHERE name = ?
+        ''', (birthday, age, sex, phone, name))
+        self.db_connection.commit()
+        return self.cursor.rowcount > 0
+
+    def delete_customer(self, name: str) -> bool:
+        """Delete a customer from the database.
+
+        Args:
+            name (str): The name of the customer to delete.
+
+        Returns:
+            bool: True if the customer was deleted successfully, False otherwise.
+        """
+        self.cursor.execute('DELETE FROM customers WHERE name = ?', (name,))
+        self.db_connection.commit()
+        return self.cursor.rowcount > 0
+
+    def validate_phone(self, phone: str) -> bool:
+        """Validate the phone number format.
+
+        Args:
+            phone (str): The phone number to validate.
+
+        Returns:
+            bool: True if the phone number is valid, False otherwise.
+        """
+        # Simple validation: check if the phone number is numeric and of length 10
+        return phone.isdigit() and len(phone) == 10
+
+
+class StreamlitUI:
+    """Class to manage the Streamlit user interface."""
+
+    def __init__(self, customer_manager: CustomerManager) -> None:
+        """Initialize the Streamlit UI with a CustomerManager instance.
+
+        Args:
+            customer_manager (CustomerManager): An instance of CustomerManager.
+        """
+        self.customer_manager: CustomerManager = customer_manager
+
+    def render(self) -> None:
+        """Render the main user interface."""
+        st.title("Customer Relationship Management System")
+        menu = ["Add Customer", "Search Customer", "Update Customer", "Delete Customer"]
+        choice = st.sidebar.selectbox("Select an option", menu)
+
+        if choice == "Add Customer":
+            self.render_add_form()
+        elif choice == "Search Customer":
+            self.render_search_form()
+        elif choice == "Update Customer":
+            self.render_update_form()
+        elif choice == "Delete Customer":
+            self.render_delete_form()
+
+    def render_add_form(self) -> None:
+        """Render the form to add a new customer."""
+        st.subheader("Add Customer")
+        name = st.text_input("Name")
+        birthday = st.text_input("Birthday (YYYY-MM-DD)")
+        age = st.number_input("Age", min_value=0)
+        sex = st.selectbox("Sex", ["Male", "Female", "Other"])
+        phone = st.text_input("Phone Number")
+
+        if st.button("Add Customer"):
+            if self.customer_manager.add_customer(name, birthday, age, sex, phone):
+                st.success("Customer added successfully!")
+            else:
+                st.error("Failed to add customer. Please check the phone number.")
+
+    def render_search_form(self) -> None:
+        """Render the form to search for a customer."""
+        st.subheader("Search Customer")
+        name = st.text_input("Enter the name of the customer")
+
+        if st.button("Search"):
+            customer = self.customer_manager.get_customer(name)
+            if customer:
+                st.write(customer)
+            else:
+                st.error("Customer not found.")
+
+    def render_update_form(self) -> None:
+        """Render the form to update an existing customer."""
+        st.subheader("Update Customer")
+        name = st.text_input("Enter the name of the customer to update")
+        birthday = st.text_input("New Birthday (YYYY-MM-DD)")
+        age = st.number_input("New Age", min_value=0)
+        sex = st.selectbox("New Sex", ["Male", "Female", "Other"])
+        phone = st.text_input("New Phone Number")
+
+        if st.button("Update Customer"):
+            if self.customer_manager.update_customer(name, birthday, age, sex, phone):
+                st.success("Customer updated successfully!")
+            else:
+                st.error("Failed to update customer. Please check the phone number.")
+
+    def render_delete_form(self) -> None:
+        """Render the form to delete a customer."""
+        st.subheader("Delete Customer")
+        name = st.text_input("Enter the name of the customer to delete")
+
+        if st.button("Delete Customer"):
+            if self.customer_manager.delete_customer(name):
+                st.success("Customer deleted successfully!")
+            else:
+                st.error("Failed to delete customer. Customer not found.")
+
+
+if __name__ == "__main__":
+    customer_manager = CustomerManager()
+    ui = StreamlitUI(customer_manager)
+    ui.render()
+```
+```python
+"""
+Test cases for the CustomerManager and StreamlitUI classes in main.py.
+"""
+
+import unittest
+import sqlite3
+from unittest.mock import patch, MagicMock
+import sys
+import os
+
+# Add the parent directory to the path to allow imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from crm_f_9.main import CustomerManager, StreamlitUI
+
+
+class TestCustomerManager(unittest.TestCase):
+    """Test cases for the CustomerManager class."""
+
+    def setUp(self) -> None:
+        """Set up test environment."""
+        self.db_connection = sqlite3.connect(':memory:')
+        self.cursor = self.db_connection.cursor()
+        self.customer_manager = CustomerManager()
+        # Override the connection to use in-memory database for testing
+        self.customer_manager.db_connection = self.db_connection
+        self.customer_manager.cursor = self.cursor
+        self.customer_manager.create_table()
+
+    def tearDown(self) -> None:
+        """Clean up test environment."""
+        self2025-04-23 21:07:34.690 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-04-23 21:07:34.692 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.002 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 2109, completion_tokens: 2433
+2025-04-23 21:07:34.701 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/tests/test_main.py
+2025-04-23 21:07:34.704 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/crm_f_9/tests/test_main.py:{'crm_f_9/main.py'}
+2025-04-23 21:07:34.707 | INFO     | metagpt.roles.qa_engineer:_write_test:93 - Done /Users/junyao/MetaGPT/workspace/crm_f_9/tests generating.
+2025-04-23 21:07:34.708 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"d6f5d9a4e4ad4f1dacbaef937fb99ae7","content":"Round 1 of tests done","role":"QaEngineer_Edward","cause_by":"metagpt.actions.write_test.WriteTest","sent_from":"QaEngineer_Edward","send_to":["<none>"]}
+2025-04-23 21:07:34.717 | INFO     | metagpt.actions.run_code:run:122 - Running python tests/test_main.py
+2025-04-23 21:07:34.717 | INFO     | metagpt.actions.run_code:run_script:103 - Python Path : {'NVM_RC_VERSION': '', 'TERM_PROGRAM': 'vscode', 'NVM_CD_FLAGS': '-q', 'TERM': 'xterm-256color', 'SHELL': '/bin/zsh', 'HOMEBREW_REPOSITORY': '/opt/homebrew', 'TMPDIR': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/', 'TERM_PROGRAM_VERSION': '0.48.6', 'ZDOTDIR': '/Users/junyao', 'CURSOR_TRACE_ID': 'b9ce39b26de14958a1e98aaa50557849', 'ORIGINAL_XDG_CURRENT_DESKTOP': 'undefined', 'MallocNanoZone': '0', 'NVM_DIR': '/Users/junyao/.nvm', 'USER': 'junyao', 'COMMAND_MODE': 'unix2003', 'RBENV_ROOT': 'Users/junyao/.rbenv-version', 'SSH_AUTH_SOCK': '/private/tmp/com.apple.launchd.ySwtqAHZpI/Listeners', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'PATH': '/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/junyao/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/Cellar/dart/2.19.6/libexec/bin:/Users/junyao/Library/Application Support/JetBrains/Toolbox/scripts:/Users/junyao/flutter/bin:/Users/junyao/.cabal/bin:/Users/junyao/.ghcup/bin:/Users/junyao/Library/Application Support/Cursor/User/globalStorage/github.copilot-chat/debugCommand:/Users/junyao/flutter/bin', '_': '/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', 'USER_ZDOTDIR': '/Users/junyao', '__CFBundleIdentifier': 'com.todesktop.230313mzl4w4u92', 'PWD': '/Users/junyao/MetaGPT/metagpt', 'JAVA_HOME': '/Library/Java/JavaVirtualMachines/jdk-17.0.7.jdk/Contents/Home', 'LANG': 'en_US.UTF-8', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'XPC_FLAGS': '0x0', 'XPC_SERVICE_NAME': '0', 'VSCODE_INJECTION': '1', 'SHLVL': '2', 'HOME': '/Users/junyao', 'VSCODE_GIT_ASKPASS_MAIN': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass-main.js', 'HOMEBREW_PREFIX': '/opt/homebrew', 'LOGNAME': 'junyao', 'VSCODE_GIT_IPC_HANDLE': '/var/folders/7b/3n1n4t5d1gq90s5_csv99cmw0000gn/T/vscode-git-40b9462617.sock', 'VSCODE_GIT_ASKPASS_NODE': '/Applications/Cursor.app/Contents/Frameworks/Cursor Helper (Plugin).app/Contents/MacOS/Cursor Helper (Plugin)', 'GIT_ASKPASS': '/Applications/Cursor.app/Contents/Resources/app/extensions/git/dist/askpass.sh', 'INFOPATH': '/opt/homebrew/share/info:/opt/homebrew/share/info:', 'HOMEBREW_CELLAR': '/opt/homebrew/Cellar', 'COLORTERM': 'truecolor', 'KMP_DUPLICATE_LIB_OK': 'True', 'KMP_INIT_AT_FORK': 'FALSE', 'LD_LIBRARY_PATH': '/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/cv2/../../lib:', 'PYGAME_HIDE_SUPPORT_PROMPT': 'hide', 'PYTHONPATH': '/Users/junyao/MetaGPT/workspace/crm_f_9:/Users/junyao/MetaGPT/workspace/crm_f_9/crm_f_9:'}
+2025-04-23 21:07:34.729 | INFO     | metagpt.actions.run_code:run_script:110 - python tests/test_main.py
+2025-04-23 21:07:35.090 | INFO     | metagpt.actions.run_code:run:132 - outs=''
+2025-04-23 21:07:35.090 | INFO     | metagpt.actions.run_code:run:133 - errs="...............2025-04-23 21:07:35.023 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n2025-04-23 21:07:35.057 \n  \x1b[33m\x1b[1mWarning:\x1b[0m to view this Streamlit app on a browser, run it with the following\n  command:\n\n    streamlit run tests/test_main.py [ARGUMENTS]\n2025-04-23 21:07:35.058 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n.2025-04-23 21:07:35.059 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n2025-04-23 21:07:35.059 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n.2025-04-23 21:07:35.060 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n2025-04-23 21:07:35.060 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n.2025-04-23 21:07:35.061 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n2025-04-23 21:07:35.061 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n.\n----------------------------------------------------------------------\nRan 19 tests in 0.048s\n\nOK\n"
+INFO:httpx:HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2025-04-23 21:07:46.849 | INFO     | metagpt.utils.cost_manager:update_cost:48 - Current Model: deepseek-chat
+2025-04-23 21:07:46.851 | INFO     | metagpt.utils.cost_manager:update_cost:58 - Total running cost: $0.003 | Max budget: $3.000 | Current cost: $0.001, prompt_tokens: 4821, completion_tokens: 85
+2025-04-23 21:07:46.859 | INFO     | metagpt.utils.file_repository:save:57 - save to: /Users/junyao/MetaGPT/workspace/crm_f_9/test_outputs/test_main.py.json
+2025-04-23 21:07:46.861 | INFO     | metagpt.utils.file_repository:save:62 - update dependency: /Users/junyao/MetaGPT/workspace/crm_f_9/test_outputs/test_main.py.json:{'crm_f_9/main.py', 'tests/test_main.py'}
+2025-04-23 21:07:46.864 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"091f2fbf07b84b4e8cf42bbdc8d798ad","content":"{\"mode\":\"script\",\"code\":null,\"code_filename\":\"main.py\",\"test_code\":null,\"test_filename\":\"test_main.py\",\"command\":[\"python\",\"tests/test_main.py\"],\"working_directory\":\"/Users/junyao/MetaGPT/workspace/crm_f_9\",\"additional_python_paths\":[\"/Users/junyao/MetaGPT/workspace/crm_f_9/crm_f_9\"],\"output_filename\":\"test_main.py.json\",\"output\":null}","role":"QaEngineer_Edward","cause_by":"metagpt.actions.run_code.RunCode","sent_from":"metagpt.roles.qa_engineer.QaEngineer","send_to":["<none>"]}
+2025-04-23 21:07:46.864 | WARNING  | metagpt.environment.base_env:publish_message:192 - Message no recipients: {"id":"e344034554874af3a91df99425b27033","content":"Round 2 of tests done","role":"QaEngineer_Edward","cause_by":"metagpt.actions.write_test.WriteTest","sent_from":"QaEngineer_Edward","send_to":["<none>"]}
+2025-04-23 21:07:46.935 | INFO     | metagpt.utils.git_repository:archive:168 - Archive: ['.dependencies.json', 'crm_f_9/main.py', 'customers.db', 'docs/prd/20250423210446.json', 'docs/requirement.txt', 'docs/system_design/20250423210446.json', 'docs/task/20250423210446.json', 'requirements.txt', 'resources/competitive_analysis/20250423210446.mmd', 'resources/data_api_design/20250423210446.mmd', 'resources/prd/20250423210446.md', 'resources/seq_flow/20250423210446.mmd', 'resources/system_design/20250423210446.md', 'test_outputs/test_main.py.json', 'tests/test_main.py']
+.db_connection.close()
+
+    def test_create_table(self) -> None:
+        """Test that the customers table is created correctly."""
+        self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='customers'")
+        result = self.cursor.fetchone()
+        self.assertIsNotNone(result)
+        self.assertEqual(result[0], 'customers')
+
+    def test_add_customer_success(self) -> None:
+        """Test adding a customer successfully."""
+        result = self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        self.assertTrue(result)
+
+        # Verify the customer was added
+        self.cursor.execute("SELECT * FROM customers WHERE name = ?", ("John Doe",))
+        customer = self.cursor.fetchone()
+        self.assertIsNotNone(customer)
+        self.assertEqual(customer[1], "John Doe")
+
+    def test_add_customer_invalid_phone(self) -> None:
+        """Test adding a customer with invalid phone number."""
+        result = self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "invalid"
+        )
+        self.assertFalse(result)
+
+    def test_add_customer_duplicate_phone(self) -> None:
+        """Test adding a customer with duplicate phone number."""
+        # Add first customer
+        self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        # Try to add second customer with same phone
+        result = self.customer_manager.add_customer(
+            "Jane Doe", "1995-01-01", 25, "Female", "1234567890"
+        )
+        self.assertFalse(result)
+
+    def test_get_customer_found(self) -> None:
+        """Test retrieving an existing customer."""
+        # Add a customer first
+        self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        # Get the customer
+        customer = self.customer_manager.get_customer("John Doe")
+        self.assertEqual(customer["name"], "John Doe")
+        self.assertEqual(customer["phone"], "1234567890")
+
+    def test_get_customer_not_found(self) -> None:
+        """Test retrieving a non-existent customer."""
+        customer = self.customer_manager.get_customer("Non Existent")
+        self.assertEqual(customer, {})
+
+    def test_update_customer_success(self) -> None:
+        """Test updating a customer successfully."""
+        # Add a customer first
+        self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        # Update the customer
+        result = self.customer_manager.update_customer(
+            "John Doe", "1991-01-01", 31, "Female", "0987654321"
+        )
+        self.assertTrue(result)
+
+        # Verify the update
+        customer = self.customer_manager.get_customer("John Doe")
+        self.assertEqual(customer["birthday"], "1991-01-01")
+        self.assertEqual(customer["age"], 31)
+        self.assertEqual(customer["sex"], "Female")
+        self.assertEqual(customer["phone"], "0987654321")
+
+    def test_update_customer_invalid_phone(self) -> None:
+        """Test updating a customer with invalid phone number."""
+        # Add a customer first
+        self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        # Try to update with invalid phone
+        result = self.customer_manager.update_customer(
+            "John Doe", "1991-01-01", 31, "Female", "invalid"
+        )
+        self.assertFalse(result)
+
+    def test_update_customer_not_found(self) -> None:
+        """Test updating a non-existent customer."""
+        result = self.customer_manager.update_customer(
+            "Non Existent", "1991-01-01", 31, "Female", "0987654321"
+        )
+        self.assertFalse(result)
+
+    def test_delete_customer_success(self) -> None:
+        """Test deleting a customer successfully."""
+        # Add a customer first
+        self.customer_manager.add_customer(
+            "John Doe", "1990-01-01", 30, "Male", "1234567890"
+        )
+        # Delete the customer
+        result = self.customer_manager.delete_customer("John Doe")
+        self.assertTrue(result)
+
+        # Verify deletion
+        customer = self.customer_manager.get_customer("John Doe")
+        self.assertEqual(customer, {})
+
+    def test_delete_customer_not_found(self) -> None:
+        """Test deleting a non-existent customer."""
+        result = self.customer_manager.delete_customer("Non Existent")
+        self.assertFalse(result)
+
+    def test_validate_phone_valid(self) -> None:
+        """Test phone number validation with valid numbers."""
+        self.assertTrue(self.customer_manager.validate_phone("1234567890"))
+        self.assertTrue(self.customer_manager.validate_phone("0000000000"))
+
+    def test_validate_phone_invalid(self) -> None:
+        """Test phone number validation with invalid numbers."""
+        self.assertFalse(self.customer_manager.validate_phone("123456789"))  # too short
+        self.assertFalse(self.customer_manager.validate_phone("12345678901"))  # too long
+        self.assertFalse(self.customer_manager.validate_phone("123456789a"))  # non-digit
+        self.assertFalse(self.customer_manager.validate_phone(""))  # empty
+
+
+class TestStreamlitUI(unittest.TestCase):
+    """Test cases for the StreamlitUI class."""
+
+    def setUp(self) -> None:
+        """Set up test environment."""
+        self.customer_manager = MagicMock(spec=CustomerManager)
+        self.ui = StreamlitUI(self.customer_manager)
+
+    @patch('streamlit.sidebar.selectbox')
+    @patch('streamlit.title')
+    def test_render(self, mock_title: MagicMock, mock_selectbox: MagicMock) -> None:
+        """Test the main render method."""
+        mock_selectbox.return_value = "Add Customer"
+        with patch.object(self.ui, 'render_add_form') as mock_render_add_form:
+            self.ui.render()
+            mock_title.assert_called_once_with("Customer Relationship Management System")
+            mock_selectbox.assert_called_once_with("Select an option", 
+                ["Add Customer", "Search Customer", "Update Customer", "Delete Customer"])
+            mock_render_add_form.assert_called_once()
+
+    @patch('streamlit.subheader')
+    @patch('streamlit.text_input')
+    @patch('streamlit.number_input')
+    @patch('streamlit.selectbox')
+    @patch('streamlit.button')
+    def test_render_add_form_success(self, mock_button: MagicMock, mock_selectbox: MagicMock,
+                                   mock_number_input: MagicMock, mock_text_input: MagicMock,
+                                   mock_subheader: MagicMock) -> None:
+        """Test the add customer form with successful addition."""
+        mock_text_input.side_effect = ["John Doe", "1990-01-01", "1234567890"]
+        mock_number_input.return_value = 30
+        mock_selectbox.return_value = "Male"
+        mock_button.return_value = True
+        self.customer_manager.add_customer.return_value = True
+
+        with patch('streamlit.success') as mock_success:
+            self.ui.render_add_form()
+            mock_success.assert_called_once_with("Customer added successfully!")
+
+    @patch('streamlit.text_input')
+    @patch('streamlit.button')
+    def test_render_search_form_found(self, mock_button: MagicMock, mock_text_input: MagicMock) -> None:
+        """Test the search customer form with found customer."""
+        mock_text_input.return_value = "John Doe"
+        mock_button.return_value = True
+        self.customer_manager.get_customer.return_value = {
+            'name': 'John Doe', 'phone': '1234567890'
+        }
+
+        with patch('streamlit.write') as mock_write:
+            self.ui.render_search_form()
+            mock_write.assert_called_once_with({
+                'name': 'John Doe', 'phone': '1234567890'
+            })
+
+    @patch('streamlit.text_input')
+    @patch('streamlit.button')
+    def test_render_search_form_not_found(self, mock_button: MagicMock, mock_text_input: MagicMock) -> None:
+        """Test the search customer form with not found customer."""
+        mock_text_input.return_value = "Non Existent"
+        mock_button.return_value = True
+        self.customer_manager.get_customer.return_value = {}
+
+        with patch('streamlit.error') as mock_error:
+            self.ui.render_search_form()
+            mock_error.assert_called_once_with("Customer not found.")
+
+    @patch('streamlit.text_input')
+    @patch('streamlit.button')
+    def test_render_delete_form_success(self, mock_button: MagicMock, mock_text_input: MagicMock) -> None:
+        """Test the delete customer form with successful deletion."""
+        mock_text_input.return_value = "John Doe"
+        mock_button.return_value = True
+        self.customer_manager.delete_customer.return_value = True
+
+        with patch('streamlit.success') as mock_success:
+            self.ui.render_delete_form()
+            mock_success.assert_called_once_with("Customer deleted successfully!")
+
+    @patch('streamlit.text_input')
+    @patch('streamlit.button')
+    def test_render_delete_form_failure(self, mock_button: MagicMock, mock_text_input: MagicMock) -> None:
+        """Test the delete customer form with failed deletion."""
+        mock_text_input.return_value = "Non Existent"
+        mock_button.return_value = True
+        self.customer_manager.delete_customer.return_value = False
+
+        with patch('streamlit.error') as mock_error:
+            self.ui.render_delete_form()
+            mock_error.assert_called_once_with("Failed to delete customer. Customer not found.")
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+---
+## instruction:
+The test output shows that all 19 tests passed successfully with no errors. The warnings about Streamlit's ScriptRunContext are expected when running tests in a non-Streamlit environment and can be safely ignored for testing purposes. The code is functioning as intended.
+
+## File To Rewrite:
+No files need to be rewritten as all tests passed.
+
+## Status:
+PASS
+
+## Send To:
+NoOne
+
+Run #9 completed with return code 0
+Duration: 232.30 seconds (3.87 minutes)

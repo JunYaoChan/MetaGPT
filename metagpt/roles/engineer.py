@@ -235,7 +235,7 @@ class Engineer(Role):
             if engineer.expertise == ExpertiseLevel.JUNIOR:
                 # Optionally use a different model for junior engineers
                 config_copy.llm = LLMConfig(
-                        api_key="",
+                        api_key="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",
                         api_type="openai",
                         base_url="https://api.openai.com/v1",
                         model="gpt-4o-mini",
@@ -434,6 +434,9 @@ class Engineer(Role):
                           
                             # If no matching class found, use default complexity
                             if not matching_class:
+                                if "game" in filename_base:
+                                    complexity += 2  # Add 2 points to complexity for main files
+                                    logger.info(f"Added complexity")
                                 logger.info(f"No matching class found for {task_filename}")
                                 return 5
                             
@@ -553,41 +556,64 @@ class Engineer(Role):
         return changed_files, coding_contexts
     
 
-    def extract_and_parse_json(self,text):
-        """
-        Extract JSON content from text that might contain other content around it,
-        and parse it into a Python object.
-        
-        Args:
-            text (str): Text that contains JSON somewhere within it
+    def extract_and_parse_json(self, text):
+        """Extract and parse JSON with better recovery mechanisms"""
+        try:
+            # Try to find JSON content between triple backticks
+            json_pattern = r'```json\s*([\s\S]*?)\s*```'
+            match = re.search(json_pattern, text, re.DOTALL)
             
-        Returns:
-            dict: Parsed JSON object
-        """
-        # Try to find JSON content between triple backticks
-        json_pattern = r'```json\s*([\s\S]*?)\s*```'
-        match = re.search(json_pattern, text)
-        
-        if match:
-            json_str = match.group(1)
-        else:
-            # If no triple backticks, try to find content that looks like JSON
-            # (starting with { and ending with })
-            json_pattern = r'(\{[\s\S]*\})'
-            match = re.search(json_pattern, text)
             if match:
                 json_str = match.group(1)
             else:
-                raise ValueError("Could not find JSON content in the text")
+                # Try to extract anything that looks like a JSON object
+                json_pattern = r'(\{\s*"review_status".*\})'
+                match = re.search(json_pattern, text, re.DOTALL)
+                if match:
+                    json_str = match.group(1)
+                else:
+                    logger.warning("Could not find JSON content in the response")
+                    return {"review_status": "LBTM", "overview": "Failed to parse response", "refined_files": {}}
+            
+            # Attempt to clean the JSON string
+            # Replace invalid escape sequences
+            json_str = re.sub(r'\\(?!["\\/bfnrt]|u[0-9a-fA-F]{4})', r'\\\\', json_str)
+            
+            # Try standard JSON parsing first
+            try:
+                return json.loads(json_str)
+            except json.JSONDecodeError:
+                # If that fails, use a more lenient approach: extract just the review status and overview
+                status_match = re.search(r'"review_status"\s*:\s*"([^"]+)"', json_str)
+                overview_match = re.search(r'"overview"\s*:\s*"([^"]+)"', json_str)
+                
+                result = {
+                    "review_status": status_match.group(1) if status_match else "LBTM",
+                    "overview": overview_match.group(1) if overview_match else "Failed to parse response",
+                    "refined_files": {}  # Empty to prevent further errors
+                }
+                
+                # Try to extract file contents individually
+                files_section = re.search(r'"refined_files"\s*:\s*\{([\s\S]*?)\}(?=\s*\})', json_str)
+                if files_section:
+                    file_content = files_section.group(1)
+                    # Parse each file entry separately
+                    file_entries = re.findall(r'"([^"]+)"\s*:\s*"((?:\\.|[^"\\])*)"', file_content)
+                    for filename, content in file_entries:
+                        # Unescape the content
+                        content = content.encode().decode('unicode_escape')
+                        result["refined_files"][filename] = content
+                        
+                return result
+                
+        except Exception as e:
+            logger.error(f"Error parsing response: {e}")
+            return {
+                "review_status": "LBTM",
+                "overview": f"Failed to process response: {str(e)}",
+                "refined_files": {}
+            }
         
-        try:
-            return json.loads(json_str)
-        except json.JSONDecodeError as e:
-            print(f"JSON parse error: {e}")
-            print(f"JSON string: {json_str[:100]}...")  # Print beginning of string for debugging
-            raise
-
-    
     async def show_token_usage(self):
         """
         Display the total token usage statistics after code generation.
@@ -676,127 +702,187 @@ class Engineer(Role):
             "total_tokens": total_prompt_tokens + total_completion_tokens,
             "total_cost": total_cost
         }
-    async def _refine_codebase_directly(self, all_coding_contexts: List) -> Set[str]:
+
+ 
+    
+    async def _integrating_codebase(self, all_coding_contexts: List) -> Set[str]:
         """
         Refines all code files as a single codebase with multiple iterations if needed.
-        Supports the same iteration mechanism as WriteCodeReview with LGTM/LBTM pattern.
+        Splits the input into smaller batches to stay within token limits.
         """
         changed_files = set()
-        
+
         if not all_coding_contexts:
             return changed_files
-            
+
         logger.info(f"Starting direct refinement of {len(all_coding_contexts)} files")
-        
+
         # Get the number of review iterations to perform
-        k = self.context.config.code_review_k_times or 1
-        logger.info(f"Will perform up to {k} iterations of code refinement")
-        
+        k = max(2, self.context.config.code_review_k_times or 0)
+        logger.info(f"Will perform up to {k} iterations of code refinement (minimum 2 enforced).")
+
         # Step 1: Gather all code files
         code_files = {}  # Dictionary of filename -> content
         ctx_by_filename = {}  # Dictionary to map filename to context object
-        
+
         for ctx in all_coding_contexts:
             code_files[ctx.filename] = ctx.code_doc.content
             ctx_by_filename[ctx.filename] = ctx
+
+        # Split files into two batches for processing
+        filenames = list(code_files.keys())
+        midpoint = len(filenames) // 2
+        batch1_filenames = filenames[:midpoint]
+        batch2_filenames = filenames[midpoint:]
         
+        logger.info(f"Split files into two batches: {len(batch1_filenames)} and {len(batch2_filenames)} files")
+
         # Initial code state
         current_code_files = dict(code_files)
-        
+
         # Perform up to k iterations
         for iteration in range(k):
-            logger.info(f"Starting refinement iteration {iteration+1}/{k}")
+            logger.info(f"Starting refinement iteration {iteration + 1}/{k}")
             
-            # Step 2: Create a prompt for direct refinement
+            # Base refinement prompt - same for both batches
             refinement_prompt = """
-            You are an experienced software engineer tasked with improving a complete codebase to ensure it's consistent and well-integrated.
-            
-            1. Missing imports - Ensure every file imports all classes, functions and constants it uses from other files
-            2. Import correctness - Fix import paths and module names
-            3. Interface consistency - Make sure function parameters and return values match between definition and usage
-            4. Constant usage - Ensure constants are defined only once and imported elsewhere
-            5. Class inheritance - Check for proper inheritance chains and interface implementations
-            6. Naming consistency - Use consistent naming across all files
-            
-            For each file, provide the COMPLETE refined code, not just the changes.
-            
-            Return your response in this JSON format:
+            You are an experienced software engineer tasked with improving a complete codebase to ensure it's consistent, correct, well-integrated, and free of common errors.
+
+            Review the file(s) provided below and refine them based on these criteria:
+            1.  Missing imports: Ensure every file imports all classes, functions, constants, and types it uses from other files.
+            2.  Import correctness: Fix import paths and module names according to the project structure.
+            3.  Interface consistency: Make sure function/method parameters (including types) and return values match between definition and usage.
+            4.  Constant usage: Ensure constants are defined centrally (if appropriate) and imported correctly elsewhere.
+            5.  Class inheritance & Interfaces: Check for proper inheritance chains and abstract method implementations.
+            6.  Naming consistency: Use consistent naming conventions across all files.
+            7.  Syntax correctness: Ensure the code is free from syntax errors that would prevent execution.
+            8.  Variable/Attribute Definition: Ensure all variables and class attributes are defined before use.
+            9.  Basic Bug Prevention: Identify and fix common errors like potential null references or incorrect logic.
+
+            For each file you modify, provide the COMPLETE refined code, not just the changes.
+
+            Return your response strictly in this JSON format:
             {
-            "review_status": "LGTM" or "LBTM", (LBTM = Looks Bad To Me, needs more work. LGTM = Looks Good To Me, good enough)
-            "overview": "Brief explanation of what improvements you made or what issues still remain",
+            "review_status": "LGTM" or "LBTM", // LBTM = Looks Bad To Me, LGTM = Looks Good To Me
+            "overview": "Brief explanation of improvements made or issues remaining.",
             "refined_files": {
-                "filename1.py": "complete refined code for this file",
-                "filename2.py": "complete refined code for this file",
-                ...
+                "filename1": "COMPLETE refined code for this file",
+                "filename2": "COMPLETE refined code for this file",
+                ... // Include ALL files provided in the input
             }
             }
-            
-            Important: Include the ENTIRE content of each file, not just the changed parts.
-            If the code looks good and doesn't need changes, still include the full original code in refined_files,
-            but set review_status to LGTM.
+
+            Important: Include the ENTIRE content of **every** file in `refined_files`, even if you made no changes to it.
+            If the code looks good and requires no changes according to the criteria, set `review_status` to "LGTM" and include the original, unmodified code in `refined_files`.
+            Focus on correctness and integration.
             """
             
-            # Step 3: Send all code files for refinement
-            refinement_input = {
-                "files": current_code_files,
-                "instructions": "Refine the entire codebase for consistency and proper integration"
+            # Process batch 1
+            batch1_files = {filename: current_code_files[filename] for filename in batch1_filenames}
+            batch1_input = {
+                "files": batch1_files,
+                "instructions": "Refine these files based on the criteria provided."
             }
+            batch1_json = json.dumps(batch1_input, indent=2)
             
-            # Convert to JSON
-            input_json = json.dumps(refinement_input, indent=2)
+            # Process batch 2
+            batch2_files = {filename: current_code_files[filename] for filename in batch2_filenames}
+            batch2_input = {
+                "files": batch2_files,
+                "instructions": "Refine these files based on the criteria provided."
+            }
+            batch2_json = json.dumps(batch2_input, indent=2)
             
-            # Send the request to the LLM
-            refinement_result = await self.llm.aask(refinement_prompt + "\n\nCodebase to refine:\n" + input_json, stream=False)
+            # Run refinement for both batches
+            batch_results = []
             
-            # Step 4: Parse the results and update files
-            try:
-                refined_data = self.extract_and_parse_json(refinement_result)
-                review_status = refined_data.get("review_status", "LBTM")  # Default to LBTM if not specified
-                logger.info(f"Refinement iteration {iteration+1} overview: {refined_data.get('overview')}")
-                logger.info(f"Review status: {review_status}")
+            for batch_num, batch_json in enumerate([batch1_json, batch2_json], 1):
+                if batch_num == 1 and not batch1_filenames:
+                    continue
+                if batch_num == 2 and not batch2_filenames:
+                    continue
+                    
+                logger.info(f"Processing batch {batch_num} with {len(batch1_filenames if batch_num == 1 else batch2_filenames)} files")
                 
-                # Update each file with its refined version
-                refined_files = refined_data.get("refined_files", {})
-                iteration_changes = False
+                # Send the request to the LLM
+                refinement_result = await self.llm.aask(
+                    refinement_prompt + f"\n\nBatch {batch_num} files to refine:\n" + batch_json, 
+                    stream=False
+                )
                 
-                for filename, refined_content in refined_files.items():
+                try:
+                    # Parse the results
+                    refined_data = self.extract_and_parse_json(refinement_result)
+                    review_status = refined_data.get("review_status", "LBTM").upper()
+                    logger.info(f"Batch {batch_num}, Iteration {iteration + 1} overview: {refined_data.get('overview')}")
+                    logger.info(f"Review status: {review_status}")
+                    
+                    # Extract refined files
+                    refined_files_data = refined_data.get("refined_files", {})
+                    if not isinstance(refined_files_data, dict):
+                        logger.error(f"Invalid format for 'refined_files' in batch {batch_num}. Expected a dict.")
+                        continue
+                        
+                    # Add to batch results for later processing
+                    batch_results.append((review_status, refined_files_data))
+                    
+                except Exception as e:
+                    logger.error(f"Failed to process batch {batch_num}: {e}")
+                    logger.error(f"Raw LLM Response (first 500 chars): {refinement_result[:500]}...")
+            
+            # Combine results from both batches
+            iteration_changes = False
+            all_lgtm = True
+            
+            for review_status, refined_files_data in batch_results:
+                # Update files with refined content
+                for filename, refined_content in refined_files_data.items():
                     if filename not in ctx_by_filename:
-                        logger.warning(f"Refinement includes unknown file: {filename}")
+                        logger.warning(f"Refinement includes unknown file: {filename}. Skipping.")
+                        continue
+                        
+                    # Ensure content is a string
+                    if not isinstance(refined_content, str):
+                        logger.warning(f"Refined content for {filename} is not a string. Skipping update.")
                         continue
                         
                     current_content = current_code_files.get(filename)
                     
                     # Only update if content actually changed
                     if refined_content != current_content:
-                        # Update the current code state
+                        logger.debug(f"Code change detected in {filename} during iteration {iteration + 1}.")
                         current_code_files[filename] = refined_content
                         iteration_changes = True
-                
-                # If there were no changes in this iteration or we get LGTM, stop iterating
-                if not iteration_changes or review_status == "LGTM":
-                    logger.info(f"Stopping refinement after iteration {iteration+1}; " + 
-                            (f"No changes made." if not iteration_changes else f"Review status: {review_status}"))
-                    break
-                
-                # If this was the last iteration, we'll apply the changes regardless
-                if iteration == k - 1:
-                    logger.info(f"Reached maximum iterations ({k}), applying final changes.")
-                
-            except Exception as e:
-                logger.error(f"Failed to process refinement results: {e}")
-                logger.error(refinement_result)
+                        
+                # Track if all batches returned LGTM
+                if review_status != "LGTM":
+                    all_lgtm = False
+            
+            # Check if we should continue
+            if all_lgtm:
+                logger.info(f"Stopping refinement after iteration {iteration + 1} as all batches returned LGTM.")
                 break
+                
+            if not iteration_changes:
+                logger.info(f"Stopping refinement after iteration {iteration + 1} as no code changes were detected.")
+                break
+                
+            if iteration == k - 1:
+                logger.info(f"Reached maximum iterations ({k}). Applying final changes.")
         
-        # After all iterations, apply the final changes to the actual files
+        # Apply the final changes to the actual files
+        logger.info("Applying final refinement changes to project repository.")
         for filename, final_content in current_code_files.items():
             if filename not in ctx_by_filename:
                 continue
                 
             original_ctx = ctx_by_filename[filename]
-            original_content = original_ctx.code_doc.content
+            original_content_before_refinement = code_files.get(filename)
             
-            # Only update if content actually changed from the original
-            if final_content != original_content:
+            # Only save if content actually changed from the initial state
+            if final_content != original_content_before_refinement:
+                logger.info(f"Saving refined changes for {filename}.")
+                
                 # Create updated document
                 updated_code_doc = Document(
                     root_path=original_ctx.code_doc.root_path,
@@ -815,14 +901,14 @@ class Engineer(Role):
                     dependencies.add(original_ctx.task_doc.root_relative_path)
                 if self.config.inc and hasattr(original_ctx, 'code_plan_and_change_doc') and original_ctx.code_plan_and_change_doc:
                     dependencies.add(original_ctx.code_plan_and_change_doc.root_relative_path)
-                
+                    
                 await self.project_repo.srcs.save(
                     filename=original_ctx.filename,
                     dependencies=list(dependencies),
                     content=final_content,
                 )
                 
-                # Record the refinement
+                # Record the refinement action in memory
                 msg = Message(
                     content=original_ctx.model_dump_json(),
                     instruct_content=original_ctx,
@@ -832,8 +918,9 @@ class Engineer(Role):
                 self.rc.memory.add(msg)
                 
                 changed_files.add(filename)
-                logger.info(f"Successfully refined {filename}")
-        
+            else:
+                logger.info(f"No net changes detected for {filename} after refinement loop. File not re-saved.")
+                
         return changed_files
     # This manages the engineers to write the code
     async def _act_sp_with_cr(self, review=False) -> Set[str]:
@@ -955,7 +1042,7 @@ class Engineer(Role):
         if review and all_coding_contexts:
             logger.info(f"All coding tasks completed. Starting direct code refinement...")
             # Use the direct refinement method instead of review
-            refinement_changed_files = await self._refine_codebase_directly(all_coding_contexts)
+            refinement_changed_files = await self._integrating_codebase(all_coding_contexts)
             changed_files.update(refinement_changed_files)
         
         if not changed_files:
@@ -1010,7 +1097,9 @@ class Engineer(Role):
 
     
     async def _act_write_code(self):
-        changed_files = await self._act_sp_with_cr(review=self.use_code_review)
+        perform_review = self.paradigm.lower() != "flat"
+
+        changed_files = await self._act_sp_with_cr(review=perform_review)
         usage_stats = await self.show_token_usage()
         return Message(
             content="\n".join(changed_files),

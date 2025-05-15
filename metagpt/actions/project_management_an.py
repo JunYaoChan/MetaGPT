@@ -47,22 +47,40 @@ REFINED_LOGIC_ANALYSIS = ActionNode(
         ["utils.py", "Modifies existing utility functions to support incremental changes"],
     ],
 )
-
 TASK_LIST = ActionNode(
     key="Task list",
     expected_type=List[str],
-    instruction="Break down the tasks into a list of filenames, prioritized by dependency order.",
-    example=["game.py", "main.py"],
+    instruction="Break down the tasks into a strictly ordered list of FILENAMES ONLY (e.g., 'game.py', 'utils.py'), "
+                "prioritized by dependency order. Each item must be only a filename with appropriate extension, "
+                "NOT a task description. Do not include explanations or descriptions in this list.",
+    example=["constants.py", "utils.py", "game.py", "main.py"],
 )
 
+# Keep the REFINED_TASK_LIST definition with similar clarity
 REFINED_TASK_LIST = ActionNode(
     key="Refined Task list",
     expected_type=List[str],
     instruction="Review and refine the combined task list after the merger of Legacy Content and Incremental Content, "
-    "and consistent with Refined File List. Ensure that tasks are organized in a logical and prioritized order, "
-    "considering dependencies for a streamlined and efficient development process. ",
-    example=["new_feature.py", "utils", "game.py", "main.py"],
+                "and consistent with Refined File List. The list must contain ONLY FILENAMES with appropriate extensions "
+                "(e.g., 'game.py', 'utils.py'). Each item must be a filename, NOT a task description. "
+                "Ensure that tasks are organized in a logical and prioritized order considering dependencies.",
+    example=["new_feature.py", "utils.py", "game.py", "main.py"],
 )
+# TASK_LIST = ActionNode(
+#     key="Task list",
+#     expected_type=List[str],
+#     instruction="Break down the tasks into a list of filenames, prioritized by dependency order.",
+#     example=["game.py", "main.py"],
+# )
+
+# REFINED_TASK_LIST = ActionNode(
+#     key="Refined Task list",
+#     expected_type=List[str],
+#     instruction="Review and refine the combined task list after the merger of Legacy Content and Incremental Content, "
+#     "and consistent with Refined File List. Ensure that tasks are organized in a logical and prioritized order, "
+#     "considering dependencies for a streamlined and efficient development process. ",
+#     example=["new_feature.py", "utils", "game.py", "main.py"],
+# )
 
 FULL_API_SPEC = ActionNode(
     key="Full API spec",
